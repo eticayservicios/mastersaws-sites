@@ -87,7 +87,7 @@ Si no configuras `S3_BUCKET` ni `CLOUDFRONT_DISTRIBUTION_ID`, el workflow los le
 
 ## Migración desde los 8 repos
 
-Los repos individuales en `mastersaws-ve` pueden archivarse cuando este monorepo esté en producción. Cada sitio sigue siendo una carpeta independiente dentro de `sites/`.
+Repositorio: `git@github.com:eticayservicios/mastersaws-sites.git`
 
 ## Dominio propio (opcional)
 
