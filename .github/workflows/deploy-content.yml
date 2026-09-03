@@ -58,6 +58,12 @@ jobs:
 
           if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
             echo "Leyendo outputs del stack ${STACK_NAME}..."
+            if ! aws cloudformation describe-stacks --stack-name "$STACK_NAME" >/dev/null 2>&1; then
+              echo "::error::El stack '${STACK_NAME}' no existe."
+              echo "::error::Primero ejecuta el workflow 'Deploy infrastructure' para el entorno '${ENV_NAME}'."
+              echo "::error::Actions → Deploy infrastructure → Run workflow → ${ENV_NAME}"
+              exit 1
+            fi
             OUTPUTS=$(aws cloudformation describe-stacks \
               --stack-name "$STACK_NAME" \
               --query 'Stacks[0].Outputs' \
