@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >-
   Masters AWS portfolio — un bucket S3 privado y una distribución CloudFront
-  sirven los 8 sitios estáticos por rutas (/cloudadoption/, /devops/, etc.).
+  sirven los sitios estáticos por rutas (/cloudadoption/, /devops/, /gobernanza-ia/, etc.).
 
 Parameters:
   ProjectName:
@@ -272,6 +272,6 @@ Outputs:
   SitePaths:
     Description: Rutas de cada sitio bajo la misma distribución.
     Value: >-
-      /cloudadoption/, /data-analytics/, /devops/, /finops/,
+      /cloudadoption/, /data-analytics/, /devops/, /finops/, /gobernanza-ia/,
       /infraestructuras/, /inteligenciaartificial/, /seguridadenlanube/,
       /tarjetas-nfc/

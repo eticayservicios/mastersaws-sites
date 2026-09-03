@@ -2,7 +2,7 @@
 
 Un solo repositorio, **un bucket S3** y **una distribución CloudFront** por entorno (`dev` / `prod`).
 
-Los 8 sitios viven como carpetas bajo `sites/`:
+Los 9 sitios viven como carpetas bajo `sites/`:
 
 ```
 sites/
@@ -11,6 +11,7 @@ sites/
   data-analytics/
   devops/
   finops/
+  gobernanza-ia/
   infraestructuras/
   inteligenciaartificial/
   seguridadenlanube/
@@ -26,6 +27,7 @@ sites/
 | Data Analytics | `/data-analytics/` |
 | DevOps | `/devops/` |
 | FinOps | `/finops/` |
+| Gobernanza de IA | `/gobernanza-ia/` |
 | Infraestructuras | `/infraestructuras/` |
 | Inteligencia Artificial | `/inteligenciaartificial/` |
 | Seguridad en la Nube | `/seguridadenlanube/` |

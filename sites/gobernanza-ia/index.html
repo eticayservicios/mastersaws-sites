@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Gobernanza de IA para Empresas | AI Governance Assessment | MastersAWS</title>
+    <meta name="title" content="Gobernanza de IA para Empresas | AI Governance Assessment | MastersAWS">
+    <meta name="description" content="Evalúe riesgos, políticas, seguridad, datos y controles de Inteligencia Artificial con el AI Governance Assessment de MastersAWS. Obtenga diagnóstico de madurez y hoja de ruta.">
+    <meta name="keywords" content="gobernanza de IA, gobierno de inteligencia artificial, AI Governance, AI Governance Assessment, riesgos de inteligencia artificial, IA responsable, seguridad de IA, políticas de inteligencia artificial, IA para empresas">
+    <meta name="author" content="Masters AWS">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="language" content="Spanish">
+
+    <link rel="canonical" href="https://www.mastersaws.com/gobernanza-ia">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mastersaws.com/gobernanza-ia">
+    <meta property="og:title" content="Gobernanza de IA para Empresas | AI Governance Assessment | MastersAWS">
+    <meta property="og:description" content="Evalúe riesgos, políticas, seguridad, datos y controles de Inteligencia Artificial. Diagnóstico de madurez y hoja de ruta accionable.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=630&fit=crop&auto=format">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="AI Governance Assessment - Gobernanza de Inteligencia Artificial para empresas | MastersAWS">
+    <meta property="og:site_name" content="Masters AWS">
+    <meta property="og:locale" content="es_ES">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.mastersaws.com/gobernanza-ia">
+    <meta name="twitter:title" content="Gobernanza de IA para Empresas | AI Governance Assessment | MastersAWS">
+    <meta name="twitter:description" content="Evalúe riesgos, políticas, seguridad, datos y controles de Inteligencia Artificial con MastersAWS.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=630&fit=crop&auto=format">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "AI Governance Assessment",
+        "name": "AI Governance Assessment - Gobernanza de Inteligencia Artificial",
+        "provider": {
+            "@type": "Organization",
+            "name": "Masters AWS",
+            "url": "https://www.mastersaws.com"
+        },
+        "description": "Evaluación estructurada del nivel de preparación de su organización para adoptar y operar soluciones de Inteligencia Artificial de manera controlada, segura y alineada con el negocio.",
+        "areaServed": { "@type": "Place", "name": "Global" },
+        "url": "https://www.mastersaws.com/gobernanza-ia"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Gobernanza de IA para Empresas | AI Governance Assessment | MastersAWS",
+        "description": "Evalúe riesgos, políticas, seguridad, datos y controles de Inteligencia Artificial con el AI Governance Assessment de MastersAWS.",
+        "url": "https://www.mastersaws.com/gobernanza-ia",
+        "inLanguage": "es",
+        "isPartOf": { "@type": "WebSite", "name": "Masters AWS", "url": "https://www.mastersaws.com" }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #000000;
+            --panel: rgba(0, 55, 58, 0.4);
+            --panel-hover: rgba(0, 65, 68, 0.5);
+            --border: rgba(255, 255, 255, 0.12);
+            --border-brand: rgba(0, 255, 247, 0.35);
+            --brand: #00FFF7;
+            --warn: #FF6800;
+            --warn-dark: #B34D00;
+            --text: rgba(255, 255, 255, 0.92);
+            --muted: rgba(255, 255, 255, 0.85);
+            --max: 1200px;
+            --radius: 24px;
+            --radius-sm: 12px;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .skip-link {
+            position: absolute; left: -999px; top: 10px;
+            background: #fff; color: #000; padding: 10px 14px;
+            border-radius: 8px; z-index: 10000;
+        }
+        .skip-link:focus { left: 10px; }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.95);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 247, 0.25);
+        }
+        .header-content {
+            max-width: var(--max); margin: 0 auto; padding: 0 24px;
+            display: flex; justify-content: flex-start; align-items: center;
+            min-height: 100px; gap: 72px;
+        }
+        .logo { text-decoration: none; display: flex; align-items: center; }
+        .logo img { max-height: 40px; width: auto; display: block; }
+        .logo:hover img { opacity: 0.9; }
+        .nav-menu { display: flex; list-style: none; gap: 40px; align-items: center; }
+        .nav-menu a {
+            color: #fff; text-decoration: none; font-weight: 600;
+            font-size: 1.45rem; letter-spacing: 0.02em;
+            transition: color 0.3s ease; padding: 16px 0;
+        }
+        .nav-menu a:hover { color: var(--brand); }
+        .nav-menu li { position: relative; }
+        .dropdown {
+            position: absolute; top: 100%; left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid var(--border-brand);
+            border-radius: 8px; padding: 10px 0; min-width: 220px;
+            opacity: 0; visibility: hidden; transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        .nav-menu li:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown a { display: block; padding: 12px 20px; font-size: 1rem; }
+        .dropdown a:hover { background: var(--brand); color: #000; }
+        .hamburger {
+            display: none; background: none; border: none; padding: 10px;
+            cursor: pointer; color: var(--brand);
+        }
+        .hamburger svg { width: 28px; height: 28px; }
+        .hamburger[aria-expanded="true"] .hamburger-open { display: none; }
+        .hamburger[aria-expanded="true"] .hamburger-close { display: block; }
+        .hamburger .hamburger-close { display: none; }
+        .nav-overlay { display: none; }
+
+        /* Buttons */
+        .btn-primary, .btn-secondary {
+            padding: 14px 28px; border-radius: 8px; text-decoration: none;
+            font-weight: 600; font-size: 1rem; transition: all 0.3s ease;
+            display: inline-flex; align-items: center; justify-content: center;
+            cursor: pointer; border: none; font-family: inherit;
+        }
+        .btn-primary { background: var(--warn-dark); color: #fff; }
+        .btn-primary:hover { background: #fff; color: #000; transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .btn-secondary {
+            background: transparent; color: var(--warn);
+            border: 2px solid var(--warn);
+        }
+        .btn-secondary:hover { background: var(--warn); color: #fff; transform: translateY(-2px); }
+        .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; }
+
+        /* Layout */
+        .section-container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+        .section { padding: 72px 0; }
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 700;
+            text-align: center; margin-bottom: 12px; color: #fff;
+        }
+        .section-subtitle {
+            font-size: 1.05rem; text-align: center; margin-bottom: 40px;
+            color: var(--muted); max-width: 720px;
+            margin-left: auto; margin-right: auto; line-height: 1.65;
+        }
+        .highlight { color: var(--brand); font-weight: 700; }
+        .eyebrow {
+            display: inline-block; font-size: 0.85rem; font-weight: 700;
+            letter-spacing: 0.12em; color: var(--brand);
+            margin-bottom: 16px; text-transform: uppercase;
+        }
+        .callout-box {
+            margin-top: 32px; padding: 24px 28px;
+            background: rgba(0, 255, 247, 0.08);
+            border: 1px solid rgba(0, 255, 247, 0.25);
+            border-radius: var(--radius-sm);
+            text-align: center; font-size: 1.05rem; color: #fff;
+        }
+        .cta-band {
+            text-align: center; padding: 48px 20px;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 247, 0.06), transparent);
+        }
+        .cta-band .hero-cta { justify-content: center; }
+
+        /* Hero */
+        .hero-section {
+            padding: 130px 0 80px; position: relative; overflow: hidden;
+        }
+        .hero-section::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 247, 0.12) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, rgba(255, 104, 0, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-grid {
+            max-width: var(--max); margin: 0 auto; padding: 0 20px;
+            display: grid; grid-template-columns: 1.05fr 0.95fr;
+            gap: 48px; align-items: center; position: relative; z-index: 2;
+        }
+        .hero-title {
+            font-size: clamp(1.85rem, 4vw, 2.6rem);
+            font-weight: 900; line-height: 1.15; margin-bottom: 12px;
+        }
+        .hero-subtitle {
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            color: var(--brand); font-weight: 700; margin-bottom: 20px;
+        }
+        .hero-description {
+            font-size: 1.05rem; color: var(--muted);
+            margin-bottom: 20px; line-height: 1.65;
+        }
+        .hero-highlight {
+            padding: 16px 20px; margin-bottom: 28px;
+            border-left: 3px solid var(--brand);
+            background: rgba(0, 255, 247, 0.06);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-weight: 600; color: #fff;
+        }
+        .hero-visual {
+            position: relative; border-radius: var(--radius);
+            background: rgba(0, 55, 58, 0.35);
+            border: 1px solid var(--border-brand);
+            padding: 24px; min-height: 340px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero-visual svg { width: 100%; max-width: 420px; height: auto; }
+
+        /* Cards */
+        .cards-grid { display: grid; gap: 24px; }
+        .cards-grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .cards-grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .cards-grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .card {
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 32px 28px;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            border-color: rgba(0, 255, 247, 0.45);
+            background: var(--panel-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(0, 255, 247, 0.08);
+        }
+        .card-icon {
+            width: 56px; height: 56px; border-radius: 16px;
+            background: rgba(0, 255, 247, 0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; margin-bottom: 18px;
+        }
+        .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+        .card p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+
+        /* Problem cards compact */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .problem-item {
+            display: flex; gap: 14px; align-items: flex-start;
+            padding: 20px; background: var(--panel);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+            transition: border-color 0.3s ease;
+        }
+        .problem-item:hover { border-color: rgba(255, 104, 0, 0.4); }
+        .problem-item .icon {
+            flex-shrink: 0; width: 36px; height: 36px;
+            border-radius: 10px; background: rgba(255, 104, 0, 0.15);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+        }
+        .problem-item p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+        /* Results numbered */
+        .results-row {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+        }
+        .result-card {
+            text-align: center; padding: 40px 28px;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .result-num {
+            font-size: 2.5rem; font-weight: 900; color: var(--brand);
+            line-height: 1; margin-bottom: 16px;
+        }
+        .result-card h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+
+        /* Deliverables dashboard */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .deliverable-card {
+            background: linear-gradient(145deg, rgba(0, 55, 58, 0.5), rgba(0, 40, 42, 0.6));
+            border: 1px solid var(--border-brand);
+            border-radius: var(--radius); padding: 28px 24px;
+            position: relative; overflow: hidden;
+        }
+        .deliverable-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--brand), var(--warn));
+        }
+        .deliverable-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--brand); }
+        .deliverable-card p { font-size: 0.9rem; color: var(--muted); }
+        .deliverable-badge {
+            display: inline-block; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 10px; border-radius: 999px;
+            background: rgba(0, 255, 247, 0.12); color: var(--brand);
+            margin-bottom: 12px;
+        }
+
+        /* Process steps */
+        .process-track {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 20px; position: relative;
+        }
+        .process-step {
+            text-align: center; padding: 32px 20px;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: var(--radius); position: relative;
+        }
+        .process-step .step-label {
+            display: inline-block; font-size: 0.75rem; font-weight: 800;
+            letter-spacing: 0.1em; color: var(--warn); margin-bottom: 8px;
+        }
+        .process-step h3 {
+            font-size: 1.2rem; font-weight: 800; color: var(--brand);
+            margin-bottom: 12px; letter-spacing: 0.04em;
+        }
+        .process-step p { font-size: 0.9rem; color: var(--muted); }
+
+        /* Checklist */
+        .checklist-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+            max-width: 900px; margin: 0 auto;
+        }
+        .check-item {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 16px 18px; background: var(--panel);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+        }
+        .check-item .check { color: var(--brand); font-weight: 800; flex-shrink: 0; }
+        .check-item p { font-size: 0.95rem; color: var(--muted); margin: 0; }
+
+        /* Strategic message */
+        .strategic-section {
+            padding: 88px 20px; text-align: center;
+            background: radial-gradient(ellipse at center, rgba(0, 255, 247, 0.1) 0%, transparent 70%);
+            border-top: 1px solid rgba(0, 255, 247, 0.15);
+            border-bottom: 1px solid rgba(0, 255, 247, 0.15);
+        }
+        .strategic-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900; line-height: 1.2; margin-bottom: 12px;
+        }
+        .strategic-subtitle {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 700; color: var(--brand); margin-bottom: 32px;
+        }
+        .strategic-list {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 16px; max-width: 960px; margin: 0 auto; text-align: left;
+        }
+        .strategic-list li {
+            list-style: none; padding: 14px 18px;
+            background: rgba(0, 55, 58, 0.4);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--brand);
+            font-size: 0.95rem; color: var(--muted);
+        }
+
+        /* Evolution timeline */
+        .timeline {
+            display: flex; align-items: stretch; gap: 16px;
+            flex-wrap: wrap; justify-content: center;
+        }
+        .timeline-step {
+            flex: 1; min-width: 220px; max-width: 320px;
+            padding: 28px 24px; background: var(--panel);
+            border: 1px solid var(--border); border-radius: var(--radius);
+            text-align: center;
+        }
+        .timeline-step .num {
+            font-size: 2rem; font-weight: 900; color: var(--brand); margin-bottom: 8px;
+        }
+        .timeline-step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+        .timeline-step p { font-size: 0.88rem; color: var(--muted); }
+        .timeline-arrow {
+            display: flex; align-items: center; color: var(--brand);
+            font-size: 1.5rem; font-weight: 700;
+        }
+        .services-tags {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            justify-content: center; margin-top: 36px;
+        }
+        .services-tags span {
+            padding: 8px 16px; font-size: 0.85rem; font-weight: 600;
+            background: rgba(0, 255, 247, 0.08);
+            border: 1px solid rgba(0, 255, 247, 0.2);
+            border-radius: 999px; color: var(--muted);
+        }
+
+        /* Frameworks */
+        .frameworks-row {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+        }
+        .framework-card {
+            text-align: center; padding: 28px 20px;
+            background: var(--panel); border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .framework-card h3 { font-size: 0.95rem; font-weight: 700; color: #fff; line-height: 1.4; }
+        .framework-note {
+            margin-top: 28px; text-align: center;
+            font-size: 0.85rem; color: rgba(255, 255, 255, 0.55);
+            max-width: 720px; margin-left: auto; margin-right: auto;
+        }
+
+        /* CTA section */
+        .cta-section {
+            padding: 72px 20px; text-align: center;
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 247, 0.08), transparent);
+        }
+
+        /* Footer */
+        .site-footer {
+            background: #0d0d0d;
+            border-top: 1px solid rgba(0, 255, 247, 0.2);
+            padding: 48px 0 0;
+        }
+        .footer-inner {
+            max-width: var(--max); margin: 0 auto; padding: 0 24px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px;
+        }
+        .footer-col h2 {
+            font-size: 1.1rem; font-weight: 700; color: var(--brand);
+            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a {
+            color: rgba(255, 255, 255, 0.85); text-decoration: none;
+            font-size: 0.95rem; transition: color 0.2s ease;
+        }
+        .footer-col a:hover { color: var(--brand); }
+        .footer-social { display: flex; gap: 16px; margin-top: 16px; }
+        .footer-social a { color: rgba(255, 255, 255, 0.85); transition: color 0.2s, transform 0.2s; }
+        .footer-social a:hover { color: var(--brand); transform: translateY(-2px); }
+        .footer-social svg { width: 22px; height: 22px; }
+        .footer-logo img { width: 120px; height: auto; }
+        .footer-bottom {
+            max-width: var(--max); margin: 40px auto 0; padding: 24px 24px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .footer-copyright { color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; text-align: center; }
+
+        /* Floating buttons */
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+            width: 56px; height: 56px; border-radius: 50%;
+            background: #25D366; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+            transition: transform 0.3s ease; text-decoration: none;
+        }
+        .whatsapp-float:hover { transform: scale(1.08); color: #fff; }
+        .whatsapp-float svg { width: 32px; height: 32px; }
+        .float-cta {
+            display: none; position: fixed; bottom: 24px; left: 50%;
+            transform: translateX(-50%); z-index: 9998;
+            padding: 12px 24px; border-radius: 999px;
+            background: #25D366; color: #fff;
+            font-weight: 700; font-size: 0.9rem;
+            text-decoration: none; box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.3s ease;
+        }
+        .float-cta:hover { background: #1fb855; color: #fff; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 36px; }
+            .hero-visual { min-height: 280px; }
+            .deliverables-grid { grid-template-columns: repeat(2, 1fr); }
+            .frameworks-row { grid-template-columns: repeat(2, 1fr); }
+            .process-track { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 992px) {
+            .cards-grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .results-row { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .header-content { justify-content: center; position: relative; }
+            .hamburger { display: flex; position: absolute; right: 24px; }
+            .nav-wrapper {
+                position: fixed; top: 0; left: 0; right: 0; width: 100%;
+                height: 100vh; background: rgba(0, 0, 0, 0.98);
+                padding: 100px 24px 24px; z-index: 999;
+                transform: translateX(100%); transition: transform 0.3s ease;
+                overflow-y: auto;
+            }
+            .nav-wrapper.is-open { transform: translateX(0); }
+            .nav-menu { flex-direction: column; gap: 0; width: 100%; max-width: 280px; margin: 0 auto; }
+            .nav-menu li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); width: 100%; }
+            .nav-menu a { padding: 14px 0; font-size: 1rem; display: block; text-align: center; }
+            .dropdown { position: static; opacity: 1; visibility: visible; transform: none; border: none; background: transparent; padding: 0 0 8px; }
+            .nav-overlay.is-open { display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 998; }
+            .section { padding: 56px 0; }
+            .cards-grid-2, .cards-grid-3, .cards-grid-4,
+            .deliverables-grid, .frameworks-row, .process-track,
+            .checklist-grid { grid-template-columns: 1fr; }
+            .timeline-arrow { display: none; }
+            .timeline-step { max-width: 100%; }
+            .float-cta { display: block; }
+            .whatsapp-float { display: none; }
+        }
+        @media (max-width: 375px) {
+            .hero-cta { flex-direction: column; }
+            .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <header class="header" role="banner">
+        <div class="header-content">
+            <a href="https://www.mastersaws.com" class="logo" aria-label="Masters AWS inicio"><img src="logo.png" alt="Masters AWS" /></a>
+            <button type="button" class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+                <span class="hamburger-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg></span>
+                <span class="hamburger-close" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></span>
+            </button>
+            <div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+            <nav class="nav-wrapper" id="nav-wrapper" aria-label="Navegación principal">
+                <ul class="nav-menu">
+                    <li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
+                    <li><a href="https://www.mastersaws.com/nosotros/">Nosotros</a></li>
+                    <li><a href="#">Servicios</a>
+                        <div class="dropdown">
+                            <a href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a>
+                            <a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a>
+                            <a href="https://www.mastersaws.com/servicios/devops/">DevOps</a>
+                            <a href="https://www.mastersaws.com/servicios/finops/">FinOps</a>
+                            <a href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a>
+                            <a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a>
+                            <a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a>
+                            <a href="https://www.mastersaws.com/gobernanza-ia" style="color: #00FFF7;">Gobernanza de IA</a>
+                        </div>
+                    </li>
+                    <li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
+                    <li><a href="#">Soluciones</a>
+                        <div class="dropdown">
+                            <a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a>
+                            <a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" role="main">
+
+    <!-- SECCIÓN 1 — HERO -->
+    <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-grid">
+            <div class="hero-text">
+                <span class="eyebrow">AI Governance Assessment</span>
+                <h1 id="hero-title" class="hero-title">¿Su empresa está usando Inteligencia Artificial de forma segura?</h1>
+                <p class="hero-subtitle">Diagnóstico de Gobernanza de Inteligencia Artificial para Empresas</p>
+                <p class="hero-description">Evalúe cómo su organización está utilizando Inteligencia Artificial, identifique riesgos y establezca los controles necesarios para adoptar IA de manera segura, responsable y alineada con el negocio.</p>
+                <p class="hero-highlight">Conozca dónde está su organización, cuáles son sus riesgos y qué debe hacer primero.</p>
+                <div class="hero-cta">
+                    <a href="https://wa.me/584129837999?text=Hola%2C%20deseo%20solicitar%20un%20AI%20Governance%20Assessment%20para%20mi%20empresa." class="btn-primary" target="_blank" rel="noopener noreferrer">Solicitar Assessment</a>
+                    <a href="https://wa.me/584129837999?text=Hola%2C%20me%20interesa%20hablar%20con%20un%20especialista%20sobre%20el%20AI%20Governance%20Assessment%20de%20MastersAWS." class="btn-secondary" target="_blank" rel="noopener noreferrer">Hablar con un especialista</a>
+                </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <svg viewBox="0 0 400 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Visualización abstracta de gobernanza de IA">
+                    <defs>
+                        <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#00FFF7" stop-opacity="0.6"/><stop offset="100%" stop-color="#FF6800" stop-opacity="0.3"/></linearGradient>
+                        <linearGradient id="g2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00FFF7" stop-opacity="0.2"/><stop offset="100%" stop-color="#00FFF7" stop-opacity="0.05"/></linearGradient>
+                    </defs>
+                    <rect x="40" y="30" width="320" height="180" rx="12" fill="rgba(0,55,58,0.6)" stroke="rgba(0,255,247,0.3)" stroke-width="1"/>
+                    <rect x="55" y="48" width="80" height="8" rx="4" fill="rgba(0,255,247,0.5)"/>
+                    <rect x="55" y="65" width="120" height="6" rx="3" fill="rgba(255,255,255,0.2)"/>
+                    <circle cx="320" cy="55" r="6" fill="#FF6800" opacity="0.8"/>
+                    <circle cx="305" cy="55" r="6" fill="#FF6800" opacity="0.5"/>
+                    <circle cx="290" cy="55" r="6" fill="#FF6800" opacity="0.3"/>
+                    <rect x="55" y="90" width="290" height="50" rx="6" fill="url(#g2)" stroke="rgba(0,255,247,0.15)"/>
+                    <polyline points="65,125 95,105 125,115 155,95 185,110 215,85 245,100 275,80 305,95 335,75" stroke="#00FFF7" stroke-width="2" fill="none" opacity="0.7"/>
+                    <rect x="55" y="155" width="90" height="40" rx="6" fill="rgba(255,104,0,0.15)" stroke="rgba(255,104,0,0.4)"/>
+                    <text x="100" y="180" text-anchor="middle" fill="#FF6800" font-size="11" font-weight="700">RIESGO</text>
+                    <rect x="160" y="155" width="90" height="40" rx="6" fill="rgba(0,255,247,0.1)" stroke="rgba(0,255,247,0.3)"/>
+                    <text x="205" y="180" text-anchor="middle" fill="#00FFF7" font-size="11" font-weight="700">DATOS</text>
+                    <rect x="265" y="155" width="80" height="40" rx="6" fill="rgba(0,255,247,0.08)" stroke="rgba(0,255,247,0.25)"/>
+                    <text x="305" y="180" text-anchor="middle" fill="#00FFF7" font-size="10" font-weight="700">CONTROL</text>
+                    <path d="M200 230 L200 260 M200 260 L170 290 M200 260 L230 290" stroke="rgba(0,255,247,0.4)" stroke-width="1.5"/>
+                    <circle cx="170" cy="300" r="28" fill="rgba(0,55,58,0.8)" stroke="rgba(0,255,247,0.4)" stroke-width="1.5"/>
+                    <circle cx="170" cy="300" r="12" fill="none" stroke="#00FFF7" stroke-width="1.5"/>
+                    <circle cx="200" cy="270" r="28" fill="rgba(0,55,58,0.8)" stroke="rgba(0,255,247,0.4)" stroke-width="1.5"/>
+                    <path d="M188 270 L196 278 L212 262" stroke="#00FFF7" stroke-width="2" fill="none"/>
+                    <circle cx="230" cy="300" r="28" fill="rgba(0,55,58,0.8)" stroke="rgba(255,104,0,0.4)" stroke-width="1.5"/>
+                    <rect x="218" y="292" width="24" height="16" rx="2" fill="none" stroke="#FF6800" stroke-width="1.5"/>
+                    <line x1="200" y1="210" x2="120" y2="240" stroke="rgba(0,255,247,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+                    <line x1="200" y1="210" x2="280" y2="240" stroke="rgba(0,255,247,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+                    <circle cx="120" cy="240" r="5" fill="#00FFF7" opacity="0.6"/>
+                    <circle cx="280" cy="240" r="5" fill="#00FFF7" opacity="0.6"/>
+                    <path d="M60 330 Q200 310 340 330" stroke="url(#g1)" stroke-width="2" fill="none" opacity="0.5"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 2 — EL PROBLEMA -->
+    <section class="section" id="problema" aria-labelledby="problema-title">
+        <div class="section-container">
+            <h2 id="problema-title" class="section-title">La IA ya está entrando en su empresa</h2>
+            <p class="section-subtitle">ChatGPT, Microsoft Copilot, Gemini, Claude, agentes de IA, automatizaciones y aplicaciones inteligentes están entrando rápidamente en las organizaciones. Muchas veces esto ocurre antes de que existan políticas y controles internos.</p>
+            <div class="problem-grid">
+                <div class="problem-item"><span class="icon" aria-hidden="true">🔒</span><p>Información confidencial compartida con herramientas públicas.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">⚠️</span><p>Herramientas de IA utilizadas sin aprobación.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">📋</span><p>Aplicaciones y agentes sin inventario centralizado.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">⚙️</span><p>Decisiones automatizadas sin supervisión.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">🔗</span><p>Proveedores de IA no evaluados.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">📄</span><p>Falta de políticas internas.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">🛡️</span><p>Riesgos de privacidad y seguridad.</p></div>
+                <div class="problem-item"><span class="icon" aria-hidden="true">👤</span><p>Ausencia de responsables claros.</p></div>
+            </div>
+            <div class="callout-box">
+                La pregunta ya no es solamente qué podemos hacer con IA.<br>
+                <span class="highlight">La pregunta es cómo podemos utilizarla sin crear nuevos riesgos para la organización.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 3 — QUÉ ES EL ASSESSMENT -->
+    <section class="section" id="assessment" aria-labelledby="assessment-title">
+        <div class="section-container">
+            <h2 id="assessment-title" class="section-title">¿Qué es el AI Governance Assessment?</h2>
+            <p class="section-subtitle">Es una evaluación estructurada del nivel actual de preparación de su organización para adoptar y operar soluciones de Inteligencia Artificial de manera controlada. Analizamos personas, procesos, tecnología, datos y controles.</p>
+            <div class="results-row">
+                <article class="result-card">
+                    <div class="result-num" aria-hidden="true">01</div>
+                    <h3>Dónde está su empresa hoy.</h3>
+                </article>
+                <article class="result-card">
+                    <div class="result-num" aria-hidden="true">02</div>
+                    <h3>Qué riesgos y brechas existen.</h3>
+                </article>
+                <article class="result-card">
+                    <div class="result-num" aria-hidden="true">03</div>
+                    <h3>Qué debe hacer primero.</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 4 — QUÉ EVALUAMOS -->
+    <section class="section" id="evaluamos" aria-labelledby="evaluamos-title">
+        <div class="section-container">
+            <h2 id="evaluamos-title" class="section-title">Una visión integral de la Gobernanza de IA</h2>
+            <p class="section-subtitle">Evaluamos siete dimensiones clave para construir un modelo de <span class="highlight">gobierno de inteligencia artificial</span> sólido y accionable.</p>
+            <div class="cards-grid cards-grid-4" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">🏛️</div>
+                    <h3>Estrategia y Gobierno de IA</h3>
+                    <p>Evaluamos responsables, políticas, procesos de aprobación y mecanismos de supervisión.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">🔍</div>
+                    <h3>Uso actual de Inteligencia Artificial</h3>
+                    <p>Identificamos herramientas, modelos, agentes, automatizaciones y casos de uso existentes.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">🔐</div>
+                    <h3>Datos y Privacidad</h3>
+                    <p>Evaluamos cómo las soluciones de IA acceden, procesan, almacenan y comparten información.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">🛡️</div>
+                    <h3>Seguridad de IA</h3>
+                    <p>Analizamos controles de acceso, integraciones, APIs, modelos externos y exposición de información.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">⚖️</div>
+                    <h3>Riesgo y Cumplimiento</h3>
+                    <p>Clasificamos casos de uso según impacto y nivel de riesgo.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">☁️</div>
+                    <h3>Proveedores y Modelos</h3>
+                    <p>Evaluamos plataformas, proveedores y modelos externos utilizados por la organización.</p>
+                </article>
+                <article class="card">
+                    <div class="card-icon" aria-hidden="true">👥</div>
+                    <h3>Personas y Uso Responsable</h3>
+                    <p>Analizamos capacitación, responsabilidades y buenas prácticas para empleados y colaboradores.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 5 — ENTREGABLES -->
+    <section class="section" id="entregables" aria-labelledby="entregables-title">
+        <div class="section-container">
+            <h2 id="entregables-title" class="section-title">¿Qué recibe su empresa?</h2>
+            <p class="section-subtitle">Valor tangible para dirección, tecnología, seguridad y negocio. Un diagnóstico completo de <span class="highlight">gobernanza de IA</span> con entregables ejecutivos.</p>
+            <div class="deliverables-grid">
+                <article class="deliverable-card">
+                    <span class="deliverable-badge">Score</span>
+                    <h3>AI Governance Maturity Score</h3>
+                    <p>Nivel actual de madurez de Gobernanza de IA.</p>
+                </article>
+                <article class="deliverable-card">
+                    <span class="deliverable-badge">Inventario</span>
+                    <h3>Inventario de IA</h3>
+                    <p>Inventario inicial de herramientas, soluciones y casos de uso.</p>
+                </article>
+                <article class="deliverable-card">
+                    <span class="deliverable-badge">Riesgos</span>
+                    <h3>Mapa de Riesgos de IA</h3>
+                    <p>Clasificación de riesgos según impacto y prioridad.</p>
+                </article>
+                <article class="deliverable-card">
+                    <span class="deliverable-badge">Brechas</span>
+                    <h3>Gap Analysis</h3>
+                    <p>Identificación de controles, políticas y procesos faltantes.</p>
+                </article>
+                <article class="deliverable-card">
+                    <span class="deliverable-badge">Roadmap</span>
+                    <h3>AI Governance Roadmap</h3>
+                    <p>Plan priorizado para avanzar hacia un modelo de IA gobernado.</p>
+                </article>
+                <article class="deliverable-card">
+                    <span class="deliverable-badge">Ejecutivo</span>
+                    <h3>Recomendaciones Ejecutivas</h3>
+                    <p>Conclusiones dirigidas a dirección, tecnología, seguridad y negocio.</p>
+                </article>
+            </div>
+            <div class="callout-box" style="margin-top: 40px;">
+                <span class="highlight">No entregamos solamente un informe. Entregamos una hoja de ruta accionable.</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-band">
+        <div class="section-container">
+            <p class="section-subtitle" style="margin-bottom: 24px;">Obtenga una visión clara de madurez, riesgos y próximos pasos para su organización.</p>
+            <div class="hero-cta">
+                <a href="https://wa.me/584129837999?text=Hola%2C%20deseo%20solicitar%20un%20AI%20Governance%20Assessment%20para%20mi%20empresa." class="btn-primary" target="_blank" rel="noopener noreferrer">Solicitar Assessment</a>
+                <a href="https://wa.me/584129837999?text=Hola%2C%20me%20interesa%20hablar%20con%20un%20especialista%20sobre%20el%20AI%20Governance%20Assessment%20de%20MastersAWS." class="btn-secondary" target="_blank" rel="noopener noreferrer">Hablar con un especialista</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 6 — METODOLOGÍA -->
+    <section class="section" id="metodologia" aria-labelledby="metodologia-title">
+        <div class="section-container">
+            <h2 id="metodologia-title" class="section-title">De IA sin control a IA gobernada</h2>
+            <p class="section-subtitle">Metodología estructurada para evaluar, priorizar y definir el camino hacia una adopción de IA responsable.</p>
+            <div class="process-track">
+                <article class="process-step">
+                    <span class="step-label">PASO 1</span>
+                    <h3>DISCOVER</h3>
+                    <p>Identificamos cómo se está utilizando actualmente la Inteligencia Artificial.</p>
+                </article>
+                <article class="process-step">
+                    <span class="step-label">PASO 2</span>
+                    <h3>ASSESS</h3>
+                    <p>Evaluamos gobierno, datos, tecnología, seguridad, riesgos y personas.</p>
+                </article>
+                <article class="process-step">
+                    <span class="step-label">PASO 3</span>
+                    <h3>PRIORITIZE</h3>
+                    <p>Clasificamos brechas y riesgos de acuerdo con impacto y urgencia.</p>
+                </article>
+                <article class="process-step">
+                    <span class="step-label">PASO 4</span>
+                    <h3>ROADMAP</h3>
+                    <p>Creamos una hoja de ruta práctica para implementar Gobernanza de IA.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 7 — ¿LO NECESITA MI EMPRESA? -->
+    <section class="section" id="necesita" aria-labelledby="necesita-title">
+        <div class="section-container">
+            <h2 id="necesita-title" class="section-title">¿Su organización necesita un Assessment?</h2>
+            <p class="section-subtitle">Este servicio es especialmente relevante si su organización:</p>
+            <div class="checklist-grid">
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Utiliza ChatGPT, Copilot, Gemini, Claude u otras plataformas.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Está desarrollando agentes de IA.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Está implementando aplicaciones con Inteligencia Artificial.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Permite IA generativa a sus empleados.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Maneja información confidencial o de clientes.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Quiere automatizar procesos importantes.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Necesita políticas corporativas de IA.</p></div>
+                <div class="check-item"><span class="check" aria-hidden="true">✓</span><p>Necesita identificar riesgos antes de escalar sus iniciativas.</p></div>
+                <div class="check-item" style="grid-column: 1 / -1; max-width: 440px; margin: 0 auto; width: 100%;"><span class="check" aria-hidden="true">✓</span><p>Quiere avanzar rápidamente con IA pero manteniendo control.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 8 — MENSAJE ESTRATÉGICO -->
+    <section class="strategic-section" aria-labelledby="strategic-title">
+        <div class="section-container">
+            <h2 id="strategic-title" class="strategic-title">No se trata de frenar la Inteligencia Artificial.</h2>
+            <p class="strategic-subtitle">Se trata de poder utilizarla con confianza.</p>
+            <p class="section-subtitle" style="margin-bottom: 36px;">Adoptar Inteligencia Artificial con control, seguridad y confianza. Una buena Gobernanza de IA permite establecer:</p>
+            <ul class="strategic-list">
+                <li>Qué herramientas pueden utilizarse.</li>
+                <li>Para qué pueden utilizarse.</li>
+                <li>Qué información pueden procesar.</li>
+                <li>Quién es responsable.</li>
+                <li>Qué necesita supervisión humana.</li>
+                <li>Qué riesgos deben controlarse.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 9 — DESPUÉS DEL ASSESSMENT -->
+    <section class="section" id="despues" aria-labelledby="despues-title">
+        <div class="section-container">
+            <h2 id="despues-title" class="section-title">El Assessment es el primer paso</h2>
+            <p class="section-subtitle">Un camino progresivo hacia un programa de gobernanza de IA sostenible.</p>
+            <div class="timeline">
+                <article class="timeline-step">
+                    <div class="num">01</div>
+                    <h3>AI Governance Assessment</h3>
+                    <p>Diagnóstico, madurez, riesgos, brechas y roadmap.</p>
+                </article>
+                <div class="timeline-arrow" aria-hidden="true">→</div>
+                <article class="timeline-step">
+                    <div class="num">02</div>
+                    <h3>Governance Foundation</h3>
+                    <p>Políticas, responsables, inventario, clasificación de riesgos y procesos de aprobación.</p>
+                </article>
+                <div class="timeline-arrow" aria-hidden="true">→</div>
+                <article class="timeline-step">
+                    <div class="num">03</div>
+                    <h3>AI Governance Program</h3>
+                    <p>Gobierno continuo de aplicaciones, modelos, agentes, proveedores y nuevas iniciativas de IA.</p>
+                </article>
+            </div>
+            <div class="services-tags" aria-label="Servicios complementarios">
+                <span>Política Corporativa de Inteligencia Artificial</span>
+                <span>Catálogo de herramientas autorizadas</span>
+                <span>Matriz de riesgos de IA</span>
+                <span>Inventario corporativo de IA</span>
+                <span>Proceso de aprobación de casos de uso</span>
+                <span>Roles y responsabilidades</span>
+                <span>Controles de seguridad y datos</span>
+                <span>AI Literacy</span>
+                <span>Gobierno de agentes de IA</span>
+                <span>Modelo operativo de Gobernanza de IA</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 10 — FRAMEWORKS -->
+    <section class="section" id="frameworks" aria-labelledby="frameworks-title">
+        <div class="section-container">
+            <h2 id="frameworks-title" class="section-title">Basado en buenas prácticas internacionales</h2>
+            <p class="section-subtitle">Nuestro enfoque de <span class="highlight">AI Governance</span> se alinea con marcos reconocidos de gestión de riesgos y IA responsable.</p>
+            <div class="frameworks-row">
+                <article class="framework-card">
+                    <h3>NIST AI Risk Management Framework</h3>
+                </article>
+                <article class="framework-card">
+                    <h3>ISO/IEC 42001</h3>
+                </article>
+                <article class="framework-card">
+                    <h3>Principios de Responsible AI</h3>
+                </article>
+                <article class="framework-card">
+                    <h3>Buenas prácticas de seguridad, privacidad y gestión de riesgos</h3>
+                </article>
+            </div>
+            <p class="framework-note">El alcance y los marcos aplicables se determinan de acuerdo con la industria, los casos de uso y las jurisdicciones donde opera cada organización.</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 11 — CTA FINAL -->
+    <section class="cta-section" aria-labelledby="cta-final-title">
+        <div class="section-container">
+            <h2 id="cta-final-title" class="section-title">Comience por saber dónde está su empresa</h2>
+            <p class="section-subtitle">La Inteligencia Artificial está avanzando rápidamente. Su modelo de gobierno también debe hacerlo. Escríbanos por WhatsApp y obtenga una visión clara de los riesgos, brechas y próximos pasos de su organización.</p>
+            <div class="hero-cta">
+                <a href="https://wa.me/584129837999?text=Hola%2C%20deseo%20solicitar%20un%20AI%20Governance%20Assessment%20para%20mi%20empresa." class="btn-primary" target="_blank" rel="noopener noreferrer">SOLICITAR ASSESSMENT</a>
+                <a href="https://wa.me/584129837999?text=Hola%2C%20me%20interesa%20hablar%20con%20un%20especialista%20sobre%20el%20AI%20Governance%20Assessment%20de%20MastersAWS." class="btn-secondary" target="_blank" rel="noopener noreferrer">HABLAR CON UN ESPECIALISTA</a>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <footer id="colophon" class="site-footer" role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h2>MASTERS AWS</h2>
+                <ul>
+                    <li><span style="color: rgba(255,255,255,0.85);">Servicios</span></li>
+                    <li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
+                    <li><a href="https://www.mastersaws.com/nosotros/">Sobre nosotros</a></li>
+                    <li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h2>CONTACTO</h2>
+                <ul class="footer-icon-list">
+                    <li><a href="mailto:sales@mastersaws.com">sales@mastersaws.com</a></li>
+                    <li><a href="https://wa.me/584129837999">+58 412 9837999</a></li>
+                </ul>
+                <div class="footer-social">
+                    <a href="https://www.youtube.com/@mastersaws" target="_blank" rel="noopener noreferrer" aria-label="Youtube">
+                        <svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/eticayservicios" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/mastersaws/?hl=es-la" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h2>SERVICIOS</h2>
+                <ul>
+                    <li><a href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
+                    <li><a href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
+                    <li><a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a></li>
+                    <li><a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a></li>
+                    <li><a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a></li>
+                    <li><a href="https://www.mastersaws.com/gobernanza-ia">Gobernanza de IA</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h2>SOLUCIONES</h2>
+                <ul>
+                    <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li>
+                    <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li>
+                </ul>
+            </div>
+            <div class="footer-col footer-logo">
+                <a href="https://www.mastersaws.com">
+                    <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" width="120" height="120" alt="Masters AWS" loading="lazy" />
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">Copyright © 2025 MastersAws. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/584129837999?text=Hola%2C%20deseo%20solicitar%20un%20AI%20Governance%20Assessment%20para%20mi%20empresa." class="float-cta" target="_blank" rel="noopener noreferrer" aria-label="Solicitar Assessment por WhatsApp">Solicitar Assessment</a>
+
+    <a href="https://wa.me/584129837999?text=Hola%2C%20deseo%20solicitar%20un%20AI%20Governance%20Assessment%20para%20mi%20empresa." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <script>
+        (function() {
+            var btn = document.querySelector('.hamburger');
+            var wrapper = document.getElementById('nav-wrapper');
+            var overlay = document.getElementById('nav-overlay');
+            if (btn && wrapper) {
+                function openNav() {
+                    wrapper.classList.add('is-open');
+                    if (overlay) overlay.classList.add('is-open');
+                    btn.setAttribute('aria-expanded', 'true');
+                    document.body.style.overflow = 'hidden';
+                }
+                function closeNav() {
+                    wrapper.classList.remove('is-open');
+                    if (overlay) overlay.classList.remove('is-open');
+                    btn.setAttribute('aria-expanded', 'false');
+                    document.body.style.overflow = '';
+                }
+                btn.addEventListener('click', function() {
+                    wrapper.classList.contains('is-open') ? closeNav() : openNav();
+                });
+                if (overlay) overlay.addEventListener('click', closeNav);
+                document.querySelectorAll('.nav-menu a').forEach(function(a) {
+                    a.addEventListener('click', closeNav);
+                });
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function(e) {
+                    var href = this.getAttribute('href');
+                    if (!href || href === '#') return;
+                    var target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+
+            document.querySelectorAll('.card, .problem-item, .deliverable-card, .process-step').forEach(function(el) {
+                el.addEventListener('mouseenter', function() {
+                    this.style.transition = 'transform 0.3s ease';
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
