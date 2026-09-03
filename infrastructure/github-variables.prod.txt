@@ -1,0 +1,30 @@
+# Variables en GitHub (Settings → Secrets and variables → Actions)
+
+## Obligatorias — credenciales AWS (cuenta 941751053509)
+
+Pueden ir en **Variables** o **Secrets** (el workflow lee ambos):
+
+| Nombre | Descripción |
+|---|---|
+| `AWS_ACCESS_KEY_ID` | Access key del IAM user |
+| `AWS_SECRET_ACCESS_KEY` | Secret key del IAM user |
+
+> Recomendado: mover `AWS_SECRET_ACCESS_KEY` a **Secrets** (no Variables) porque las variables son visibles en texto plano.
+
+## Opcionales — destino del despliegue
+
+Si no las configuras, el workflow las lee del stack CloudFormation:
+
+| Nombre | Ejemplo |
+|---|---|
+| `S3_BUCKET` | `mastersaws-portfolio-prod` |
+| `CLOUDFRONT_DISTRIBUTION_ID` | `E1234567890ABC` |
+
+## Orden de ejecución
+
+1. **Deploy infrastructure** → crea stack `mastersaws-portfolio-prod` en cuenta `941751053509`
+2. **Deploy content** → sube sitios e invalida CloudFront
+
+## Región
+
+Todos los workflows usan **us-east-1** (fijo).

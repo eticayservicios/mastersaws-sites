@@ -21,6 +21,9 @@ on:
 permissions:
   contents: read
 
+env:
+  AWS_REGION: us-east-1
+
 jobs:
   deploy:
     name: Sync S3 + CloudFront
@@ -31,17 +34,29 @@ jobs:
 
       - name: Validar credenciales AWS
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          KEY_FROM_SECRET: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          KEY_FROM_VAR: ${{ vars.AWS_ACCESS_KEY_ID }}
+          SECRET_FROM_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SECRET_FROM_VAR: ${{ vars.AWS_SECRET_ACCESS_KEY }}
         run: |
-          test -n "$AWS_ACCESS_KEY_ID" || (echo "::error::Falta AWS_ACCESS_KEY_ID" && exit 1)
-          test -n "$AWS_SECRET_ACCESS_KEY" || (echo "::error::Falta AWS_SECRET_ACCESS_KEY" && exit 1)
+          AWS_ACCESS_KEY_ID="${KEY_FROM_SECRET:-$KEY_FROM_VAR}"
+          AWS_SECRET_ACCESS_KEY="${SECRET_FROM_SECRET:-$SECRET_FROM_VAR}"
+          if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "::error::Faltan AWS_ACCESS_KEY_ID y/o AWS_SECRET_ACCESS_KEY."
+            echo "::error::Configúralos en Settings → Secrets and variables → Actions (Variables o Secrets)."
+            exit 1
+          fi
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_ACCESS_KEY_ID || vars.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' && secrets.AWS_SECRET_ACCESS_KEY || vars.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Verificar cuenta AWS
+        run: |
+          echo "Región: ${AWS_REGION}"
+          aws sts get-caller-identity --output table
 
       - name: Resolver bucket y CloudFront
         id: target
@@ -57,15 +72,15 @@ jobs:
           STACK_NAME="mastersaws-portfolio-${ENV_NAME}"
 
           if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
-            echo "Leyendo outputs del stack ${STACK_NAME}..."
-            if ! aws cloudformation describe-stacks --stack-name "$STACK_NAME" >/dev/null 2>&1; then
-              echo "::error::El stack '${STACK_NAME}' no existe."
-              echo "::error::Primero ejecuta el workflow 'Deploy infrastructure' para el entorno '${ENV_NAME}'."
-              echo "::error::Actions → Deploy infrastructure → Run workflow → ${ENV_NAME}"
+            echo "Leyendo outputs del stack ${STACK_NAME} en ${AWS_REGION}..."
+            if ! aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$AWS_REGION" >/dev/null 2>&1; then
+              echo "::error::El stack '${STACK_NAME}' no existe en esta cuenta/región."
+              echo "::error::Primero ejecuta: Actions → Deploy infrastructure → Run workflow → ${ENV_NAME}"
               exit 1
             fi
             OUTPUTS=$(aws cloudformation describe-stacks \
               --stack-name "$STACK_NAME" \
+              --region "$AWS_REGION" \
               --query 'Stacks[0].Outputs' \
               --output json)
 
@@ -74,11 +89,11 @@ jobs:
           fi
 
           if [ -z "$S3_BUCKET" ] || [ "$S3_BUCKET" = "null" ]; then
-            echo "::error::No se pudo resolver el bucket. Ejecuta primero 'Deploy infrastructure' o configura S3_BUCKET."
+            echo "::error::No se pudo resolver el bucket. Ejecuta 'Deploy infrastructure' o configura S3_BUCKET."
             exit 1
           fi
           if [ -z "$CF_ID" ] || [ "$CF_ID" = "null" ]; then
-            echo "::error::No se pudo resolver CloudFront. Configura CLOUDFRONT_DISTRIBUTION_ID o despliega infra."
+            echo "::error::No se pudo resolver CloudFront. Ejecuta 'Deploy infrastructure' o configura CLOUDFRONT_DISTRIBUTION_ID."
             exit 1
           fi
 

@@ -16,7 +16,7 @@ env:
 
 jobs:
   deploy:
-    name: SAM deploy S3 + CloudFront
+    name: CloudFormation S3 + CloudFront
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     permissions:
@@ -26,38 +26,44 @@ jobs:
 
       - name: Validar credenciales AWS
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          KEY_FROM_SECRET: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          KEY_FROM_VAR: ${{ vars.AWS_ACCESS_KEY_ID }}
+          SECRET_FROM_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SECRET_FROM_VAR: ${{ vars.AWS_SECRET_ACCESS_KEY }}
         run: |
-          test -n "$AWS_ACCESS_KEY_ID" || (echo "::error::Falta AWS_ACCESS_KEY_ID" && exit 1)
-          test -n "$AWS_SECRET_ACCESS_KEY" || (echo "::error::Falta AWS_SECRET_ACCESS_KEY" && exit 1)
+          AWS_ACCESS_KEY_ID="${KEY_FROM_SECRET:-$KEY_FROM_VAR}"
+          AWS_SECRET_ACCESS_KEY="${SECRET_FROM_SECRET:-$SECRET_FROM_VAR}"
+          if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "::error::Faltan AWS_ACCESS_KEY_ID y/o AWS_SECRET_ACCESS_KEY."
+            echo "::error::Configúralos en Settings → Secrets and variables → Actions (Variables o Secrets)."
+            exit 1
+          fi
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_ACCESS_KEY_ID || vars.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY != '' && secrets.AWS_SECRET_ACCESS_KEY || vars.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - uses: aws-actions/setup-sam@v2
+      - name: Verificar cuenta AWS
+        run: aws sts get-caller-identity --output table
 
       - name: Validar plantilla
-        run: sam validate --lint -t infrastructure/template.yaml --region ${{ env.AWS_REGION }}
+        run: aws cloudformation validate-template --template-body file://infrastructure/template.yaml
 
       - name: Desplegar stack
         run: |
-          sam deploy \
-            --config-env "${{ inputs.environment }}" \
+          aws cloudformation deploy \
             --template-file infrastructure/template.yaml \
             --stack-name "mastersaws-portfolio-${{ inputs.environment }}" \
             --region "${AWS_REGION}" \
-            --capabilities CAPABILITY_IAM \
-            --no-confirm-changeset \
+            --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
             --no-fail-on-empty-changeset \
-            --resolve-s3 \
             --parameter-overrides \
               "ProjectName=mastersaws-portfolio" \
               "Environment=${{ inputs.environment }}" \
-              "BucketName=mastersaws-portfolio-${{ inputs.environment }}"
+              "BucketName=mastersaws-portfolio-${{ inputs.environment }}" \
+              "PriceClass=PriceClass_100"
 
       - name: Mostrar outputs
         run: |
