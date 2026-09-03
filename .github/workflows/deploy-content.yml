@@ -1,0 +1,95 @@
+name: Deploy content
+
+on:
+  push:
+    branches:
+      - dev
+      - prod
+    paths:
+      - 'sites/**'
+      - '.github/workflows/deploy-content.yml'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Entorno a desplegar
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Sync S3 + CloudFront
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validar credenciales AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          test -n "$AWS_ACCESS_KEY_ID" || (echo "::error::Falta AWS_ACCESS_KEY_ID" && exit 1)
+          test -n "$AWS_SECRET_ACCESS_KEY" || (echo "::error::Falta AWS_SECRET_ACCESS_KEY" && exit 1)
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
+
+      - name: Resolver bucket y CloudFront
+        id: target
+        env:
+          ENV_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.ref_name }}
+          S3_VAR: ${{ vars.S3_BUCKET }}
+          S3_SECRET: ${{ secrets.S3_BUCKET }}
+          CF_VAR: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          CF_SECRET: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          S3_BUCKET="${S3_VAR:-$S3_SECRET}"
+          CF_ID="${CF_VAR:-$CF_SECRET}"
+          STACK_NAME="mastersaws-portfolio-${ENV_NAME}"
+
+          if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
+            echo "Leyendo outputs del stack ${STACK_NAME}..."
+            OUTPUTS=$(aws cloudformation describe-stacks \
+              --stack-name "$STACK_NAME" \
+              --query 'Stacks[0].Outputs' \
+              --output json)
+
+            S3_BUCKET=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="BucketName") | .OutputValue')
+            CF_ID=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="CloudFrontDistributionId") | .OutputValue')
+          fi
+
+          if [ -z "$S3_BUCKET" ] || [ "$S3_BUCKET" = "null" ]; then
+            echo "::error::No se pudo resolver el bucket. Ejecuta primero 'Deploy infrastructure' o configura S3_BUCKET."
+            exit 1
+          fi
+          if [ -z "$CF_ID" ] || [ "$CF_ID" = "null" ]; then
+            echo "::error::No se pudo resolver CloudFront. Configura CLOUDFRONT_DISTRIBUTION_ID o despliega infra."
+            exit 1
+          fi
+
+          echo "s3_bucket=$S3_BUCKET" >> "$GITHUB_OUTPUT"
+          echo "cloudfront_id=$CF_ID" >> "$GITHUB_OUTPUT"
+          echo "Entorno: $ENV_NAME"
+          echo "Bucket: $S3_BUCKET"
+          echo "CloudFront: $CF_ID"
+
+      - name: Sincronizar sitios a S3
+        run: |
+          aws s3 sync sites/ "s3://${{ steps.target.outputs.s3_bucket }}/" \
+            --delete \
+            --exact-timestamps
+
+      - name: Invalidar CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ steps.target.outputs.cloudfront_id }}" \
+            --paths "/*"

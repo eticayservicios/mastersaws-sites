@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Primary Meta Tags - SEO -->
+    <title>Seguridad en la Nube AWS | Compliance, IAM y Protección | Masters AWS</title>
+    <meta name="title" content="Seguridad en la Nube AWS | Compliance, IAM y Protección | Masters AWS">
+    <meta name="description" content="Servicios de seguridad en la nube AWS: diseño de seguridad, IAM, compliance, cifrado y mejores prácticas. Protege tus datos y cumple normativas con arquitecturas seguras.">
+    <meta name="keywords" content="Seguridad AWS, IAM AWS, compliance nube, cifrado AWS, seguridad cloud, auditoría AWS, protección datos, WAF, GuardDuty">
+    <meta name="author" content="Masters AWS">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="language" content="Spanish">
+
+    <link rel="canonical" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">
+    <meta property="og:title" content="Seguridad en la Nube AWS | Compliance e IAM | Masters AWS">
+    <meta property="og:description" content="Diseño de seguridad, IAM, compliance, cifrado y mejores prácticas en AWS. Protege tus datos con expertos.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=630&fit=crop&auto=format">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Seguridad en la Nube AWS con Masters AWS">
+    <meta property="og:site_name" content="Masters AWS">
+    <meta property="og:locale" content="es_ES">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">
+    <meta name="twitter:title" content="Seguridad en la Nube AWS | Compliance e IAM | Masters AWS">
+    <meta name="twitter:description" content="Diseño de seguridad, IAM, compliance, cifrado y mejores prácticas en AWS. Protege tus datos.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=630&fit=crop&auto=format">
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Service","serviceType":"Cloud Security Consulting","name":"Seguridad en la Nube AWS - Compliance e IAM","provider":{"@type":"Organization","name":"Masters AWS","url":"https://www.mastersaws.com"},"description":"Servicios de seguridad en la nube AWS: IAM, compliance, cifrado y protección de datos.","areaServed":{"@type":"Place","name":"Global"},"offers":{"@type":"Offer","priceCurrency":"USD"}}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebPage","name":"Seguridad en la Nube AWS | Masters AWS","description":"Servicios de seguridad en la nube AWS: IAM, compliance, cifrado y protección de datos.","url":"https://www.mastersaws.com/servicios/seguridad-en-la-nube/","inLanguage":"es","isPartOf":{"@type":"WebSite","name":"Masters AWS","url":"https://www.mastersaws.com"}}
+    </script>
+
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#000;color:#fff;line-height:1.6;overflow-x:hidden}.header{background:rgba(0,0,0,.95);padding:0;position:fixed;width:100%;top:0;z-index:1000;backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,255,247,.25)}.header-content{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:flex-start;align-items:center;min-height:100px;gap:72px}.logo{font-size:1.8rem;font-weight:900;color:#fff;text-decoration:none;display:flex;align-items:center}.logo img{max-height:40px;width:auto;display:block}.logo:hover{color:#00FFF7}.nav-menu{display:flex;list-style:none;gap:40px;align-items:center;justify-content:center}.nav-menu a{color:#fff;text-decoration:none;font-weight:600;font-size:1.45rem;letter-spacing:.02em;transition:color .3s;padding:16px 0;display:inline-block;line-height:1.2}.nav-menu a:hover{color:#00FFF7}.hamburger{display:none;background:0;border:0;padding:10px;cursor:pointer;color:#00FFF7;align-items:center;justify-content:center}.hamburger svg{width:28px;height:28px}.hamburger[aria-expanded="true"] .hamburger-open{display:none}.hamburger[aria-expanded="true"] .hamburger-close{display:block}.hamburger .hamburger-close{display:none}.nav-overlay{display:none}.nav-close{display:none}.nav-menu li{position:relative}.dropdown{position:absolute;top:100%;left:0;background:rgba(0,0,0,.95);border:1px solid rgba(0,255,247,.35);border-radius:8px;padding:10px 0;min-width:200px;opacity:0;visibility:hidden;transform:translateY(-10px);transition:all .3s}.nav-menu li:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}.dropdown a{display:block;padding:12px 20px;color:#fff;font-size:1rem;transition:all .3s}.dropdown a:hover{background:#00FFF7;color:#000}.hero-section{padding:120px 0 80px;text-align:center;background:#000;position:relative;overflow:hidden}.hero-section::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,255,247,.12) 0%,transparent 70%);pointer-events:none}.hero-section::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(0,255,247,.08) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(0,255,247,.06) 0%,transparent 50%),radial-gradient(circle at 50% 80%,rgba(255,104,0,.03) 0%,transparent 40%);pointer-events:none}.hero-content{max-width:1000px;margin:0 auto;padding:0 20px;position:relative;z-index:2}.hero-title{font-size:2.8rem;font-weight:900;margin-bottom:15px;color:#fff;line-height:1.1}.hero-subtitle{font-size:1.3rem;color:#00FFF7;margin-bottom:25px;font-weight:700}.hero-description{font-size:1.05rem;color:rgba(255,255,255,.9);margin-bottom:40px;max-width:750px;margin:0 auto;line-height:1.6}.hero-cta{display:inline-flex;gap:16px;flex-wrap:wrap;justify-content:center}.btn-primary{padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;transition:all .3s;background:#B34D00;color:#fff;border:0;cursor:pointer}.btn-primary:hover{background:#fff;color:#000;transform:translateY(-2px)}.btn-secondary{padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;transition:all .3s;background:0;color:#FF6800;border:2px solid #FF6800}.btn-secondary:hover{background:#FF6800;color:#fff;transform:translateY(-2px)}.key-features-section,.courses-section{padding:60px 0;background:#000}.section-container{max-width:1200px;margin:0 auto;padding:0 20px}.section-title{font-size:2rem;font-weight:700;text-align:center;margin-bottom:12px;color:#fff}.section-subtitle{font-size:1.05rem;text-align:center;margin-bottom:40px;color:rgba(255,255,255,.85);max-width:640px;margin:0 auto;line-height:1.6}.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:24px}.feature-item{text-align:center;padding:40px 28px;background:rgba(0,55,58,.4);border:1px solid rgba(255,255,255,.12);border-radius:24px;transition:all .3s}.feature-item:hover{border-color:rgba(0,255,247,.5);transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,255,247,.1);background:rgba(0,65,68,.5)}.feature-icon{width:80px;height:80px;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;background:rgba(0,255,247,.25);border-radius:20px;font-size:2.5rem}.feature-title{font-size:1.2rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:14px}.feature-desc{font-size:.95rem;color:rgba(255,255,255,.9);line-height:1.6}.highlight{color:#00FFF7;font-weight:700}.offers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;margin-top:28px}.offer-card{background:rgba(0,55,58,.4);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:40px 32px;transition:all .3s;text-decoration:none;color:inherit;display:block}.offer-card:hover{border-color:rgba(0,255,247,.45);background:rgba(0,65,68,.5);box-shadow:0 12px 28px rgba(0,255,247,.1)}.offer-card .offer-icon{width:80px;height:80px;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;background:rgba(0,255,247,.25);border-radius:20px;font-size:2.5rem}.offer-card h3{font-size:1.25rem;color:#fff;margin-bottom:16px;font-weight:700}.offer-card p{color:rgba(255,255,255,.9);line-height:1.6;margin-bottom:24px;font-size:1rem}.offer-card .offer-link{display:inline-block;padding:12px 24px;border-radius:8px;font-weight:600;font-size:.95rem;background:#00FFF7;color:#000;transition:all .3s}.offer-card:hover .offer-link{background:#fff;transform:translateY(-2px)}.cta-section{padding:60px 20px;text-align:center;background:linear-gradient(180deg,transparent 0%,rgba(0,255,247,.06) 50%,transparent 100%)}.cta-section .section-title{margin-bottom:16px}.cta-section .section-subtitle{margin-bottom:32px}@media(max-width:992px){.features-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:768px){.header-content{justify-content:center;position:relative}.logo{margin-left:0}.hamburger{display:flex;position:absolute;right:24px}.nav-wrapper{position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:rgba(0,0,0,.98);padding:100px 24px 24px;z-index:999;transform:translateX(100%);transition:transform .3s;overflow-y:auto}.nav-wrapper.is-open{transform:translateX(0)}.nav-close{display:flex;position:absolute;top:24px;right:24px;background:0;border:0;padding:8px;cursor:pointer;color:#00FFF7;align-items:center;justify-content:center;z-index:10}.nav-close svg{width:28px;height:28px}.nav-menu{display:flex;flex-direction:column;gap:0;align-items:center;text-align:center;list-style:none;padding:0;margin:0}.nav-menu li{border-bottom:1px solid rgba(255,255,255,.1);width:100%;max-width:280px}.nav-menu a[href*="seguridad"]{color:#00FFF7}.nav-has-dropdown .dropdown{position:static;transform:none;border:none;min-width:auto;max-height:0;overflow:hidden;opacity:0;padding:0;margin:0;visibility:hidden;text-align:center;transition:max-height .3s,opacity .2s}.nav-has-dropdown.is-expanded .dropdown{max-height:400px;opacity:1;visibility:visible;padding:0 0 8px}.nav-has-dropdown .dropdown a{display:block;padding:10px 0}.nav-dropdown-trigger{display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}.nav-dropdown-trigger::after{content:'▼';font-size:.6rem;color:rgba(255,255,255,.8);transition:transform .2s}.nav-has-dropdown.is-expanded .nav-dropdown-trigger::after{transform:rotate(180deg);content:'▼'}.nav-menu a{padding:14px 0;font-size:1rem}.nav-overlay.is-open{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:998}.hero-title{font-size:2rem}.hero-subtitle{font-size:1.1rem}.features-grid{grid-template-columns:1fr;gap:20px}.hero-section{padding:150px 0 60px}.offer-card .offer-link{display:block;width:100%;text-align:center;font-size:.85rem;padding:12px 16px;box-sizing:border-box}}.site-footer{background:#0d0d0d;border-top:1px solid rgba(0,255,247,.2);padding:48px 0 0}.footer-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px}.footer-col h2{font-size:1.1rem;font-weight:700;color:#00FFF7;margin-bottom:20px;text-transform:uppercase;letter-spacing:.05em}.footer-col ul{list-style:none}.footer-col li{margin-bottom:10px}.footer-col a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.95rem;transition:color .2s}.footer-col a:hover{color:#00FFF7}.footer-col .footer-icon-list li{display:flex;align-items:center;gap:10px}.footer-col .footer-icon-list a{display:inline-flex;align-items:center;gap:10px}.footer-social{display:flex;gap:16px;margin-top:16px}.footer-social a{color:rgba(255,255,255,.85);transition:color .2s,transform .2s}.footer-social a:hover{color:#00FFF7;transform:translateY(-2px)}.footer-social svg{width:22px;height:22px}.footer-logo img{width:120px;height:auto}.footer-bottom{max-width:1200px;margin:0 auto;padding:24px 24px 32px;border-top:1px solid rgba(255,255,255,.1);margin-top:40px}.footer-copyright{color:rgba(255,255,255,.6);font-size:.9rem;text-align:center}.whatsapp-float{position:fixed;bottom:24px;right:24px;z-index:9999;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);transition:transform .3s,box-shadow .3s;text-decoration:none}.whatsapp-float:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,211,102,.6);color:#fff}.whatsapp-float svg{width:32px;height:32px}
+    </style>
+</head>
+<body>
+<header class="header" role="banner">
+<div class="header-content">
+<a href="https://www.mastersaws.com" class="logo" aria-label="Masters AWS inicio"><img src="logo.png" alt="Masters AWS"/></a>
+<button type="button" class="hamburger" aria-label="Abrir menú" aria-expanded="false"><span class="hamburger-open" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg></span><span class="hamburger-close" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></span></button>
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+<nav class="nav-wrapper" id="nav-wrapper" aria-label="Navegación principal">
+<button type="button" class="nav-close" id="nav-close" aria-label="Cerrar menú"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></button>
+<ul class="nav-menu">
+<li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
+<li><a href="https://www.mastersaws.com/nosotros/">Nosotros</a></li>
+<li class="nav-has-dropdown"><a href="#" class="nav-dropdown-trigger" aria-expanded="false">Servicios</a>
+<div class="dropdown">
+<a href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a>
+<a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="color:#00FFF7">Seguridad en la Nube</a>
+<a href="https://www.mastersaws.com/servicios/devops/">DevOps</a>
+<a href="https://www.mastersaws.com/servicios/finops/">FinOps</a>
+<a href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a>
+<a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a>
+<a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a>
+</div>
+</li>
+<li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
+<li class="nav-has-dropdown"><a href="#" class="nav-dropdown-trigger" aria-expanded="false">Soluciones</a>
+<div class="dropdown">
+<a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a>
+<a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a>
+</div>
+</li>
+</ul>
+</nav>
+</div>
+</header>
+<main id="main-content" role="main">
+<section class="hero-section" aria-labelledby="hero-title">
+<div class="hero-content">
+<h1 id="hero-title" class="hero-title">SEGURIDAD EN LA NUBE AWS</h1>
+<p class="hero-subtitle">COMPLIANCE, IAM Y PROTECCIÓN DE DATOS</p>
+<p class="hero-description">Diseño de seguridad en AWS, IAM, compliance, cifrado y mejores prácticas. Protege tus datos y cumple normativas con arquitecturas seguras y auditorías alineadas a estándares.</p>
+<div class="hero-cta">
+<a href="#servicios" class="btn-primary">Ver servicios de Seguridad</a>
+<a href="https://wa.me/584129837999" class="btn-secondary" target="_blank" rel="noopener noreferrer">Contactar</a>
+</div>
+</div>
+</section>
+<section id="servicios" class="key-features-section" aria-labelledby="features-title">
+<div class="section-container">
+<h2 id="features-title" class="section-title">QUÉ OFRECEMOS EN SEGURIDAD</h2>
+<p class="section-subtitle">IAM, compliance, cifrado y detección de amenazas para que tu operación en AWS sea segura y auditable.</p>
+<div class="features-grid">
+<article class="feature-item"><div class="feature-icon" aria-hidden="true">🔐</div><h3 class="feature-title">IAM y políticas</h3><p class="feature-desc">Diseño de identidades, roles, políticas y permisos mínimos. Principio de menor privilegio y mejores prácticas en AWS IAM.</p></article>
+<article class="feature-item"><div class="feature-icon" aria-hidden="true">📋</div><h3 class="feature-title">Compliance y auditoría</h3><p class="feature-desc">Config Rules, Security Hub, auditorías y reportes para cumplir normativas (SOC, ISO, PCI-DSS) y estándares internos.</p></article>
+<article class="feature-item"><div class="feature-icon" aria-hidden="true">🔒</div><h3 class="feature-title">Cifrado y protección de datos</h3><p class="feature-desc">Cifrado en reposo y en tránsito, KMS, Secrets Manager y protección de datos sensibles en S3, RDS y aplicaciones.</p></article>
+<article class="feature-item"><div class="feature-icon" aria-hidden="true">🛡</div><h3 class="feature-title">Detección y respuesta</h3><p class="feature-desc">GuardDuty, WAF, Shield y monitoreo de amenazas. Detección de anomalías y respuesta ante incidentes de seguridad.</p></article>
+</div>
+</div>
+</section>
+<section id="cursos" class="courses-section" aria-labelledby="cursos-title">
+<div class="section-container">
+<h2 id="cursos-title" class="section-title">CURSOS, FORMACIÓN Y MÁS</h2>
+<p class="section-subtitle">Formación en seguridad AWS, consultoría y soporte para que tu equipo proteja con <span class="highlight">Masters AWS</span>.</p>
+<div class="offers-grid">
+<a href="https://www.mastersaws.com/soluciones/master-academy/" class="offer-card"><div class="offer-icon" aria-hidden="true">📚</div><h3>Master Academy – Cursos</h3><p>Cursos de AWS Certified, arquitectura, seguridad, Terraform y más. Formación práctica con certificaciones.</p><span class="offer-link">Ver cursos en la Academia →</span></a>
+<a href="https://www.mastersaws.com/soluciones/master-academy/" class="offer-card"><div class="offer-icon" aria-hidden="true">🎓</div><h3>Security Specialty – Certificación</h3><p>Preparación para AWS Certified Security Specialty. IAM, cifrado, detección de amenazas y compliance.</p><span class="offer-link">Ir a Master Academy →</span></a>
+<a href="https://wa.me/584129837999" class="offer-card" target="_blank" rel="noopener noreferrer"><div class="offer-icon" aria-hidden="true">🛠</div><h3>Consultoría y Soporte</h3><p>Diseño de seguridad, IAM, compliance y auditorías. Soporte técnico con SLA para tu operación.</p><span class="offer-link">Contactar soporte →</span></a>
+<a href="https://www.mastersaws.com/soluciones/master-hosting/" class="offer-card"><div class="offer-icon" aria-hidden="true">☁</div><h3>Master Hosting</h3><p>Hosting en AWS administrado, dominios, correo corporativo y aplicaciones en la nube con soporte en español.</p><span class="offer-link">Conocer Master Hosting →</span></a>
+</div>
+</div>
+</section>
+<section class="cta-section" aria-labelledby="cta-title">
+<div class="section-container">
+<h2 id="cta-title" class="section-title">¿LISTO PARA REFORZAR TU SEGURIDAD EN LA NUBE?</h2>
+<p class="section-subtitle">Cuéntanos tu entorno y requisitos de compliance. Te proponemos un plan de seguridad a medida.</p>
+<a href="https://wa.me/584129837999" class="btn-primary" target="_blank" rel="noopener noreferrer">Contactar a Masters AWS</a>
+</div>
+</section>
+</main>
+<footer id="colophon" class="site-footer" role="contentinfo">
+<div class="footer-inner">
+<div class="footer-col"><h2>MASTERS AWS</h2><ul><li><span style="color:rgba(255,255,255,.85)">Servicios</span></li><li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li><li><a href="https://www.mastersaws.com/nosotros/">Sobre nosotros</a></li><li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li></ul></div>
+<div class="footer-col"><h2>CONTACTO</h2><ul class="footer-icon-list"><li><a href="mailto:sales@mastersaws.com">sales@mastersaws.com</a></li><li><a href="https://wa.me/584129837999">+58 412 9837999</a></li></ul><div class="footer-social"><a href="https://www.youtube.com/@mastersaws" target="_blank" rel="noopener noreferrer" aria-label="Youtube"><svg viewBox="0 0 576 512" fill="currentColor"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg></a><a href="https://www.linkedin.com/company/eticayservicios" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 448 512" fill="currentColor"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a><a href="https://www.instagram.com/mastersaws/?hl=es-la" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 448 512" fill="currentColor"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8z"/></svg></a></div></div>
+<div class="footer-col"><h2>SERVICIOS</h2><ul><li><a href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li><li><a href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li><li><a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a></li><li><a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a></li><li><a href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a></li><li><a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a></li></ul></div>
+<div class="footer-col"><h2>SOLUCIONES</h2><ul><li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li><li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li></ul></div>
+<div class="footer-col footer-logo"><a href="https://www.mastersaws.com"><img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" width="120" height="120" alt="Masters AWS"/></a></div>
+</div>
+<div class="footer-bottom"><div class="footer-copyright">Copyright © 2025 MastersAws. All rights reserved.</div></div>
+</footer>
+<a href="https://wa.me/584129837999" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<script>
+(function(){var btn=document.querySelector('.hamburger'),wrapper=document.getElementById('nav-wrapper'),overlay=document.getElementById('nav-overlay');if(!btn||!wrapper)return;function open(){wrapper.classList.add('is-open');if(overlay)overlay.classList.add('is-open');btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}function close(){wrapper.classList.remove('is-open');if(overlay)overlay.classList.remove('is-open');btn.setAttribute('aria-expanded','false');document.body.style.overflow=''}btn.addEventListener('click',function(){if(wrapper.classList.contains('is-open'))close();else open()});var closeBtn=document.getElementById('nav-close');if(closeBtn)closeBtn.addEventListener('click',close);if(overlay)overlay.addEventListener('click',close);document.querySelectorAll('.nav-menu a:not(.nav-dropdown-trigger)').forEach(function(a){a.addEventListener('click',close)});document.querySelectorAll('.nav-dropdown-trigger').forEach(function(trigger){trigger.addEventListener('click',function(e){if(!window.matchMedia('(max-width: 768px)').matches)return;e.preventDefault();var li=this.closest('.nav-has-dropdown');if(!li)return;var expanded=li.classList.toggle('is-expanded');this.setAttribute('aria-expanded',expanded?'true':'false')})})})();
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor){anchor.addEventListener('click',function(e){var href=this.getAttribute('href');if(href==='#'||!href){e.preventDefault();return}e.preventDefault();var target=document.querySelector(href);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})})});
+document.querySelectorAll('.feature-item, .offer-card').forEach(function(card){card.addEventListener('mouseenter',function(){this.style.transform='translateY(-5px)';this.style.transition='transform 0.3s ease'});card.addEventListener('mouseleave',function(){this.style.transform='translateY(0)'})});
+</script>
+</body>
+</html>

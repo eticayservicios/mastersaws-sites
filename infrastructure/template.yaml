@@ -1,0 +1,277 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >-
+  Masters AWS portfolio — un bucket S3 privado y una distribución CloudFront
+  sirven los 8 sitios estáticos por rutas (/cloudadoption/, /devops/, etc.).
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: mastersaws-portfolio
+
+  Environment:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - dev
+      - prod
+
+  BucketName:
+    Type: String
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
+    Description: Nombre global único del bucket S3.
+
+  DomainName:
+    Type: String
+    Default: ''
+    Description: Dominio apex opcional (ej. mastersaws.com). Vacío = dominio CloudFront.
+
+  HostedZoneId:
+    Type: String
+    Default: ''
+    Description: Hosted zone Route 53 para DNS y certificado ACM (opcional).
+
+  CertificateArn:
+    Type: String
+    Default: ''
+    Description: ARN de certificado ACM en us-east-1 (opcional).
+
+  PriceClass:
+    Type: String
+    Default: PriceClass_100
+    AllowedValues:
+      - PriceClass_100
+      - PriceClass_200
+      - PriceClass_All
+
+Conditions:
+  HasDomainName: !Not [!Equals [!Ref DomainName, '']]
+  HasHostedZone: !Not [!Equals [!Ref HostedZoneId, '']]
+  UseProvidedCertificate: !Not [!Equals [!Ref CertificateArn, '']]
+  CreateCertificate: !And
+    - !Equals [!Ref CertificateArn, '']
+    - !Not [!Equals [!Ref DomainName, '']]
+    - !Not [!Equals [!Ref HostedZoneId, '']]
+  HasViewerCertificate: !Or
+    - !Condition UseProvidedCertificate
+    - !Condition CreateCertificate
+  HasCustomDomain: !And
+    - !Condition HasDomainName
+    - !Condition HasViewerCertificate
+  CreateApexDns: !And
+    - !Condition HasHostedZone
+    - !Condition HasCustomDomain
+
+Resources:
+  PortfolioCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Condition: CreateCertificate
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZoneId
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  PortfolioBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Ref BucketName
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+            BucketKeyEnabled: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  PortfolioOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub '${ProjectName}-${Environment}-oac'
+        Description: OAC for Masters AWS portfolio S3 origin
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  PortfolioRoutingFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub '${ProjectName}-${Environment}-routing'
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Rewrites pretty paths to index.html for multi-site portfolio.
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+          var request = event.request;
+          var uri = request.uri;
+
+          if (uri === '/' || uri === '') {
+            request.uri = '/index.html';
+            return request;
+          }
+
+          if (uri.endsWith('/')) {
+            request.uri = uri + 'index.html';
+            return request;
+          }
+
+          if (!uri.includes('.')) {
+            request.uri = uri + '/index.html';
+          }
+
+          return request;
+        }
+
+  PortfolioDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: !Sub '${ProjectName}-${Environment}-distribution'
+        Enabled: true
+        DefaultRootObject: index.html
+        HttpVersion: http2and3
+        IPV6Enabled: true
+        PriceClass: !Ref PriceClass
+        Origins:
+          - Id: PortfolioS3Origin
+            DomainName: !GetAtt PortfolioBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt PortfolioOriginAccessControl.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ''
+        DefaultCacheBehavior:
+          TargetOriginId: PortfolioS3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          Compress: true
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt PortfolioRoutingFunction.FunctionARN
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 404
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 60
+          - ErrorCode: 404
+            ResponseCode: 404
+            ResponsePagePath: /index.html
+            ErrorCachingMinTTL: 60
+        Aliases: !If
+          - HasCustomDomain
+          - - !Ref DomainName
+          - !Ref AWS::NoValue
+        ViewerCertificate: !If
+          - HasViewerCertificate
+          - AcmCertificateArn: !If
+              - UseProvidedCertificate
+              - !Ref CertificateArn
+              - !Ref PortfolioCertificate
+            SslSupportMethod: sni-only
+            MinimumProtocolVersion: TLSv1.2_2021
+          - CloudFrontDefaultCertificate: true
+      Tags:
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref Environment
+
+  PortfolioBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PortfolioBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowCloudFrontReadViaOAC
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub '${PortfolioBucket.Arn}/*'
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub 'arn:aws:cloudfront::${AWS::AccountId}:distribution/${PortfolioDistribution}'
+
+  PortfolioDnsRecord:
+    Type: AWS::Route53::RecordSet
+    Condition: CreateApexDns
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt PortfolioDistribution.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2
+        EvaluateTargetHealth: false
+
+  PortfolioDnsRecordIpv6:
+    Type: AWS::Route53::RecordSet
+    Condition: CreateApexDns
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref DomainName
+      Type: AAAA
+      AliasTarget:
+        DNSName: !GetAtt PortfolioDistribution.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2
+        EvaluateTargetHealth: false
+
+Outputs:
+  Environment:
+    Value: !Ref Environment
+
+  BucketName:
+    Description: Bucket S3 único del portafolio.
+    Value: !Ref PortfolioBucket
+
+  CloudFrontDistributionId:
+    Description: ID de CloudFront para invalidaciones en CI/CD.
+    Value: !Ref PortfolioDistribution
+
+  CloudFrontDomainName:
+    Description: Dominio por defecto de CloudFront.
+    Value: !GetAtt PortfolioDistribution.DomainName
+
+  SiteUrl:
+    Description: URL pública HTTPS del portafolio.
+    Value: !If
+      - HasCustomDomain
+      - !Sub 'https://${DomainName}'
+      - !Sub 'https://${PortfolioDistribution.DomainName}'
+
+  SitePaths:
+    Description: Rutas de cada sitio bajo la misma distribución.
+    Value: >-
+      /cloudadoption/, /data-analytics/, /devops/, /finops/,
+      /infraestructuras/, /inteligenciaartificial/, /seguridadenlanube/,
+      /tarjetas-nfc/

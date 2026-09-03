@@ -1,0 +1,23 @@
+version = 0.1
+
+[default.global.parameters]
+stack_name = "mastersaws-portfolio-prod"
+
+[default.deploy.parameters]
+template_file = "infrastructure/template.yaml"
+resolve_s3 = true
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+fail_on_empty_changeset = false
+parameter_overrides = "ProjectName=mastersaws-portfolio Environment=prod BucketName=mastersaws-portfolio-prod"
+
+[dev.global.parameters]
+stack_name = "mastersaws-portfolio-dev"
+
+[dev.deploy.parameters]
+template_file = "infrastructure/template.yaml"
+resolve_s3 = true
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+fail_on_empty_changeset = false
+parameter_overrides = "ProjectName=mastersaws-portfolio Environment=dev BucketName=mastersaws-portfolio-dev"

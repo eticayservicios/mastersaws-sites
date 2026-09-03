@@ -1,0 +1,129 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches:
+      - dev
+      - prod
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Entorno a desplegar
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Sync S3 + CloudFront
+    runs-on: ubuntu-latest
+    environment: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.ref_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar credenciales AWS
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          missing=0
+          if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+            echo "::error::Falta el secret AWS_ACCESS_KEY_ID en GitHub."
+            missing=1
+          fi
+          if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "::error::Falta el secret AWS_SECRET_ACCESS_KEY en GitHub."
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Resolver entorno y destino
+        id: target
+        env:
+          DEV_S3_BUCKET_VAR: ${{ vars.DEV_S3_BUCKET }}
+          DEV_S3_BUCKET_SECRET: ${{ secrets.DEV_S3_BUCKET }}
+          DEV_CF_VAR: ${{ vars.DEV_CLOUDFRONT_DISTRIBUTION_ID }}
+          DEV_CF_SECRET: ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }}
+          PROD_S3_BUCKET_VAR: ${{ vars.PROD_S3_BUCKET }}
+          PROD_S3_BUCKET_SECRET: ${{ secrets.PROD_S3_BUCKET }}
+          PROD_CF_VAR: ${{ vars.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
+          PROD_CF_SECRET: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          DEV_S3_BUCKET="${DEV_S3_BUCKET_VAR:-$DEV_S3_BUCKET_SECRET}"
+          DEV_CLOUDFRONT_DISTRIBUTION_ID="${DEV_CF_VAR:-$DEV_CF_SECRET}"
+          PROD_S3_BUCKET="${PROD_S3_BUCKET_VAR:-$PROD_S3_BUCKET_SECRET}"
+          PROD_CLOUDFRONT_DISTRIBUTION_ID="${PROD_CF_VAR:-$PROD_CF_SECRET}"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            ENV="${{ inputs.environment }}"
+          else
+            ENV="${{ github.ref_name }}"
+          fi
+
+          case "$ENV" in
+            dev)
+              S3_BUCKET="$DEV_S3_BUCKET"
+              CF_ID="$DEV_CLOUDFRONT_DISTRIBUTION_ID"
+              ;;
+            prod)
+              S3_BUCKET="$PROD_S3_BUCKET"
+              CF_ID="$PROD_CLOUDFRONT_DISTRIBUTION_ID"
+              ;;
+            *)
+              echo "::error::Rama o entorno no soportado: $ENV (usa dev o prod)"
+              exit 1
+              ;;
+          esac
+
+          missing=0
+          if [ -z "$S3_BUCKET" ]; then
+            echo "::error::Falta la variable DEV_S3_BUCKET o PROD_S3_BUCKET según el entorno."
+            missing=1
+          fi
+          if [ -z "$CF_ID" ]; then
+            echo "::error::Falta DEV_CLOUDFRONT_DISTRIBUTION_ID o PROD_CLOUDFRONT_DISTRIBUTION_ID según el entorno."
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "environment=$ENV" >> "$GITHUB_OUTPUT"
+          echo "s3_bucket=$S3_BUCKET" >> "$GITHUB_OUTPUT"
+          echo "cloudfront_id=$CF_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Configurar credenciales AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_DEFAULT_REGION || 'us-east-1' }}
+
+      - name: Sincronizar contenido a S3
+        run: |
+          aws s3 sync . "s3://${{ steps.target.outputs.s3_bucket }}/" \
+            --delete \
+            --exact-timestamps \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude ".gitlab-ci.yml"
+
+      - name: Invalidar caché de CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ steps.target.outputs.cloudfront_id }}" \
+            --paths "/*"
+
+      - name: Resumen del despliegue
+        run: |
+          echo "Entorno: ${{ steps.target.outputs.environment }}"
+          echo "Bucket:  s3://${{ steps.target.outputs.s3_bucket }}/"
+          echo "CloudFront: ${{ steps.target.outputs.cloudfront_id }}"

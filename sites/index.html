@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masters AWS — Portafolio</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(160deg, #0f172a, #1e293b);
+      color: #f8fafc;
+    }
+    main {
+      width: min(720px, 92vw);
+      padding: 2rem;
+    }
+    h1 { margin-top: 0; font-size: 1.75rem; }
+    p { color: #cbd5e1; line-height: 1.6; }
+    ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+    a {
+      display: block;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #e2e8f0;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background 0.15s ease;
+    }
+    a:hover { background: rgba(255, 255, 255, 0.12); }
+    .slug { font-size: 0.85rem; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Masters AWS</h1>
+    <p>Portafolio unificado. Cada especialidad vive en su propia ruta dentro del mismo bucket S3 y distribución CloudFront.</p>
+    <ul>
+      <li><a href="/cloudadoption/">Cloud Adoption <span class="slug">/cloudadoption/</span></a></li>
+      <li><a href="/data-analytics/">Data Analytics <span class="slug">/data-analytics/</span></a></li>
+      <li><a href="/devops/">DevOps <span class="slug">/devops/</span></a></li>
+      <li><a href="/finops/">FinOps <span class="slug">/finops/</span></a></li>
+      <li><a href="/infraestructuras/">Infraestructuras <span class="slug">/infraestructuras/</span></a></li>
+      <li><a href="/inteligenciaartificial/">Inteligencia Artificial <span class="slug">/inteligenciaartificial/</span></a></li>
+      <li><a href="/seguridadenlanube/">Seguridad en la Nube <span class="slug">/seguridadenlanube/</span></a></li>
+      <li><a href="/tarjetas-nfc/">Tarjetas NFC <span class="slug">/tarjetas-nfc/</span></a></li>
+    </ul>
+  </main>
+</body>
+</html>
