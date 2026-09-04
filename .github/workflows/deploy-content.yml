@@ -75,51 +75,45 @@ jobs:
           PROD_CF_VAR: ${{ vars.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
           PROD_CF_SECRET: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
-          case "$ENV_NAME" in
-            dev)
-              S3_BUCKET="${DEV_S3_VAR:-$DEV_S3_SECRET}"
-              CF_ID="${DEV_CF_VAR:-$DEV_CF_SECRET}"
-              ;;
-            prod)
-              S3_BUCKET="${PROD_S3_VAR:-$PROD_S3_SECRET}"
-              CF_ID="${PROD_CF_VAR:-$PROD_CF_SECRET}"
-              ;;
-            *)
-              echo "::error::Entorno no soportado: $ENV_NAME"
-              exit 1
-              ;;
-          esac
-
-          # Fallback a nombres genéricos (monorepo)
-          S3_BUCKET="${S3_BUCKET:-${S3_GENERIC_VAR:-$S3_GENERIC_SECRET}}"
-          CF_ID="${CF_ID:-${CF_GENERIC_VAR:-$CF_GENERIC_SECRET}}"
-
+          ENV_NAME="${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.ref_name }}"
           STACK_NAME="mastersaws-portfolio-${ENV_NAME}"
+          S3_BUCKET=""
+          CF_ID=""
 
-          if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
-            echo "Leyendo outputs del stack ${STACK_NAME} en ${AWS_REGION}..."
-            if ! aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$AWS_REGION" >/dev/null 2>&1; then
-              echo "::error::El stack '${STACK_NAME}' no existe en esta cuenta/región."
-              echo "::error::Opción 1: Actions → Deploy infrastructure → Run workflow → ${ENV_NAME}"
-              echo "::error::Opción 2: agrega Variables PROD_S3_BUCKET y PROD_CLOUDFRONT_DISTRIBUTION_ID (prod) o DEV_* (dev)"
-              exit 1
-            fi
+          # 1. IaC primero: leer bucket y CloudFront del stack CloudFormation
+          if aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$AWS_REGION" >/dev/null 2>&1; then
+            echo "Stack ${STACK_NAME} encontrado. Leyendo outputs de IaC..."
             OUTPUTS=$(aws cloudformation describe-stacks \
               --stack-name "$STACK_NAME" \
               --region "$AWS_REGION" \
               --query 'Stacks[0].Outputs' \
               --output json)
-
             S3_BUCKET=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="BucketName") | .OutputValue')
             CF_ID=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="CloudFrontDistributionId") | .OutputValue')
+          else
+            echo "Stack ${STACK_NAME} no existe. Buscando variables manuales (opcional)..."
+            case "$ENV_NAME" in
+              dev)
+                S3_BUCKET="${DEV_S3_VAR:-$DEV_S3_SECRET}"
+                CF_ID="${DEV_CF_VAR:-$DEV_CF_SECRET}"
+                ;;
+              prod)
+                S3_BUCKET="${PROD_S3_VAR:-$PROD_S3_SECRET}"
+                CF_ID="${PROD_CF_VAR:-$PROD_CF_SECRET}"
+                ;;
+            esac
+            S3_BUCKET="${S3_BUCKET:-${S3_GENERIC_VAR:-$S3_GENERIC_SECRET}}"
+            CF_ID="${CF_ID:-${CF_GENERIC_VAR:-$CF_GENERIC_SECRET}}"
           fi
 
           if [ -z "$S3_BUCKET" ] || [ "$S3_BUCKET" = "null" ]; then
-            echo "::error::No se pudo resolver el bucket. Ejecuta 'Deploy infrastructure' o configura S3_BUCKET."
+            echo "::error::No hay infraestructura desplegada."
+            echo "::error::Ejecuta: Actions → Deploy all → Run workflow → ${ENV_NAME}"
+            echo "::error::Eso crea el bucket S3 y CloudFront por IaC. No necesitas configurar nombres manualmente."
             exit 1
           fi
           if [ -z "$CF_ID" ] || [ "$CF_ID" = "null" ]; then
-            echo "::error::No se pudo resolver CloudFront. Ejecuta 'Deploy infrastructure' o configura CLOUDFRONT_DISTRIBUTION_ID."
+            echo "::error::No se encontró CloudFront. Ejecuta Deploy all → ${ENV_NAME}"
             exit 1
           fi
 

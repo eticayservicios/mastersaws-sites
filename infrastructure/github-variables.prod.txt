@@ -1,40 +1,36 @@
-# Variables para eticayservicios/mastersaws-sites
-# GitHub → Settings → Secrets and variables → Actions
+# Variables para mastersaws-sites (solo IaC)
 
-## Ya las tienes (credenciales)
-| Variable | Obligatoria |
-|---|---|
-| AWS_ACCESS_KEY_ID | Sí |
-| AWS_SECRET_ACCESS_KEY | Sí |
+## Únicas variables obligatorias
 
-## Te faltan para prod (elige UNA opción)
-
-### Opción A — Crear infra automáticamente (recomendado)
-Ejecuta: Actions → Deploy infrastructure → prod
-No necesitas más variables; el stack crea bucket y CloudFront.
-
-### Opción B — Usar bucket/CloudFront existentes (como finops)
-Agrega estas Variables en GitHub:
-
-| Variable | Descripción | Dónde obtenerla |
-|---|---|---|
-| PROD_S3_BUCKET | Nombre del bucket S3 | AWS Console → S3 |
-| PROD_CLOUDFRONT_DISTRIBUTION_ID | ID de CloudFront (empieza con E) | AWS Console → CloudFront |
-
-Para dev, usa:
 | Variable | Descripción |
 |---|---|
-| DEV_S3_BUCKET | Bucket de desarrollo |
-| DEV_CLOUDFRONT_DISTRIBUTION_ID | CloudFront de desarrollo |
+| `AWS_ACCESS_KEY_ID` | Access key IAM (cuenta 941751053509) |
+| `AWS_SECRET_ACCESS_KEY` | Secret key IAM |
 
-### Opción C — Nombres genéricos (monorepo)
-| Variable | Descripción |
+**No necesitas** `PROD_S3_BUCKET`, `PROD_CLOUDFRONT_DISTRIBUTION_ID` ni similares.
+El bucket y CloudFront se crean solos por CloudFormation.
+
+## Cómo desplegar
+
+**Actions → Deploy all → Run workflow → prod**
+
+Un solo clic hace:
+1. Crea bucket S3 + CloudFront (IaC)
+2. Sube los 8 sitios
+3. Invalida caché
+
+Los nombres los genera la plantilla:
+- Bucket: `mastersaws-portfolio-prod`
+- Stack:  `mastersaws-portfolio-prod`
+
+## Workflows disponibles
+
+| Workflow | Cuándo usarlo |
 |---|---|
-| S3_BUCKET | Bucket único |
-| CLOUDFRONT_DISTRIBUTION_ID | CloudFront único |
-
-## Cómo obtener el CloudFront ID
-AWS Console → CloudFront → tu distribución → copia el ID (ej. E28J1Q8T8ACP4L)
+| **Deploy all** | Primera vez y despliegues completos (recomendado) |
+| Deploy infrastructure | Solo crear/actualizar S3 + CloudFront |
+| Deploy content | Solo subir sitios (después de que IaC ya exista) |
 
 ## Región
-Todos los workflows usan us-east-1
+
+`us-east-1` (fija en todos los workflows)
