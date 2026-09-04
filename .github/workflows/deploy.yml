@@ -1,0 +1,105 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - prod
+
+env:
+  AWS_REGION: us-east-1
+  STACK_NAME: mastersaws-portfolio-prod
+
+jobs:
+  deploy:
+    name: Crear infra + subir sitios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar credenciales AWS desde Variables
+        env:
+          KEY_VAR: ${{ vars.AWS_ACCESS_KEY_ID }}
+          SECRET_VAR: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+          KEY_SECRET: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_SECRET: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          AWS_ACCESS_KEY_ID="${KEY_VAR:-$KEY_SECRET}"
+          AWS_SECRET_ACCESS_KEY="${SECRET_VAR:-$SECRET_SECRET}"
+
+          if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+            echo "::error::Faltan AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY."
+            echo "::error::Configúralas en: Settings → Secrets and variables → Actions → Variables"
+            exit 1
+          fi
+
+          echo "::add-mask::$AWS_ACCESS_KEY_ID"
+          echo "::add-mask::$AWS_SECRET_ACCESS_KEY"
+          echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> "$GITHUB_ENV"
+          echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> "$GITHUB_ENV"
+          echo "AWS_DEFAULT_REGION=${{ env.AWS_REGION }}" >> "$GITHUB_ENV"
+
+      - name: Verificar cuenta AWS
+        run: aws sts get-caller-identity --output table
+
+      - name: Calcular nombre único del bucket
+        id: names
+        run: |
+          ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+          BUCKET="mastersaws-sites-${ACCOUNT}-prod"
+          echo "bucket=$BUCKET" >> "$GITHUB_OUTPUT"
+          echo "Bucket a crear: $BUCKET"
+
+      - name: Validar plantilla IaC
+        run: aws cloudformation validate-template --template-body file://infrastructure/template.yaml
+
+      - name: Crear S3 + CloudFront (CloudFormation)
+        run: |
+          aws cloudformation deploy \
+            --template-file infrastructure/template.yaml \
+            --stack-name "${{ env.STACK_NAME }}" \
+            --region "${AWS_REGION}" \
+            --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
+            --no-fail-on-empty-changeset \
+            --parameter-overrides \
+              "ProjectName=mastersaws-portfolio" \
+              "Environment=prod" \
+              "BucketName=${{ steps.names.outputs.bucket }}" \
+              "PriceClass=PriceClass_100"
+
+      - name: Obtener outputs del stack
+        id: stack
+        run: |
+          OUTPUTS=$(aws cloudformation describe-stacks \
+            --stack-name "${{ env.STACK_NAME }}" \
+            --region "${AWS_REGION}" \
+            --query 'Stacks[0].Outputs' \
+            --output json)
+
+          echo "s3_bucket=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="BucketName") | .OutputValue')" >> "$GITHUB_OUTPUT"
+          echo "cloudfront_id=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="CloudFrontDistributionId") | .OutputValue')" >> "$GITHUB_OUTPUT"
+          echo "site_url=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="SiteUrl") | .OutputValue')" >> "$GITHUB_OUTPUT"
+
+          echo "=== Recursos creados por IaC ==="
+          aws cloudformation describe-stacks \
+            --stack-name "${{ env.STACK_NAME }}" \
+            --region "${AWS_REGION}" \
+            --query 'Stacks[0].Outputs' \
+            --output table
+
+      - name: Subir sitios al bucket
+        run: |
+          aws s3 sync sites/ "s3://${{ steps.stack.outputs.s3_bucket }}/" \
+            --delete \
+            --region "${AWS_REGION}"
+
+      - name: Invalidar CloudFront
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ steps.stack.outputs.cloudfront_id }}" \
+            --paths "/*"
+
+      - name: Listo
+        run: |
+          echo "Despliegue completado."
+          echo "URL: ${{ steps.stack.outputs.site_url }}"
