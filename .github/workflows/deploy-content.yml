@@ -62,20 +62,46 @@ jobs:
         id: target
         env:
           ENV_NAME: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.ref_name }}
-          S3_VAR: ${{ vars.S3_BUCKET }}
-          S3_SECRET: ${{ secrets.S3_BUCKET }}
-          CF_VAR: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
-          CF_SECRET: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          S3_GENERIC_VAR: ${{ vars.S3_BUCKET }}
+          S3_GENERIC_SECRET: ${{ secrets.S3_BUCKET }}
+          CF_GENERIC_VAR: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          CF_GENERIC_SECRET: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          DEV_S3_VAR: ${{ vars.DEV_S3_BUCKET }}
+          DEV_S3_SECRET: ${{ secrets.DEV_S3_BUCKET }}
+          DEV_CF_VAR: ${{ vars.DEV_CLOUDFRONT_DISTRIBUTION_ID }}
+          DEV_CF_SECRET: ${{ secrets.DEV_CLOUDFRONT_DISTRIBUTION_ID }}
+          PROD_S3_VAR: ${{ vars.PROD_S3_BUCKET }}
+          PROD_S3_SECRET: ${{ secrets.PROD_S3_BUCKET }}
+          PROD_CF_VAR: ${{ vars.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
+          PROD_CF_SECRET: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
-          S3_BUCKET="${S3_VAR:-$S3_SECRET}"
-          CF_ID="${CF_VAR:-$CF_SECRET}"
+          case "$ENV_NAME" in
+            dev)
+              S3_BUCKET="${DEV_S3_VAR:-$DEV_S3_SECRET}"
+              CF_ID="${DEV_CF_VAR:-$DEV_CF_SECRET}"
+              ;;
+            prod)
+              S3_BUCKET="${PROD_S3_VAR:-$PROD_S3_SECRET}"
+              CF_ID="${PROD_CF_VAR:-$PROD_CF_SECRET}"
+              ;;
+            *)
+              echo "::error::Entorno no soportado: $ENV_NAME"
+              exit 1
+              ;;
+          esac
+
+          # Fallback a nombres genéricos (monorepo)
+          S3_BUCKET="${S3_BUCKET:-${S3_GENERIC_VAR:-$S3_GENERIC_SECRET}}"
+          CF_ID="${CF_ID:-${CF_GENERIC_VAR:-$CF_GENERIC_SECRET}}"
+
           STACK_NAME="mastersaws-portfolio-${ENV_NAME}"
 
           if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
             echo "Leyendo outputs del stack ${STACK_NAME} en ${AWS_REGION}..."
             if ! aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$AWS_REGION" >/dev/null 2>&1; then
               echo "::error::El stack '${STACK_NAME}' no existe en esta cuenta/región."
-              echo "::error::Primero ejecuta: Actions → Deploy infrastructure → Run workflow → ${ENV_NAME}"
+              echo "::error::Opción 1: Actions → Deploy infrastructure → Run workflow → ${ENV_NAME}"
+              echo "::error::Opción 2: agrega Variables PROD_S3_BUCKET y PROD_CLOUDFRONT_DISTRIBUTION_ID (prod) o DEV_* (dev)"
               exit 1
             fi
             OUTPUTS=$(aws cloudformation describe-stacks \
