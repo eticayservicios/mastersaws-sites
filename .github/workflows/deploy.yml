@@ -59,10 +59,13 @@ jobs:
           PROD_S3_SECRET: ${{ secrets.PROD_S3_BUCKET }}
           PROD_CF_VAR: ${{ vars.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
           PROD_CF_SECRET: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
+          PATH_PREFIX_VAR: ${{ vars.S3_PATH_PREFIX }}
+          PATH_PREFIX_SECRET: ${{ secrets.S3_PATH_PREFIX }}
         run: |
           S3_BUCKET="${PROD_S3_VAR:-$PROD_S3_SECRET}"
           CF_ID="${PROD_CF_VAR:-$PROD_CF_SECRET}"
           LEGACY=0
+          PATH_PREFIX="${PATH_PREFIX_VAR:-${PATH_PREFIX_SECRET:-servicios}}"
 
           if [ -n "$S3_BUCKET" ] && [ -n "$CF_ID" ]; then
             LEGACY=1
@@ -70,6 +73,7 @@ jobs:
           else
             S3_BUCKET="${S3_GENERIC_VAR:-$S3_GENERIC_SECRET}"
             CF_ID="${CF_GENERIC_VAR:-$CF_GENERIC_SECRET}"
+            PATH_PREFIX=""
           fi
 
           if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
@@ -97,18 +101,24 @@ jobs:
           echo "legacy_mode=$LEGACY" >> "$GITHUB_OUTPUT"
           echo "s3_bucket=$S3_BUCKET" >> "$GITHUB_OUTPUT"
           echo "cloudfront_id=$CF_ID" >> "$GITHUB_OUTPUT"
+          echo "path_prefix=$PATH_PREFIX" >> "$GITHUB_OUTPUT"
           echo "Bucket: $S3_BUCKET"
+          echo "Prefijo S3: ${PATH_PREFIX:-/}"
           echo "CloudFront: $CF_ID"
 
-      - name: Sincronizar landings a S3 (modo compartido, sin borrar raíz)
+      - name: Sincronizar landings a S3 (modo compartido www.mastersaws.com)
         if: steps.target.outputs.legacy_mode == '1'
         run: |
           BUCKET="${{ steps.target.outputs.s3_bucket }}"
+          PREFIX="${{ steps.target.outputs.path_prefix }}"
+          PREFIX="${PREFIX#/}"
+          PREFIX="${PREFIX%/}"
+          [ -n "$PREFIX" ] && DEST_PREFIX="${PREFIX}/" || DEST_PREFIX=""
           for dir in sites/*/; do
             [ -d "$dir" ] || continue
             name=$(basename "$dir")
-            echo "Sync s3://${BUCKET}/${name}/"
-            aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
+            echo "Sync s3://${BUCKET}/${DEST_PREFIX}${name}/"
+            aws s3 sync "$dir" "s3://${BUCKET}/${DEST_PREFIX}${name}/" \
               --exact-timestamps \
               --delete
           done
@@ -123,7 +133,10 @@ jobs:
       - name: Publicar índices de directorio (barra final)
         run: |
           chmod +x scripts/publish-s3-directory-indexes.sh
-          ./scripts/publish-s3-directory-indexes.sh "${{ steps.target.outputs.s3_bucket }}" sites
+          ./scripts/publish-s3-directory-indexes.sh \
+            "${{ steps.target.outputs.s3_bucket }}" \
+            sites \
+            "${{ steps.target.outputs.path_prefix }}"
 
       - name: Invalidar CloudFront
         run: |
@@ -135,4 +148,4 @@ jobs:
         run: |
           echo "Despliegue completado."
           echo "Bucket: ${{ steps.target.outputs.s3_bucket }}"
-          echo "Ejemplo: https://www.mastersaws.com/gobernanza-ia/"
+          echo "Ejemplo: https://www.mastersaws.com/servicios/gobernanza-ia/"
