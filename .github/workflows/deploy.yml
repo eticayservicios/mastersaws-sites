@@ -5,19 +5,26 @@ on:
   push:
     branches:
       - prod
+    paths:
+      - 'sites/**'
+      - 'scripts/publish-s3-directory-indexes.sh'
+      - '.github/workflows/deploy.yml'
 
 env:
   AWS_REGION: us-east-1
   STACK_NAME: mastersaws-portfolio-prod
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
-    name: Crear infra + subir sitios
+    name: Subir sitios a S3 + índices de directorio
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configurar credenciales AWS desde Variables
+      - name: Configurar credenciales AWS
         env:
           KEY_VAR: ${{ vars.AWS_ACCESS_KEY_ID }}
           SECRET_VAR: ${{ vars.AWS_SECRET_ACCESS_KEY }}
@@ -29,7 +36,6 @@ jobs:
 
           if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
             echo "::error::Faltan AWS_ACCESS_KEY_ID y AWS_SECRET_ACCESS_KEY."
-            echo "::error::Configúralas en: Settings → Secrets and variables → Actions → Variables"
             exit 1
           fi
 
@@ -42,64 +48,91 @@ jobs:
       - name: Verificar cuenta AWS
         run: aws sts get-caller-identity --output table
 
-      - name: Calcular nombre único del bucket
-        id: names
+      - name: Resolver bucket y CloudFront
+        id: target
+        env:
+          S3_GENERIC_VAR: ${{ vars.S3_BUCKET }}
+          S3_GENERIC_SECRET: ${{ secrets.S3_BUCKET }}
+          CF_GENERIC_VAR: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+          CF_GENERIC_SECRET: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          PROD_S3_VAR: ${{ vars.PROD_S3_BUCKET }}
+          PROD_S3_SECRET: ${{ secrets.PROD_S3_BUCKET }}
+          PROD_CF_VAR: ${{ vars.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
+          PROD_CF_SECRET: ${{ secrets.PROD_CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
-          ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
-          BUCKET="mastersaws-sites-${ACCOUNT}-prod"
-          echo "bucket=$BUCKET" >> "$GITHUB_OUTPUT"
-          echo "Bucket a crear: $BUCKET"
+          S3_BUCKET="${PROD_S3_VAR:-$PROD_S3_SECRET}"
+          CF_ID="${PROD_CF_VAR:-$PROD_CF_SECRET}"
+          LEGACY=0
 
-      - name: Validar plantilla IaC
-        run: aws cloudformation validate-template --template-body file://infrastructure/template.yaml
+          if [ -n "$S3_BUCKET" ] && [ -n "$CF_ID" ]; then
+            LEGACY=1
+            echo "Modo: bucket compartido www.mastersaws.com (PROD_S3_BUCKET)"
+          else
+            S3_BUCKET="${S3_GENERIC_VAR:-$S3_GENERIC_SECRET}"
+            CF_ID="${CF_GENERIC_VAR:-$CF_GENERIC_SECRET}"
+          fi
 
-      - name: Crear S3 + CloudFront (CloudFormation)
+          if [ -z "$S3_BUCKET" ] || [ -z "$CF_ID" ]; then
+            echo "Leyendo outputs del stack ${STACK_NAME}..."
+            if ! aws cloudformation describe-stacks --stack-name "$STACK_NAME" --region "$AWS_REGION" >/dev/null 2>&1; then
+              echo "::error::No se pudo resolver bucket/CloudFront."
+              echo "::error::Configura PROD_S3_BUCKET y PROD_CLOUDFRONT_DISTRIBUTION_ID (www.mastersaws.com)."
+              exit 1
+            fi
+            OUTPUTS=$(aws cloudformation describe-stacks \
+              --stack-name "$STACK_NAME" \
+              --region "$AWS_REGION" \
+              --query 'Stacks[0].Outputs' \
+              --output json)
+            S3_BUCKET=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="BucketName") | .OutputValue')
+            CF_ID=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="CloudFrontDistributionId") | .OutputValue')
+            echo "Modo: stack CloudFormation ${STACK_NAME}"
+          fi
+
+          if [ -z "$S3_BUCKET" ] || [ "$S3_BUCKET" = "null" ] || [ -z "$CF_ID" ] || [ "$CF_ID" = "null" ]; then
+            echo "::error::Bucket o CloudFront inválidos."
+            exit 1
+          fi
+
+          echo "legacy_mode=$LEGACY" >> "$GITHUB_OUTPUT"
+          echo "s3_bucket=$S3_BUCKET" >> "$GITHUB_OUTPUT"
+          echo "cloudfront_id=$CF_ID" >> "$GITHUB_OUTPUT"
+          echo "Bucket: $S3_BUCKET"
+          echo "CloudFront: $CF_ID"
+
+      - name: Sincronizar landings a S3 (modo compartido, sin borrar raíz)
+        if: steps.target.outputs.legacy_mode == '1'
         run: |
-          aws cloudformation deploy \
-            --template-file infrastructure/template.yaml \
-            --stack-name "${{ env.STACK_NAME }}" \
-            --region "${AWS_REGION}" \
-            --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
-            --no-fail-on-empty-changeset \
-            --parameter-overrides \
-              "ProjectName=mastersaws-portfolio" \
-              "Environment=prod" \
-              "BucketName=${{ steps.names.outputs.bucket }}" \
-              "PriceClass=PriceClass_100"
+          BUCKET="${{ steps.target.outputs.s3_bucket }}"
+          for dir in sites/*/; do
+            [ -d "$dir" ] || continue
+            name=$(basename "$dir")
+            echo "Sync s3://${BUCKET}/${name}/"
+            aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
+              --exact-timestamps \
+              --delete
+          done
 
-      - name: Obtener outputs del stack
-        id: stack
+      - name: Sincronizar sitios a S3 (modo stack IaC)
+        if: steps.target.outputs.legacy_mode != '1'
         run: |
-          OUTPUTS=$(aws cloudformation describe-stacks \
-            --stack-name "${{ env.STACK_NAME }}" \
-            --region "${AWS_REGION}" \
-            --query 'Stacks[0].Outputs' \
-            --output json)
-
-          echo "s3_bucket=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="BucketName") | .OutputValue')" >> "$GITHUB_OUTPUT"
-          echo "cloudfront_id=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="CloudFrontDistributionId") | .OutputValue')" >> "$GITHUB_OUTPUT"
-          echo "site_url=$(echo "$OUTPUTS" | jq -r '.[] | select(.OutputKey=="SiteUrl") | .OutputValue')" >> "$GITHUB_OUTPUT"
-
-          echo "=== Recursos creados por IaC ==="
-          aws cloudformation describe-stacks \
-            --stack-name "${{ env.STACK_NAME }}" \
-            --region "${AWS_REGION}" \
-            --query 'Stacks[0].Outputs' \
-            --output table
-
-      - name: Subir sitios al bucket
-        run: |
-          aws s3 sync sites/ "s3://${{ steps.stack.outputs.s3_bucket }}/" \
+          aws s3 sync sites/ "s3://${{ steps.target.outputs.s3_bucket }}/" \
             --delete \
-            --region "${AWS_REGION}"
+            --exact-timestamps
+
+      - name: Publicar índices de directorio (barra final)
+        run: |
+          chmod +x scripts/publish-s3-directory-indexes.sh
+          ./scripts/publish-s3-directory-indexes.sh "${{ steps.target.outputs.s3_bucket }}" sites
 
       - name: Invalidar CloudFront
         run: |
           aws cloudfront create-invalidation \
-            --distribution-id "${{ steps.stack.outputs.cloudfront_id }}" \
+            --distribution-id "${{ steps.target.outputs.cloudfront_id }}" \
             --paths "/*"
 
       - name: Listo
         run: |
           echo "Despliegue completado."
-          echo "URL: ${{ steps.stack.outputs.site_url }}"
+          echo "Bucket: ${{ steps.target.outputs.s3_bucket }}"
+          echo "Ejemplo: https://www.mastersaws.com/gobernanza-ia/"
