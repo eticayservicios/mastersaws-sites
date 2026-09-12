@@ -45,7 +45,9 @@ infrastructure/
 
 Tras el despliegue, la URL aparece en los logs del workflow (output `SiteUrl`).
 
-Rutas: `/devops/`, `/cloudadoption/`, `/finops/`, etc.
+Rutas de servicios: `/servicios/devops/`, `/servicios/cloudadoption/`, `/servicios/finops/`, etc.
+
+Productos en raíz: `/mastervpn/`, `/tarjetas-nfc/`.
 
 ## Región AWS
 

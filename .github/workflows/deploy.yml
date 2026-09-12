@@ -114,29 +114,89 @@ jobs:
           PREFIX="${PREFIX#/}"
           PREFIX="${PREFIX%/}"
           [ -n "$PREFIX" ] && DEST_PREFIX="${PREFIX}/" || DEST_PREFIX=""
+          # Productos comerciales en la raíz del sitio (no bajo /servicios/)
+          ROOT_LANDINGS="mastervpn tarjetas-nfc"
           for dir in sites/*/; do
             [ -d "$dir" ] || continue
             name=$(basename "$dir")
-            echo "Sync s3://${BUCKET}/${DEST_PREFIX}${name}/"
-            aws s3 sync "$dir" "s3://${BUCKET}/${DEST_PREFIX}${name}/" \
-              --exact-timestamps \
-              --delete
+            if echo " $ROOT_LANDINGS " | grep -q " $name "; then
+              echo "Sync raíz s3://${BUCKET}/${name}/"
+              aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
+                --exact-timestamps \
+                --delete
+            else
+              echo "Sync s3://${BUCKET}/${DEST_PREFIX}${name}/"
+              aws s3 sync "$dir" "s3://${BUCKET}/${DEST_PREFIX}${name}/" \
+                --exact-timestamps \
+                --delete
+            fi
           done
+          if [ -d paises ]; then
+            for dir in paises/*/; do
+              [ -d "$dir" ] || continue
+              name=$(basename "$dir")
+              echo "Sync país s3://${BUCKET}/${name}/"
+              aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
+                --exact-timestamps
+            done
+          fi
 
       - name: Sincronizar sitios a S3 (modo stack IaC)
         if: steps.target.outputs.legacy_mode != '1'
         run: |
-          aws s3 sync sites/ "s3://${{ steps.target.outputs.s3_bucket }}/" \
-            --delete \
-            --exact-timestamps
+          for dir in sites/*/; do
+            [ -d "$dir" ] || continue
+            name=$(basename "$dir")
+            aws s3 sync "$dir" "s3://${{ steps.target.outputs.s3_bucket }}/${name}/" \
+              --exact-timestamps
+          done
+          if [ -d paises ]; then
+            for dir in paises/*/; do
+              [ -d "$dir" ] || continue
+              name=$(basename "$dir")
+              aws s3 sync "$dir" "s3://${{ steps.target.outputs.s3_bucket }}/${name}/" \
+                --exact-timestamps
+            done
+          fi
 
       - name: Publicar índices de directorio (barra final)
         run: |
           chmod +x scripts/publish-s3-directory-indexes.sh
-          ./scripts/publish-s3-directory-indexes.sh \
-            "${{ steps.target.outputs.s3_bucket }}" \
-            sites \
-            "${{ steps.target.outputs.path_prefix }}"
+          BUCKET="${{ steps.target.outputs.s3_bucket }}"
+          PREFIX="${{ steps.target.outputs.path_prefix }}"
+          ROOT_LANDINGS="mastervpn tarjetas-nfc"
+
+          # Índices bajo /servicios/ (u otro prefijo) excepto landings de raíz
+          TMP_SITES=$(mktemp -d)
+          for dir in sites/*/; do
+            [ -d "$dir" ] || continue
+            name=$(basename "$dir")
+            if echo " $ROOT_LANDINGS " | grep -q " $name "; then
+              continue
+            fi
+            mkdir -p "$TMP_SITES/$name"
+            cp "$dir/index.html" "$TMP_SITES/$name/index.html"
+          done
+          ./scripts/publish-s3-directory-indexes.sh "$BUCKET" "$TMP_SITES" "$PREFIX"
+          rm -rf "$TMP_SITES"
+
+          # Índices en la raíz del dominio para productos
+          TMP_ROOT=$(mktemp -d)
+          for name in $ROOT_LANDINGS; do
+            if [ -f "sites/$name/index.html" ]; then
+              mkdir -p "$TMP_ROOT/$name"
+              cp "sites/$name/index.html" "$TMP_ROOT/$name/index.html"
+            fi
+          done
+          ./scripts/publish-s3-directory-indexes.sh "$BUCKET" "$TMP_ROOT" ""
+          rm -rf "$TMP_ROOT"
+
+          if [ -d paises ]; then
+            ./scripts/publish-s3-directory-indexes.sh \
+              "$BUCKET" \
+              paises \
+              ""
+          fi
 
       - name: Invalidar CloudFront
         run: |
