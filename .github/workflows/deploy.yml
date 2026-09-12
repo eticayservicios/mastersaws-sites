@@ -208,17 +208,7 @@ jobs:
         run: |
           echo "Despliegue completado."
           echo "Bucket: ${{ steps.target.outputs.s3_bucket }}"
-          echo "CloudFront: ${{ steps.target.outputs.cloudfront_id }}"
           DOMAIN=$(aws cloudfront get-distribution --id "${{ steps.target.outputs.cloudfront_id }}" --query 'Distribution.DomainName' --output text)
-          echo "CF_DOMAIN=$DOMAIN"
-          echo "Probe CF /mastervpn/:"
-          curl -sI "https://$DOMAIN/mastervpn/" | head -20 || true
-          echo "Probe www /mastervpn/:"
-          curl -sI "https://www.mastersaws.com/mastervpn/" | head -15 || true
-          echo "Probe www /tarjetas-nfc/:"
-          curl -sI "https://www.mastersaws.com/tarjetas-nfc/" | head -15 || true
-          # EC2 / SSM clue for nginx routing
-          aws ec2 describe-instances --filters "Name=ip-address,Values=107.23.195.227" \
-            --query 'Reservations[].Instances[].{Id:InstanceId,Name:Tags[?Key==`Name`]|[0].Value,State:State.Name,Key:KeyName}' \
-            --output table || true
-          echo "Ejemplo: https://www.mastersaws.com/mastervpn/"
+          echo "CloudFront: https://${DOMAIN}/mastervpn/"
+          echo "Nota: www.mastersaws.com/mastervpn requiere proxy nginx en el origen WordPress (igual que /tarjetas-nfc/)."
+
