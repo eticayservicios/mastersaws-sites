@@ -1,11 +1,14 @@
 ﻿name: Diagnose CF
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches: [prod]
+    paths: ['.github/workflows/diagnose-cf.yml']
 jobs:
   diag:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: AWS + probe
+      - name: Find routing targets
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -14,13 +17,11 @@ jobs:
           set -euo pipefail
           DOMAIN=$(aws cloudfront get-distribution --id E1SKSIPFEZUHQ4 --query 'Distribution.DomainName' --output text)
           echo "CF_DOMAIN=$DOMAIN"
-          aws s3 ls s3://mastersaws-sites-941751053509-prod/mastervpn/
-          echo "--- curl CF mastervpn ---"
-          curl -sI "https://$DOMAIN/mastervpn/" | head -20
-          curl -sI "https://$DOMAIN/mastervpn" | head -10
-          curl -s "https://$DOMAIN/mastervpn/" | head -5
-          echo "--- nginx map clues: compare paths ---"
-          curl -sI "https://www.mastersaws.com/tarjetas-nfc/" | head -15
-          curl -sI "https://www.mastersaws.com/mastervpn/" | head -15
-          # Try to find EC2 and SSM
-          aws ec2 describe-instances --filters "Name=ip-address,Values=107.23.195.227" --query 'Reservations[].Instances[].{Id:InstanceId,Name:Tags[?Key==`Name`]|[0].Value,State:State.Name}' --output table || true
+          echo "=== distributions ==="
+          aws cloudfront list-distributions --query "DistributionList.Items[].{Id:Id,Domain:DomainName,Aliases:Aliases.Items,Comment:Comment}" --output table
+          echo "=== EC2 all us-east-1 public IPs ==="
+          aws ec2 describe-instances --query "Reservations[].Instances[].{Id:InstanceId,Pub:PublicIpAddress,Priv:PrivateIpAddress,Name:Tags[?Key=='Name']|[0].Value,Key:KeyName,State:State.Name}" --output table
+          echo "=== try SSM ==="
+          aws ssm describe-instance-information --output table || true
+          echo "=== buckets ==="
+          aws s3 ls | head -50
