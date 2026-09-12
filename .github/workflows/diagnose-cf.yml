@@ -8,20 +8,58 @@ jobs:
   diag:
     runs-on: ubuntu-latest
     steps:
-      - name: Find routing targets
+      - uses: actions/checkout@v4
+      - name: Inspect mastersaws-landing and fix MasterVPN routing
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
         run: |
           set -euo pipefail
-          DOMAIN=$(aws cloudfront get-distribution --id E1SKSIPFEZUHQ4 --query 'Distribution.DomainName' --output text)
-          echo "CF_DOMAIN=$DOMAIN"
-          echo "=== distributions ==="
-          aws cloudfront list-distributions --query "DistributionList.Items[].{Id:Id,Domain:DomainName,Aliases:Aliases.Items,Comment:Comment}" --output table
-          echo "=== EC2 all us-east-1 public IPs ==="
-          aws ec2 describe-instances --query "Reservations[].Instances[].{Id:InstanceId,Pub:PublicIpAddress,Priv:PrivateIpAddress,Name:Tags[?Key=='Name']|[0].Value,Key:KeyName,State:State.Name}" --output table
-          echo "=== try SSM ==="
-          aws ssm describe-instance-information --output table || true
-          echo "=== buckets ==="
-          aws s3 ls | head -50
+          echo "=== CF with www.mastersaws.com alias ==="
+          aws cloudfront list-distributions --output json > /tmp/cfs.json
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/cfs.json'))
+          for d in data['DistributionList']['Items']:
+            aliases=(d.get('Aliases') or {}).get('Items') or []
+            comment=d.get('Comment') or ''
+            if 'mastersaws' in comment.lower() or any('mastersaws' in a for a in aliases):
+              print(d['Id'], d['DomainName'], aliases, comment)
+              print('  origins:', [o['DomainName'] for o in d['Origins']['Items']])
+          PY
+
+          echo "=== mastersaws-landing bucket prefixes ==="
+          aws s3 ls s3://mastersaws-landing/ || true
+          aws s3 ls s3://mastersaws-landing/ --recursive | awk '{print $4}' | awk -F/ '{print $1}' | sort -u | head -80
+
+          echo "=== sync mastervpn into mastersaws-landing (www origin) ==="
+          aws s3 sync sites/mastervpn/ s3://mastersaws-landing/mastervpn/ --exact-timestamps --delete
+          # directory indexes for trailing slash
+          aws s3api put-object --bucket mastersaws-landing --key mastervpn/ --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
+          aws s3api put-object --bucket mastersaws-landing --key mastervpn --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
+
+          echo "=== also under servicios/mastervpn for nginx map variants ==="
+          aws s3 sync sites/mastervpn/ s3://mastersaws-landing/servicios/mastervpn/ --exact-timestamps --delete
+          aws s3api put-object --bucket mastersaws-landing --key servicios/mastervpn/ --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
+          aws s3api put-object --bucket mastersaws-landing --key servicios/mastervpn --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
+
+          # Invalidate www CF if found
+          WWW_ID=$(python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/cfs.json'))
+          for d in data['DistributionList']['Items']:
+            aliases=(d.get('Aliases') or {}).get('Items') or []
+            if 'www.mastersaws.com' in aliases:
+              print(d['Id']); break
+          PY
+          )
+          echo "WWW_CF_ID=$WWW_ID"
+          if [ -n "$WWW_ID" ]; then
+            aws cloudfront create-invalidation --distribution-id "$WWW_ID" --paths "/mastervpn" "/mastervpn/" "/mastervpn/*" "/servicios/mastervpn" "/servicios/mastervpn/" "/servicios/mastervpn/*"
+          fi
+
+          echo "=== probe ==="
+          sleep 3
+          curl -sI "https://www.mastersaws.com/mastervpn/" | head -20 || true
+          curl -sI "https://www.mastersaws.com/servicios/mastervpn/" | head -15 || true
