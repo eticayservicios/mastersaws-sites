@@ -1,0 +1,26 @@
+﻿name: Diagnose CF
+on: workflow_dispatch
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: AWS + probe
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-1
+        run: |
+          set -euo pipefail
+          DOMAIN=$(aws cloudfront get-distribution --id E1SKSIPFEZUHQ4 --query 'Distribution.DomainName' --output text)
+          echo "CF_DOMAIN=$DOMAIN"
+          aws s3 ls s3://mastersaws-sites-941751053509-prod/mastervpn/
+          echo "--- curl CF mastervpn ---"
+          curl -sI "https://$DOMAIN/mastervpn/" | head -20
+          curl -sI "https://$DOMAIN/mastervpn" | head -10
+          curl -s "https://$DOMAIN/mastervpn/" | head -5
+          echo "--- nginx map clues: compare paths ---"
+          curl -sI "https://www.mastersaws.com/tarjetas-nfc/" | head -15
+          curl -sI "https://www.mastersaws.com/mastervpn/" | head -15
+          # Try to find EC2 and SSM
+          aws ec2 describe-instances --filters "Name=ip-address,Values=107.23.195.227" --query 'Reservations[].Instances[].{Id:InstanceId,Name:Tags[?Key==`Name`]|[0].Value,State:State.Name}' --output table || true
