@@ -1,56 +1,21 @@
 ﻿name: Diagnose CF
-on:
-  workflow_dispatch:
-  push:
-    branches: [prod]
-    paths: ['.github/workflows/diagnose-cf.yml']
+on: workflow_dispatch
 jobs:
   diag:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Inspect www CF behaviors and S3 objects
+      - name: DNS and nginx workaround options
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
         run: |
           set -euo pipefail
-          WWW_ID=E1IB9HVV1Q4AO7
-          aws cloudfront get-distribution-config --id "$WWW_ID" --output json > /tmp/www.json
-          python3 - <<'PY'
-          import json
-          cfg=json.load(open('/tmp/www.json'))['DistributionConfig']
-          print('Aliases', cfg.get('Aliases'))
-          print('DefaultRoot', cfg.get('DefaultRootObject'))
-          print('DefaultBehavior', cfg['DefaultCacheBehavior'].get('TargetOriginId'), cfg['DefaultCacheBehavior'].get('ViewerProtocolPolicy'))
-          print('Origins:')
-          for o in cfg['Origins']['Items']:
-            print(' ', o['Id'], o['DomainName'], 'OriginPath=', o.get('OriginPath'))
-          print('CacheBehaviors:')
-          for b in (cfg.get('CacheBehaviors') or {}).get('Items') or []:
-            print(' ', b['PathPattern'], '->', b['TargetOriginId'])
-          print('CustomErrors:')
-          for e in (cfg.get('CustomErrorResponses') or {}).get('Items') or []:
-            print(' ', e)
-          fns=cfg['DefaultCacheBehavior'].get('LambdaFunctionAssociations') or {}
-          print('Lambda', fns)
-          fas=cfg['DefaultCacheBehavior'].get('FunctionAssociations') or {}
-          print('Functions', fas)
-          PY
-
-          echo "=== S3 head mastervpn ==="
-          aws s3api head-object --bucket mastersaws-landing --key mastervpn/index.html || true
-          aws s3api head-object --bucket mastersaws-landing --key mastervpn/ || true
-          aws s3 ls s3://mastersaws-landing/mastervpn/
-          aws s3 ls s3://mastersaws-landing/servicios/ | head -40
-          aws s3 ls s3://mastersaws-landing/tarjetas-nfc/ 2>&1 | head -10 || true
-          aws s3 ls s3://mastersaws-landing/servicios/devops/ 2>&1 | head -10 || true
-
-          echo "=== invalidate and probe CF domain ==="
-          aws cloudfront create-invalidation --distribution-id "$WWW_ID" --paths "/*" >/tmp/inv.json
-          cat /tmp/inv.json | head -20
-          sleep 8
-          curl -sI "https://d1izffkv6wzs41.cloudfront.net/mastervpn/index.html" | head -20
-          curl -sI "https://d1izffkv6wzs41.cloudfront.net/mastervpn/" | head -20
-          curl -s "https://d1izffkv6wzs41.cloudfront.net/mastervpn/index.html" | head -5
+          echo "=== Route53 zones ==="
+          aws route53 list-hosted-zones --query "HostedZones[].{Name:Name,Id:Id}" --output table || true
+          echo "=== How www tarjetas is served: compare CF-Ids ==="
+          curl -sI "https://www.mastersaws.com/tarjetas-nfc/" | egrep -i "via|x-amz-cf|x-cache|content-length|last-modified"
+          curl -sI "https://d2easup7g60n7n.cloudfront.net/tarjetas-nfc/" | egrep -i "via|x-amz-cf|x-cache|content-length|last-modified|etag"
+          curl -sI "https://d2ztwmb3517u1g.cloudfront.net/" | egrep -i "via|content-length|last-modified|etag|HTTP" | head -15
+          echo "=== portfolio mastervpn still ok ==="
+          curl -sI "https://d2easup7g60n7n.cloudfront.net/mastervpn/" | head -12
