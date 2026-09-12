@@ -9,57 +9,48 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect mastersaws-landing and fix MasterVPN routing
+      - name: Inspect www CF behaviors and S3 objects
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
         run: |
           set -euo pipefail
-          echo "=== CF with www.mastersaws.com alias ==="
-          aws cloudfront list-distributions --output json > /tmp/cfs.json
+          WWW_ID=E1IB9HVV1Q4AO7
+          aws cloudfront get-distribution-config --id "$WWW_ID" --output json > /tmp/www.json
           python3 - <<'PY'
           import json
-          data=json.load(open('/tmp/cfs.json'))
-          for d in data['DistributionList']['Items']:
-            aliases=(d.get('Aliases') or {}).get('Items') or []
-            comment=d.get('Comment') or ''
-            if 'mastersaws' in comment.lower() or any('mastersaws' in a for a in aliases):
-              print(d['Id'], d['DomainName'], aliases, comment)
-              print('  origins:', [o['DomainName'] for o in d['Origins']['Items']])
+          cfg=json.load(open('/tmp/www.json'))['DistributionConfig']
+          print('Aliases', cfg.get('Aliases'))
+          print('DefaultRoot', cfg.get('DefaultRootObject'))
+          print('DefaultBehavior', cfg['DefaultCacheBehavior'].get('TargetOriginId'), cfg['DefaultCacheBehavior'].get('ViewerProtocolPolicy'))
+          print('Origins:')
+          for o in cfg['Origins']['Items']:
+            print(' ', o['Id'], o['DomainName'], 'OriginPath=', o.get('OriginPath'))
+          print('CacheBehaviors:')
+          for b in (cfg.get('CacheBehaviors') or {}).get('Items') or []:
+            print(' ', b['PathPattern'], '->', b['TargetOriginId'])
+          print('CustomErrors:')
+          for e in (cfg.get('CustomErrorResponses') or {}).get('Items') or []:
+            print(' ', e)
+          fns=cfg['DefaultCacheBehavior'].get('LambdaFunctionAssociations') or {}
+          print('Lambda', fns)
+          fas=cfg['DefaultCacheBehavior'].get('FunctionAssociations') or {}
+          print('Functions', fas)
           PY
 
-          echo "=== mastersaws-landing bucket prefixes ==="
-          aws s3 ls s3://mastersaws-landing/ || true
-          aws s3 ls s3://mastersaws-landing/ --recursive | awk '{print $4}' | awk -F/ '{print $1}' | sort -u | head -80
+          echo "=== S3 head mastervpn ==="
+          aws s3api head-object --bucket mastersaws-landing --key mastervpn/index.html || true
+          aws s3api head-object --bucket mastersaws-landing --key mastervpn/ || true
+          aws s3 ls s3://mastersaws-landing/mastervpn/
+          aws s3 ls s3://mastersaws-landing/servicios/ | head -40
+          aws s3 ls s3://mastersaws-landing/tarjetas-nfc/ 2>&1 | head -10 || true
+          aws s3 ls s3://mastersaws-landing/servicios/devops/ 2>&1 | head -10 || true
 
-          echo "=== sync mastervpn into mastersaws-landing (www origin) ==="
-          aws s3 sync sites/mastervpn/ s3://mastersaws-landing/mastervpn/ --exact-timestamps --delete
-          # directory indexes for trailing slash
-          aws s3api put-object --bucket mastersaws-landing --key mastervpn/ --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
-          aws s3api put-object --bucket mastersaws-landing --key mastervpn --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
-
-          echo "=== also under servicios/mastervpn for nginx map variants ==="
-          aws s3 sync sites/mastervpn/ s3://mastersaws-landing/servicios/mastervpn/ --exact-timestamps --delete
-          aws s3api put-object --bucket mastersaws-landing --key servicios/mastervpn/ --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
-          aws s3api put-object --bucket mastersaws-landing --key servicios/mastervpn --body sites/mastervpn/index.html --content-type "text/html; charset=utf-8" --cache-control "public, max-age=300"
-
-          # Invalidate www CF if found
-          WWW_ID=$(python3 - <<'PY'
-          import json
-          data=json.load(open('/tmp/cfs.json'))
-          for d in data['DistributionList']['Items']:
-            aliases=(d.get('Aliases') or {}).get('Items') or []
-            if 'www.mastersaws.com' in aliases:
-              print(d['Id']); break
-          PY
-          )
-          echo "WWW_CF_ID=$WWW_ID"
-          if [ -n "$WWW_ID" ]; then
-            aws cloudfront create-invalidation --distribution-id "$WWW_ID" --paths "/mastervpn" "/mastervpn/" "/mastervpn/*" "/servicios/mastervpn" "/servicios/mastervpn/" "/servicios/mastervpn/*"
-          fi
-
-          echo "=== probe ==="
-          sleep 3
-          curl -sI "https://www.mastersaws.com/mastervpn/" | head -20 || true
-          curl -sI "https://www.mastersaws.com/servicios/mastervpn/" | head -15 || true
+          echo "=== invalidate and probe CF domain ==="
+          aws cloudfront create-invalidation --distribution-id "$WWW_ID" --paths "/*" >/tmp/inv.json
+          cat /tmp/inv.json | head -20
+          sleep 8
+          curl -sI "https://d1izffkv6wzs41.cloudfront.net/mastervpn/index.html" | head -20
+          curl -sI "https://d1izffkv6wzs41.cloudfront.net/mastervpn/" | head -20
+          curl -s "https://d1izffkv6wzs41.cloudfront.net/mastervpn/index.html" | head -5
