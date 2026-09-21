@@ -3,62 +3,701 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masters AWS — Portafolio</title>
+  <title>Soluciones AWS para empresas | MastersAWS</title>
+  <meta name="description" content="Impulsa tu negocio con soluciones AWS para empresas. Migración, seguridad, DevOps, FinOps y hosting administrado. Habla con los expertos de MastersAWS." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://www.mastersaws.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.mastersaws.com/" />
+  <meta property="og:title" content="Soluciones AWS para empresas | MastersAWS" />
+  <meta property="og:description" content="Impulsa tu negocio con soluciones AWS para empresas. Migración, seguridad, DevOps, FinOps y hosting administrado." />
+  <meta property="og:image" content="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" />
+  <meta property="og:site_name" content="MastersAWS" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Soluciones AWS para empresas | MastersAWS" />
+  <meta name="twitter:description" content="Impulsa tu negocio con soluciones AWS para empresas." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "MastersAWS",
+    "url": "https://www.mastersaws.com/",
+    "logo": "https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png",
+    "email": "sales@mastersaws.com",
+    "telephone": "+58-412-9837999",
+    "sameAs": [
+      "https://www.youtube.com/@mastersaws",
+      "https://www.linkedin.com/company/eticayservicios",
+      "https://www.instagram.com/mastersaws/"
+    ]
+  }
+  </script>
   <style>
     :root {
-      color-scheme: light dark;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      --bg: #000000;
+      --bg-elevated: #0d0d0d;
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.78);
+      --brand: #00FFF7;
+      --accent: #FF6800;
+      --header-h: 100px;
+      --max: 1120px;
+      --radius: 12px;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(160deg, #0f172a, #1e293b);
-      color: #f8fafc;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(1100px 560px at 12% -8%, rgba(0, 255, 247, 0.12) 0%, transparent 55%),
+        radial-gradient(900px 480px at 92% 8%, rgba(255, 104, 0, 0.08) 0%, transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    main {
-      width: min(720px, 92vw);
-      padding: 2rem;
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; }
+    :focus-visible {
+      outline: 3px solid var(--brand);
+      outline-offset: 3px;
     }
-    h1 { margin-top: 0; font-size: 1.75rem; }
-    p { color: #cbd5e1; line-height: 1.6; }
-    ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      gap: 0.75rem;
-    }
-    a {
-      display: block;
-      padding: 0.9rem 1rem;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #e2e8f0;
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 2000;
+      background: var(--brand);
+      color: #001010;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
       text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: background 0.15s ease;
     }
-    a:hover { background: rgba(255, 255, 255, 0.12); }
-    .slug { font-size: 0.85rem; color: #94a3b8; }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+    .container {
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Chrome MastersAWS */
+    .devopsShell .header {
+      background: rgba(0, 0, 0, 0.95);
+      padding: 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 255, 247, 0.25);
+    }
+    .devopsShell .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100px;
+      gap: 72px;
+    }
+    .devopsShell .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .devopsShell .logo:hover { color: #00FFF7; }
+    .devopsShell .logo-text {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .devopsShell .logo-text .accent { color: #00FFF7; font-weight: 900; }
+    .devopsShell .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 40px;
+      align-items: center;
+    }
+    .devopsShell .nav-menu a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.45rem;
+      letter-spacing: 0.02em;
+      transition: color 0.3s ease;
+      padding: 16px 0;
+      display: inline-block;
+      line-height: 1.2;
+    }
+    .devopsShell .nav-menu a:hover { color: #00FFF7; }
+    .devopsShell .nav-menu li { position: relative; }
+    .devopsShell .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(0, 0, 0, 0.95);
+      border: 1px solid rgba(0, 255, 247, 0.35);
+      border-radius: 8px;
+      padding: 10px 0;
+      min-width: 220px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 20;
+    }
+    .devopsShell .nav-menu li:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .devopsShell .dropdown a {
+      display: block;
+      padding: 12px 20px;
+      color: #ffffff;
+      font-size: 1rem;
+    }
+    .devopsShell .dropdown a:hover { background: #00FFF7; color: #000000; }
+    #contenido { padding-top: 110px; }
+
+    .devopsShell .site-footer {
+      background: #0d0d0d;
+      border-top: 1px solid rgba(0, 255, 247, 0.2);
+      padding: 48px 0 0;
+    }
+    .devopsShell .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+    }
+    .devopsShell .footer-col h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #00FFF7;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .devopsShell .footer-col ul { list-style: none; }
+    .devopsShell .footer-col li { margin-bottom: 10px; }
+    .devopsShell .footer-col a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .devopsShell .footer-col a:hover { color: #00FFF7; }
+    .devopsShell .footer-icon-list li { display: flex; align-items: center; gap: 10px; }
+    .devopsShell .footer-social { display: flex; gap: 16px; margin-top: 16px; }
+    .devopsShell .footer-social a { color: rgba(255, 255, 255, 0.85); transition: color 0.2s ease, transform 0.2s ease; }
+    .devopsShell .footer-social a:hover { color: #00FFF7; transform: translateY(-2px); }
+    .devopsShell .footer-social svg { width: 22px; height: 22px; }
+    .devopsShell .footer-logo img { width: 120px; height: auto; }
+    .devopsShell .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 24px 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 40px;
+    }
+    .devopsShell .footer-copyright {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .devopsShell .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+    }
+    .devopsShell .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.6);
+      color: #fff;
+    }
+    .devopsShell .whatsapp-float svg { width: 32px; height: 32px; }
+
+    /* Home content */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.98rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--brand);
+      color: #001010;
+    }
+    .btn-primary:hover { background: #7dfff9; color: #001010; }
+    .btn-ghost {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(0, 255, 247, 0.45);
+    }
+    .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - var(--header-h));
+      display: flex;
+      align-items: center;
+      padding: 48px 0 72px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.72) 100%),
+        url("https://www.mastersaws.com/wp-content/uploads/2025/09/awsamazon-web-services.png") center / cover no-repeat;
+      opacity: 0.28;
+      pointer-events: none;
+      animation: heroGlow 12s ease-in-out infinite alternate;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      animation: riseIn 0.9s ease both;
+    }
+    .brand-mark {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+    .brand-mark span { color: var(--brand); }
+    .hero h1 {
+      font-size: clamp(1.55rem, 3.4vw, 2.35rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      max-width: 18ch;
+    }
+    .hero-lead {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 42ch;
+      margin-bottom: 28px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    .section {
+      padding: 72px 0;
+      scroll-margin-top: calc(var(--header-h) + 12px);
+    }
+    .section-head {
+      max-width: 640px;
+      margin-bottom: 36px;
+      animation: riseIn 0.7s ease both;
+    }
+    .section-head h2 {
+      font-size: clamp(1.45rem, 2.8vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .section-head p { color: var(--muted); }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .pillar {
+      padding-top: 8px;
+      border-top: 2px solid rgba(0, 255, 247, 0.35);
+      animation: riseIn 0.8s ease both;
+    }
+    .pillar:nth-child(2) { animation-delay: 0.08s; }
+    .pillar:nth-child(3) { animation-delay: 0.16s; }
+    .pillar h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin: 14px 0 8px;
+    }
+    .pillar p { color: var(--muted); font-size: 0.96rem; }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .service {
+      display: block;
+      padding: 22px 20px;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      transition: border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    }
+    .service:hover {
+      border-color: var(--brand);
+      transform: translateY(-2px);
+      color: var(--brand);
+    }
+    .service h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .service p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .service:hover p { color: rgba(255, 255, 255, 0.72); }
+
+    .solutions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .solution {
+      display: block;
+      padding: 20px 0;
+      text-decoration: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .solution:hover {
+      color: var(--brand);
+      border-color: var(--brand);
+    }
+    .solution strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+    .solution span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .cta-band {
+      padding: 80px 0;
+      text-align: center;
+      background:
+        radial-gradient(600px 220px at 50% 0%, rgba(0, 255, 247, 0.12), transparent 70%),
+        var(--bg-elevated);
+      border-top: 1px solid rgba(0, 255, 247, 0.18);
+      border-bottom: 1px solid rgba(0, 255, 247, 0.18);
+    }
+    .cta-band h2 {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .cta-band p {
+      color: var(--muted);
+      max-width: 48ch;
+      margin: 0 auto 24px;
+    }
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heroGlow {
+      from { opacity: 0.22; transform: scale(1); }
+      to { opacity: 0.34; transform: scale(1.04); }
+    }
+
+    @media (max-width: 960px) {
+      .pillars, .services { grid-template-columns: 1fr 1fr; }
+      .solutions { grid-template-columns: 1fr 1fr; }
+      .devopsShell .nav-menu { display: none; }
+      #contenido { padding-top: 90px; }
+    }
+    @media (max-width: 640px) {
+      .pillars, .services, .solutions { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding: 36px 0 56px; }
+      .hero-actions, .cta-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      .devopsShell .header-content { gap: 16px; min-height: 80px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Masters AWS</h1>
-    <p>Portafolio unificado. Cada especialidad vive en su propia ruta dentro del mismo bucket S3 y distribución CloudFront.</p>
-    <ul>
-      <li><a href="/cloudadoption/">Cloud Adoption <span class="slug">/cloudadoption/</span></a></li>
-      <li><a href="/data-analytics/">Data Analytics <span class="slug">/data-analytics/</span></a></li>
-      <li><a href="/devops/">DevOps <span class="slug">/devops/</span></a></li>
-      <li><a href="/finops/">FinOps <span class="slug">/finops/</span></a></li>
-      <li><a href="/gobernanza-ia/">Gobernanza de IA <span class="slug">/gobernanza-ia/</span></a></li>
-      <li><a href="/infraestructuras/">Infraestructuras <span class="slug">/infraestructuras/</span></a></li>
-      <li><a href="/inteligenciaartificial/">Inteligencia Artificial <span class="slug">/inteligenciaartificial/</span></a></li>
-      <li><a href="/seguridadenlanube/">Seguridad en la Nube <span class="slug">/seguridadenlanube/</span></a></li>
-      <li><a href="/tarjetas-nfc/">Tarjetas NFC <span class="slug">/tarjetas-nfc/</span></a></li>
-      <li><a href="/mastervpn/">MasterVPN <span class="slug">/mastervpn/</span></a></li>
-    </ul>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <div class="devopsShell">
+    <header class="header" role="banner">
+      <div class="header-content">
+        <a href="/" class="logo" aria-label="MastersAWS - inicio">
+          <span class="logo-text" aria-hidden="true">Masters<span class="accent">AWS</span></span>
+        </a>
+        <nav aria-label="Navegación principal">
+          <ul class="nav-menu">
+            <li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
+            <li><a href="https://www.mastersaws.com/nosotros/">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a>
+              <div class="dropdown">
+                <a href="/cloudadoption/">Cloud Adoption</a>
+                <a href="/seguridadenlanube/">Seguridad en la Nube</a>
+                <a href="/devops/">DevOps</a>
+                <a href="/finops/">FinOps</a>
+                <a href="/infraestructuras/">Infraestructura</a>
+                <a href="/data-analytics/">Data &amp; Analytics</a>
+                <a href="/inteligenciaartificial/">Inteligencia Artificial</a>
+                <a href="/gobernanza-ia/">Gobernanza de IA</a>
+              </div>
+            </li>
+            <li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
+            <li><a href="#soluciones">Soluciones</a>
+              <div class="dropdown">
+                <a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a>
+                <a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a>
+                <a href="/mastervpn/">MasterVPN</a>
+                <a href="/tarjetas-nfc/">Tarjetas NFC</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </div>
+
+  <main id="contenido">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <p class="brand-mark">Masters<span>AWS</span></p>
+        <h1 id="hero-title">Transforma tu negocio con AWS</h1>
+        <p class="hero-lead">
+          Impulsa tu empresa con soluciones en la nube personalizadas: migración, seguridad, DevOps, FinOps y operación continua.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#servicios">Ver soluciones</a>
+          <a class="btn btn-ghost" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20hablar%20sobre%20soluciones%20AWS" target="_blank" rel="noopener noreferrer">Hablar con un experto</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="why-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="why-title">Soluciones adaptadas a tus necesidades</h2>
+          <p>
+            En MastersAWS diseñamos caminos a la nube ágiles, seguros y eficientes, alineados al contexto de cada empresa.
+          </p>
+        </div>
+        <div class="pillars">
+          <article class="pillar">
+            <h3>Partner certificado de AWS</h3>
+            <p>Experiencia y certificaciones para acompañarte con criterio técnico y de negocio.</p>
+          </article>
+          <article class="pillar">
+            <h3>Soporte continuo</h3>
+            <p>Desde la migración hasta la optimización, te acompañamos en cada etapa del proceso.</p>
+          </article>
+          <article class="pillar">
+            <h3>Especialización multisectorial</h3>
+            <p>Trabajamos con equipos de finanzas, energía, sector público y más.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicios" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="services-title">Soluciones para cada etapa de tu transformación en la nube</h2>
+          <p>Optimiza infraestructura, reduce costos y deja tu operación lista para escalar.</p>
+        </div>
+        <div class="services">
+          <a class="service" href="/cloudadoption/">
+            <h3>Cloud Adoption</h3>
+            <p>Migraciones a AWS y soporte continuo.</p>
+          </a>
+          <a class="service" href="/seguridadenlanube/">
+            <h3>Seguridad en la Nube</h3>
+            <p>Evaluaciones y remediaciones de seguridad.</p>
+          </a>
+          <a class="service" href="/devops/">
+            <h3>DevOps</h3>
+            <p>Prácticas y herramientas para entregar más rápido.</p>
+          </a>
+          <a class="service" href="/finops/">
+            <h3>FinOps</h3>
+            <p>Optimización y gobernanza de costos en la nube.</p>
+          </a>
+          <a class="service" href="/infraestructuras/">
+            <h3>Infraestructura</h3>
+            <p>Revisiones arquitectónicas y optimización.</p>
+          </a>
+          <a class="service" href="/data-analytics/">
+            <h3>Data &amp; Analytics</h3>
+            <p>Datos listos para decidir y escalar.</p>
+          </a>
+          <a class="service" href="/inteligenciaartificial/">
+            <h3>Inteligencia Artificial</h3>
+            <p>Casos de uso de IA sobre AWS.</p>
+          </a>
+          <a class="service" href="/gobernanza-ia/">
+            <h3>Gobernanza de IA</h3>
+            <p>Adopción controlada, segura y alineada al negocio.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="soluciones" aria-labelledby="solutions-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="solutions-title">Productos y soluciones</h2>
+          <p>Herramientas listas para acelerar formación, hosting, conectividad y experiencias digitales.</p>
+        </div>
+        <div class="solutions">
+          <a class="solution" href="https://www.mastersaws.com/soluciones/master-academy/">
+            <strong>Master Academy</strong>
+            <span>Formación práctica en AWS</span>
+          </a>
+          <a class="solution" href="https://www.mastersaws.com/soluciones/master-hosting/">
+            <strong>Master Hosting</strong>
+            <span>Hosting administrado en la nube</span>
+          </a>
+          <a class="solution" href="/mastervpn/">
+            <strong>MasterVPN</strong>
+            <span>Conexión privada y segura</span>
+          </a>
+          <a class="solution" href="/tarjetas-nfc/">
+            <strong>Tarjetas NFC</strong>
+            <span>Sistemas NFC para negocios</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band" aria-labelledby="cta-title">
+      <div class="container">
+        <h2 id="cta-title">¿Listo para comenzar tu viaje a la nube?</h2>
+        <p>
+          Hablemos sobre cómo optimizar tu negocio con las mejores soluciones en AWS. Ya seas startup o empresa consolidada, tenemos un camino claro para ti.
+        </p>
+        <div class="cta-actions">
+          <a class="btn btn-primary" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20comenzar%20mi%20viaje%20a%20la%20nube%20con%20MastersAWS" target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a>
+          <a class="btn btn-ghost" href="mailto:sales@mastersaws.com">sales@mastersaws.com</a>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <div class="devopsShell">
+    <footer id="colophon" class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-col">
+          <h2>MASTERS AWS</h2>
+          <ul>
+            <li><span style="color: rgba(255,255,255,0.85);">Servicios</span></li>
+            <li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
+            <li><a href="https://www.mastersaws.com/nosotros/">Sobre nosotros</a></li>
+            <li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2>CONTACTO</h2>
+          <ul class="footer-icon-list">
+            <li><a href="mailto:sales@mastersaws.com">sales@mastersaws.com</a></li>
+            <li><a href="https://wa.me/584129837999" target="_blank" rel="noopener noreferrer">+58 412 9837999</a></li>
+          </ul>
+          <div class="footer-social">
+            <a href="https://www.youtube.com/@mastersaws" target="_blank" rel="noopener noreferrer" aria-label="Youtube">
+              <svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/eticayservicios" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/mastersaws/?hl=es-la" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h2>SERVICIOS</h2>
+          <ul>
+            <li><a href="/finops/">FinOps</a></li>
+            <li><a href="/devops/">DevOps</a></li>
+            <li><a href="/data-analytics/">Data &amp; Analytics</a></li>
+            <li><a href="/seguridadenlanube/">Seguridad en la Nube</a></li>
+            <li><a href="/gobernanza-ia/">Gobernanza de IA</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h2>SOLUCIONES</h2>
+          <ul>
+            <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li>
+            <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li>
+            <li><a href="/mastervpn/">MasterVPN</a></li>
+            <li><a href="/tarjetas-nfc/">Tarjetas NFC</a></li>
+          </ul>
+        </div>
+        <div class="footer-col footer-logo">
+          <a href="/">
+            <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" width="120" height="120" alt="Masters AWS" />
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copyright">Copyright © <span id="year"></span> MastersAws. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <a href="https://wa.me/584129837999?text=Hola%2C%20quiero%20hablar%20con%20MastersAWS" class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+    </a>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = String(new Date().getFullYear());
+  </script>
 </body>
 </html>
