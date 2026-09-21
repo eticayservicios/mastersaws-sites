@@ -114,6 +114,13 @@ jobs:
           PREFIX="${PREFIX#/}"
           PREFIX="${PREFIX%/}"
           [ -n "$PREFIX" ] && DEST_PREFIX="${PREFIX}/" || DEST_PREFIX=""
+          # Home estático en la raíz del bucket
+          if [ -f sites/index.html ]; then
+            echo "Upload home s3://${BUCKET}/index.html"
+            aws s3 cp sites/index.html "s3://${BUCKET}/index.html" \
+              --content-type "text/html; charset=utf-8" \
+              --cache-control "public, max-age=60"
+          fi
           # Productos comerciales en la raíz del sitio (no bajo /servicios/)
           ROOT_LANDINGS="mastervpn tarjetas-nfc"
           for dir in sites/*/; do
@@ -144,17 +151,24 @@ jobs:
       - name: Sincronizar sitios a S3 (modo stack IaC)
         if: steps.target.outputs.legacy_mode != '1'
         run: |
+          BUCKET="${{ steps.target.outputs.s3_bucket }}"
+          if [ -f sites/index.html ]; then
+            echo "Upload home s3://${BUCKET}/index.html"
+            aws s3 cp sites/index.html "s3://${BUCKET}/index.html" \
+              --content-type "text/html; charset=utf-8" \
+              --cache-control "public, max-age=60"
+          fi
           for dir in sites/*/; do
             [ -d "$dir" ] || continue
             name=$(basename "$dir")
-            aws s3 sync "$dir" "s3://${{ steps.target.outputs.s3_bucket }}/${name}/" \
+            aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
               --exact-timestamps
           done
           if [ -d paises ]; then
             for dir in paises/*/; do
               [ -d "$dir" ] || continue
               name=$(basename "$dir")
-              aws s3 sync "$dir" "s3://${{ steps.target.outputs.s3_bucket }}/${name}/" \
+              aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
                 --exact-timestamps
             done
           fi
