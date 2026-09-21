@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Subir sitios a S3 + +¡ndices de directorio
+    name: Subir sitios a S3 + índices de directorio
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
