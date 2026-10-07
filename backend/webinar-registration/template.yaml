@@ -1,0 +1,139 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Registro del webinar MastersAWS (API Gateway HTTP API + Lambda + DynamoDB + SES).
+
+Parameters:
+  WebinarId:
+    Type: String
+    Default: automatizacion-ia-2026
+  WebinarTitle:
+    Type: String
+    Default: 'Webinar gratuito: Automatización e IA para empresas'
+  WebinarDate:
+    Type: String
+    Default: ''
+    Description: Fecha legible para el correo, p. ej. "jueves 22 de octubre de 2026". Vacío = por confirmar.
+  WebinarTime:
+    Type: String
+    Default: ''
+    Description: Hora legible, p. ej. "10:00".
+  WebinarTimezone:
+    Type: String
+    Default: ''
+    Description: Zona horaria legible, p. ej. "hora de Caracas, GMT-4".
+  WebinarJoinUrl:
+    Type: String
+    Default: ''
+    Description: Enlace de Zoom/Meet/Teams. Vacío = se enviará más adelante.
+  SenderDomain:
+    Type: String
+    Default: mastersaws.com
+  SenderEmail:
+    Type: String
+    Default: sales@mastersaws.com
+  NotifyEmail:
+    Type: String
+    Default: sales@mastersaws.com
+  AllowedOrigins:
+    Type: CommaDelimitedList
+    Default: 'https://www.mastersaws.com,https://mastersaws.com,http://localhost:5599'
+
+Resources:
+  RegistrationsTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      TableName: mastersaws-webinar-registrations
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: webinarId
+          AttributeType: S
+        - AttributeName: email
+          AttributeType: S
+      KeySchema:
+        - AttributeName: webinarId
+          KeyType: HASH
+        - AttributeName: email
+          KeyType: RANGE
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  SenderIdentity:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: !Ref SenderDomain
+
+  RegistrationApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: !Ref AllowedOrigins
+        AllowMethods: [POST, OPTIONS]
+        AllowHeaders: [content-type]
+        MaxAge: 600
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 20
+        ThrottlingRateLimit: 5
+
+  RegistrationFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: mastersaws-webinar-registration
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs22.x
+      Architectures: [arm64]
+      MemorySize: 256
+      Timeout: 10
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref RegistrationsTable
+          WEBINAR_ID: !Ref WebinarId
+          WEBINAR_TITLE: !Ref WebinarTitle
+          WEBINAR_DATE: !Ref WebinarDate
+          WEBINAR_TIME: !Ref WebinarTime
+          WEBINAR_TIMEZONE: !Ref WebinarTimezone
+          WEBINAR_JOIN_URL: !Ref WebinarJoinUrl
+          SENDER_EMAIL: !Ref SenderEmail
+          NOTIFY_EMAIL: !Ref NotifyEmail
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+                - dynamodb:UpdateItem
+              Resource: !GetAtt RegistrationsTable.Arn
+            - Effect: Allow
+              Action: ses:SendEmail
+              Resource: '*'
+              Condition:
+                StringLike:
+                  ses:FromAddress: !Sub '*@${SenderDomain}'
+      Events:
+        Register:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref RegistrationApi
+            Method: POST
+            Path: /webinar/registrations
+
+  RegistrationFunctionLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${RegistrationFunction}
+      RetentionInDays: 90
+
+Outputs:
+  RegistrationEndpoint:
+    Value: !Sub 'https://${RegistrationApi}.execute-api.${AWS::Region}.amazonaws.com/webinar/registrations'
+  TableName:
+    Value: !Ref RegistrationsTable
+  DkimRecord1:
+    Value: !Sub '${SenderIdentity.DkimDNSTokenName1} CNAME ${SenderIdentity.DkimDNSTokenValue1}'
+  DkimRecord2:
+    Value: !Sub '${SenderIdentity.DkimDNSTokenName2} CNAME ${SenderIdentity.DkimDNSTokenValue2}'
+  DkimRecord3:
+    Value: !Sub '${SenderIdentity.DkimDNSTokenName3} CNAME ${SenderIdentity.DkimDNSTokenValue3}'

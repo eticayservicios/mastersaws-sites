@@ -261,6 +261,7 @@
         }
         .form-group input::placeholder { color: rgba(200, 215, 245, 0.4); }
         .form-group input:focus { outline: none; border-color: var(--sky); box-shadow: 0 0 0 3px rgba(58, 168, 255, 0.2); }
+        .form-hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
         .form-actions { margin-top: 22px; }
         .form-actions .btn { width: 100%; }
         .form-feedback { margin-top: 14px; text-align: center; font-size: 0.9rem; min-height: 1.3em; }
@@ -622,6 +623,10 @@
                             <label for="field-role">Cargo o área</label>
                             <input type="text" id="field-role" name="role" autocomplete="organization-title" required placeholder="Ej. Director de operaciones">
                         </div>
+                        <div class="form-hp" aria-hidden="true">
+                            <label for="field-website">Sitio web</label>
+                            <input type="text" id="field-website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="form-actions">
                             <button type="submit" class="btn">Quiero participar</button>
                         </div>
@@ -661,11 +666,25 @@
         })();
 
         /**
-         * INTEGRACIÓN DEL FORMULARIO: conecta el envío en submitRegistration().
+         * Endpoint del stack backend/webinar-registration (output RegistrationEndpoint).
          */
+        var REGISTRATION_ENDPOINT = 'https://j4z81s53n0.execute-api.us-east-1.amazonaws.com/webinar/registrations';
+
         function submitRegistration(payload) {
-            console.info('[webinar-registration] Payload listo para enviar:', payload);
-            return Promise.resolve({ ok: true, demo: true });
+            return fetch(REGISTRATION_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(function (res) {
+                return res.json().catch(function () { return {}; }).then(function (data) {
+                    if (!res.ok || !data.ok) {
+                        var err = new Error(data.error || 'request_failed');
+                        err.fields = data.fields || [];
+                        throw err;
+                    }
+                    return data;
+                });
+            });
         }
 
         (function initForm() {
@@ -682,25 +701,29 @@
                     form.reportValidity();
                     return;
                 }
+                var f = form.elements;
                 var payload = {
-                    name: form.name.value.trim(),
-                    email: form.email.value.trim(),
-                    company: form.company.value.trim(),
-                    role: form.role.value.trim(),
-                    source: 'webinar-automatizacion-ia',
-                    submittedAt: new Date().toISOString()
+                    name: f['name'].value.trim(),
+                    email: f['email'].value.trim(),
+                    company: f['company'].value.trim(),
+                    role: f['role'].value.trim(),
+                    website: f['website'].value.trim()
                 };
                 var btn = form.querySelector('button[type="submit"]');
                 btn.disabled = true;
                 btn.textContent = 'Enviando…';
                 submitRegistration(payload)
-                    .then(function () {
-                        feedback.textContent = 'Gracias. Hemos recibido tu solicitud (modo demo: conecta submitRegistration al backend).';
+                    .then(function (data) {
+                        feedback.textContent = data.alreadyRegistered
+                            ? 'Este correo ya estaba registrado. Te escribiremos con los detalles de acceso.'
+                            : '¡Listo! Tu lugar está reservado. Revisa tu correo para ver la confirmación.';
                         feedback.classList.add('success');
                         form.reset();
                     })
-                    .catch(function () {
-                        feedback.textContent = 'No pudimos enviar tu registro. Intenta de nuevo o escríbenos por WhatsApp.';
+                    .catch(function (err) {
+                        feedback.textContent = err && err.message === 'validation'
+                            ? 'Revisa los datos: nombre, correo, empresa y cargo son obligatorios.'
+                            : 'No pudimos enviar tu registro. Intenta de nuevo o escríbenos por WhatsApp.';
                         feedback.classList.add('error');
                     })
                     .finally(function () {
