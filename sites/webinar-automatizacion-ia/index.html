@@ -96,11 +96,6 @@
             font-size: 0.92rem; font-weight: 500; transition: color 0.2s ease;
         }
         .nav-links a:hover { color: var(--cyan); }
-        .menu-toggle {
-            display: none; background: none; border: none; color: #fff; cursor: pointer; padding: 8px;
-        }
-        .menu-toggle svg { width: 26px; height: 26px; display: block; }
-
         /* Hero */
         .hero-band {
             position: relative; overflow: hidden;
@@ -353,15 +348,7 @@
         }
         @media (max-width: 720px) {
             .wrap, .header-inner, .hero { padding-left: 20px; padding-right: 20px; }
-            .menu-toggle { display: block; }
-            .nav-links {
-                display: none; position: absolute; top: 100%; left: 0; right: 0;
-                flex-direction: column; gap: 0; padding: 8px 20px 16px;
-                background: rgba(4, 10, 23, 0.98); border-bottom: 1px solid var(--line);
-            }
-            .nav-links.is-open { display: flex; }
-            .nav-links a { display: block; padding: 12px 0; font-size: 1rem; }
-            .header-inner { position: relative; min-height: 64px; }
+            .header-inner { min-height: 64px; }
             .logo img { height: 30px; }
             .hero-lead { font-size: 1rem; }
             .hero .btn { width: 100%; }
@@ -380,13 +367,8 @@
             <a href="https://www.mastersaws.com" class="logo" aria-label="MastersAWS inicio">
                 <img src="logo.png" alt="MastersAWS" width="160" height="34">
             </a>
-            <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-            </button>
             <nav aria-label="Navegación principal">
                 <ul class="nav-links" id="nav-links">
-                    <li><a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Servicios</a></li>
-                    <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Academy</a></li>
                     <li><a href="#registro">Contacto</a></li>
                 </ul>
             </nav>
@@ -826,22 +808,6 @@
                         btn.disabled = false;
                         btn.textContent = 'Quiero participar';
                     });
-            });
-        })();
-
-        (function initNav() {
-            var toggle = document.getElementById('menu-toggle');
-            var nav = document.getElementById('nav-links');
-            if (!toggle || !nav) return;
-            toggle.addEventListener('click', function () {
-                var open = nav.classList.toggle('is-open');
-                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            });
-            nav.querySelectorAll('a').forEach(function (a) {
-                a.addEventListener('click', function () {
-                    nav.classList.remove('is-open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                });
             });
         })();
     </script>
