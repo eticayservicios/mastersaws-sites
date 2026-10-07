@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Subir sitios a S3 + ndices de directorio
+    name: Subir sitios a S3 + indices de directorio
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -94,7 +94,7 @@ jobs:
           fi
 
           if [ -z "$S3_BUCKET" ] || [ "$S3_BUCKET" = "null" ] || [ -z "$CF_ID" ] || [ "$CF_ID" = "null" ]; then
-            echo "::error::Bucket o CloudFront inv+lidos."
+            echo "::error::Bucket o CloudFront invalidos."
             exit 1
           fi
 
@@ -114,7 +114,7 @@ jobs:
           PREFIX="${PREFIX#/}"
           PREFIX="${PREFIX%/}"
           [ -n "$PREFIX" ] && DEST_PREFIX="${PREFIX}/" || DEST_PREFIX=""
-          # Home est+tico en la ra+z del bucket
+          # Home estatico en la raiz del bucket
           if [ -f sites/index.html ]; then
             echo "Upload home s3://${BUCKET}/index.html
             # root index upload enabled"
@@ -122,13 +122,13 @@ jobs:
               --content-type "text/html; charset=utf-8" \
               --cache-control "public, max-age=60"
           fi
-          # Productos comerciales en la ra+z del sitio (no bajo /servicios/)
+          # Productos comerciales en la raiz del sitio (no bajo /servicios/)
           ROOT_LANDINGS="mastervpn tarjetas-nfc webinar-automatizacion-ia"
           for dir in sites/*/; do
             [ -d "$dir" ] || continue
             name=$(basename "$dir")
             if echo " $ROOT_LANDINGS " | grep -q " $name "; then
-              echo "Sync ra+z s3://${BUCKET}/${name}/"
+              echo "Sync raiz s3://${BUCKET}/${name}/"
               aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
                 --exact-timestamps \
                 --delete
@@ -143,7 +143,7 @@ jobs:
             for dir in paises/*/; do
               [ -d "$dir" ] || continue
               name=$(basename "$dir")
-              echo "Sync pa+s s3://${BUCKET}/${name}/"
+              echo "Sync pais s3://${BUCKET}/${name}/"
               aws s3 sync "$dir" "s3://${BUCKET}/${name}/" \
                 --exact-timestamps
             done
@@ -175,14 +175,14 @@ jobs:
             done
           fi
 
-      - name: Publicar +ndices de directorio (barra final)
+      - name: Publicar indices de directorio (barra final)
         run: |
           chmod +x scripts/publish-s3-directory-indexes.sh
           BUCKET="${{ steps.target.outputs.s3_bucket }}"
           PREFIX="${{ steps.target.outputs.path_prefix }}"
           ROOT_LANDINGS="mastervpn tarjetas-nfc webinar-automatizacion-ia"
 
-          # +ndices bajo /servicios/ (u otro prefijo) excepto landings de ra+z
+          # indices bajo /servicios/ (u otro prefijo) excepto landings de raiz
           TMP_SITES=$(mktemp -d)
           for dir in sites/*/; do
             [ -d "$dir" ] || continue
@@ -196,7 +196,7 @@ jobs:
           ./scripts/publish-s3-directory-indexes.sh "$BUCKET" "$TMP_SITES" "$PREFIX"
           rm -rf "$TMP_SITES"
 
-          # +ndices en la ra+z del dominio para productos
+          # indices en la raiz del dominio para productos
           TMP_ROOT=$(mktemp -d)
           for name in $ROOT_LANDINGS; do
             if [ -f "sites/$name/index.html" ]; then
@@ -226,5 +226,5 @@ jobs:
           echo "Bucket: ${{ steps.target.outputs.s3_bucket }}"
           DOMAIN=$(aws cloudfront get-distribution --id "${{ steps.target.outputs.cloudfront_id }}" --query 'Distribution.DomainName' --output text)
           echo "CloudFront: https://${DOMAIN}/mastervpn/"
-          echo "Nota: landings en raíz (mastervpn, tarjetas-nfc, webinar-automatizacion-ia) requieren location nginx ? CloudFront en el servidor WordPress."
+          echo "Nota: landings en raiz (mastervpn, tarjetas-nfc, webinar-automatizacion-ia) requieren location nginx -> CloudFront en el servidor WordPress."
 
