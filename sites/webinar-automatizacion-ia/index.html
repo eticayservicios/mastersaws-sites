@@ -239,6 +239,53 @@
         .step h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 6px; }
         .step p { font-size: 0.84rem; color: var(--muted); line-height: 1.5; max-width: 170px; margin: 0 auto; }
 
+        /* Agenda + audience */
+        .agenda { padding: 64px 0 72px; border-top: 1px solid var(--line); }
+        .agenda h2 {
+            font-family: Poppins, Inter, sans-serif;
+            text-align: center; font-size: clamp(1.5rem, 2.9vw, 2.05rem);
+            font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px;
+        }
+        .agenda h2 em { font-style: normal; color: var(--sky); }
+        .agenda-sub { text-align: center; color: var(--muted); max-width: 640px; margin: 0 auto 36px; font-size: 0.98rem; }
+        .agenda-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px; align-items: stretch; }
+        .learn-list { list-style: none; display: grid; gap: 12px; }
+        .learn-list li {
+            display: flex; gap: 14px; align-items: flex-start;
+            padding: 16px 18px; border-radius: 8px;
+            background: var(--card); border: 1px solid var(--card-border);
+            transition: border-color 0.25s ease;
+        }
+        .learn-list li:hover { border-color: rgba(58, 168, 255, 0.5); }
+        .learn-check {
+            width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%;
+            display: grid; place-items: center; color: var(--sky);
+            border: 1px solid rgba(58, 168, 255, 0.5); box-shadow: 0 0 10px rgba(20, 99, 255, 0.3);
+        }
+        .learn-check svg { width: 13px; height: 13px; }
+        .learn-list strong { display: block; font-size: 0.96rem; margin-bottom: 2px; }
+        .learn-list span { font-size: 0.86rem; color: var(--muted); }
+        .audience-card {
+            padding: 28px 26px; border-radius: 10px;
+            background: linear-gradient(160deg, rgba(20, 70, 170, 0.28), rgba(9, 18, 38, 0.85));
+            border: 1px solid rgba(58, 168, 255, 0.35);
+            box-shadow: 0 0 40px rgba(20, 99, 255, 0.12);
+            display: flex; flex-direction: column;
+        }
+        .audience-card h3 { font-family: Poppins, Inter, sans-serif; font-size: 1.2rem; margin-bottom: 14px; }
+        .audience-list { list-style: none; display: grid; gap: 10px; margin-bottom: 22px; }
+        .audience-list li { display: flex; gap: 10px; align-items: center; font-size: 0.92rem; color: rgba(225, 232, 250, 0.88); }
+        .audience-list li::before {
+            content: ""; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+            background: var(--sky); box-shadow: 0 0 8px var(--sky);
+        }
+        .format-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+        .format-pills span {
+            font-size: 0.78rem; font-weight: 600; padding: 6px 12px; border-radius: 999px;
+            border: 1px solid rgba(58, 168, 255, 0.4); background: rgba(8, 24, 56, 0.6);
+        }
+        .audience-card .btn { margin-top: auto; }
+
         /* Registration */
         .form-section {
             padding: 64px 0 80px; border-top: 1px solid var(--line);
@@ -296,6 +343,7 @@
             .benefit, .benefit:first-child { padding: 0; }
             .benefit + .benefit { border-left: none; border-top: 1px solid rgba(120, 170, 255, 0.12); padding-top: 18px; }
             .cards { grid-template-columns: 1fr; }
+            .agenda-grid { grid-template-columns: 1fr; }
             .timeline-line { top: 0; bottom: 0; left: 19px; right: auto; width: 2px; height: auto;
                 background: linear-gradient(180deg, rgba(20, 99, 255, 0), #1a6dff 8%, #3aa8ff 50%, #1a6dff 92%, rgba(20, 99, 255, 0)); }
             .steps { grid-template-columns: 1fr; gap: 22px; }
@@ -597,6 +645,54 @@
                     <li class="step"><div class="step-n">4</div><h3>Priorizar</h3><p>Define un plan realista de implementación.</p></li>
                     <li class="step"><div class="step-n">5</div><h3>Automatizar</h3><p>Convierte oportunidades en resultados.</p></li>
                 </ol>
+            </div>
+        </section>
+
+        <section class="agenda" id="agenda" aria-labelledby="agenda-title">
+            <div class="wrap">
+                <h2 id="agenda-title">Qué te llevarás de <em>esta sesión</em></h2>
+                <p class="agenda-sub">Un enfoque práctico para pasar de la intención de automatizar a un primer caso con impacto medible, sin grandes inversiones iniciales.</p>
+                <div class="agenda-grid">
+                    <ul class="learn-list">
+                        <li>
+                            <span class="learn-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+                            <div><strong>Detectar oportunidades de automatización</strong><span>Cómo reconocer los procesos que más tiempo y errores generan en tu operación.</span></div>
+                        </li>
+                        <li>
+                            <span class="learn-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+                            <div><strong>Ordenar los datos antes de la IA</strong><span>Por qué unificar la información y definir responsables es el primer paso.</span></div>
+                        </li>
+                        <li>
+                            <span class="learn-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+                            <div><strong>Conectar procesos con KPI</strong><span>Cómo relacionar cada mejora con indicadores que el negocio entiende.</span></div>
+                        </li>
+                        <li>
+                            <span class="learn-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+                            <div><strong>Priorizar tu primer caso</strong><span>Criterios para elegir por dónde empezar según valor, esfuerzo y riesgo.</span></div>
+                        </li>
+                        <li>
+                            <span class="learn-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+                            <div><strong>Avanzar gradualmente hacia la IA</strong><span>Qué pasos considerar para escalar con control, seguridad y supervisión.</span></div>
+                        </li>
+                    </ul>
+                    <aside class="audience-card" aria-labelledby="audience-title">
+                        <h3 id="audience-title">¿Para quién es este webinar?</h3>
+                        <ul class="audience-list">
+                            <li>Empresarios y gerentes generales</li>
+                            <li>Directores y líderes de operaciones</li>
+                            <li>Responsables de tecnología y transformación digital</li>
+                            <li>Áreas de finanzas, ventas y atención al cliente</li>
+                        </ul>
+                        <div class="format-pills" aria-label="Formato del webinar">
+                            <span>Online y en vivo</span>
+                            <span>Gratuito</span>
+                            <span>Espacio para preguntas</span>
+                        </div>
+                        <a class="btn" href="#registro">Reservar mi lugar
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                    </aside>
+                </div>
             </div>
         </section>
 
