@@ -19,6 +19,7 @@ const {
 } = process.env;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^\+?[0-9\s().-]{7,20}$/;
 
 const json = (statusCode, body) => ({
     statusCode,
@@ -121,12 +122,14 @@ export const handler = async (event) => {
 
     const name = clean(body.name, 120);
     const email = clean(body.email, 254).toLowerCase();
+    const phone = clean(body.phone, 30);
     const company = clean(body.company, 160);
     const role = clean(body.role, 120);
 
     const errors = [];
     if (name.length < 2) errors.push('name');
     if (!EMAIL_RE.test(email)) errors.push('email');
+    if (!PHONE_RE.test(phone) || phone.replace(/\D/g, '').length < 7) errors.push('phone');
     if (company.length < 2) errors.push('company');
     if (role.length < 2) errors.push('role');
     if (errors.length) return json(422, { ok: false, error: 'validation', fields: errors });
@@ -141,6 +144,7 @@ export const handler = async (event) => {
                 webinarId: { S: WEBINAR_ID },
                 email: { S: email },
                 name: { S: name },
+                phone: { S: phone },
                 company: { S: company },
                 role: { S: role },
                 createdAt: { S: now },
@@ -173,6 +177,7 @@ export const handler = async (event) => {
             '',
             `Nombre: ${name}`,
             `Correo: ${email}`,
+            `Teléfono: ${phone}`,
             `Empresa: ${company}`,
             `Cargo o área: ${role}`,
             `Fecha de registro: ${now}`,

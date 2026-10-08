@@ -694,6 +694,10 @@
                             <input type="email" id="field-email" name="email" autocomplete="email" required placeholder="nombre@empresa.com">
                         </div>
                         <div class="form-group">
+                            <label for="field-phone">Teléfono</label>
+                            <input type="tel" id="field-phone" name="phone" autocomplete="tel" inputmode="tel" required pattern="\+?[0-9\s\(\)\.\-]{7,20}" placeholder="+58 412 1234567">
+                        </div>
+                        <div class="form-group">
                             <label for="field-company">Empresa</label>
                             <input type="text" id="field-company" name="company" autocomplete="organization" required placeholder="Nombre de la empresa">
                         </div>
@@ -783,6 +787,7 @@
                 var payload = {
                     name: f['name'].value.trim(),
                     email: f['email'].value.trim(),
+                    phone: f['phone'].value.trim(),
                     company: f['company'].value.trim(),
                     role: f['role'].value.trim(),
                     website: f['website'].value.trim()
@@ -800,7 +805,7 @@
                     })
                     .catch(function (err) {
                         feedback.textContent = err && err.message === 'validation'
-                            ? 'Revisa los datos: nombre, correo, empresa y cargo son obligatorios.'
+                            ? 'Revisa los datos: nombre, correo, teléfono, empresa y cargo son obligatorios.'
                             : 'No pudimos enviar tu registro. Intenta de nuevo o escríbenos por WhatsApp.';
                         feedback.classList.add('error');
                     })
