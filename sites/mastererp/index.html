@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MasterERP | Plataforma empresarial modular e inteligente | MastersAWS</title>
+    <meta name="title" content="MasterERP | Plataforma empresarial modular e inteligente">
+    <meta name="description" content="MasterERP conecta operación, inventario, compras, administración, contabilidad, finanzas y analítica en una plataforma modular, personalizable e impulsada por IA.">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <link rel="canonical" href="https://www.mastersaws.com/mastererp/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mastersaws.com/mastererp/">
+    <meta property="og:title" content="MasterERP | Plataforma empresarial inteligente">
+    <meta property="og:description" content="Modular, personalizable e impulsada por IA. Una sola visión de tu operación.">
+    <meta property="og:site_name" content="MastersAWS">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MasterERP | Plataforma empresarial inteligente">
+    <meta name="twitter:description" content="Conecta operación, inventario, compras, finanzas y analítica con IA integrada.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"SoftwareApplication","name":"MasterERP","applicationCategory":"BusinessApplication","operatingSystem":"Web","description":"Plataforma empresarial modular e inteligente para operaciones, inventario, compras, administración, contabilidad, finanzas y analítica.","provider":{"@type":"Organization","name":"MastersAWS","url":"https://www.mastersaws.com"},"url":"https://www.mastersaws.com/mastererp/"}
+    </script>
+    <style>
+        :root {
+            --bg: #050a14;
+            --bg-2: #0a1220;
+            --line: rgba(100, 180, 255, 0.14);
+            --teal: #14b8a6;
+            --teal-2: #2dd4bf;
+            --electric: #38bdf8;
+            --violet: #8b5cf6;
+            --text: #fff;
+            --muted: rgba(220, 230, 245, 0.72);
+            --card: rgba(12, 20, 36, 0.72);
+            --card-border: rgba(56, 189, 248, 0.22);
+            --max: 1180px;
+            --orbit: 168px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Inter, system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        a { color: inherit; }
+        :focus-visible { outline: 2px solid var(--teal-2); outline-offset: 3px; }
+        .skip-link { position: absolute; left: -999px; top: 10px; background: #fff; color: #000; padding: 10px 14px; z-index: 10000; border-radius: 6px; }
+        .skip-link:focus { left: 10px; }
+        .wrap { max-width: var(--max); margin: 0 auto; padding: 0 32px; }
+        .header {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(5, 10, 20, 0.88);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+        }
+        .header-inner {
+            max-width: var(--max); margin: 0 auto; padding: 0 32px;
+            min-height: 72px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo img { height: 34px; width: auto; display: block; }
+        .nav-links { display: flex; gap: 36px; list-style: none; }
+        .nav-links a { color: rgba(255,255,255,.9); text-decoration: none; font-size: .92rem; font-weight: 500; }
+        .nav-links a:hover { color: var(--teal-2); }
+        .hero-band {
+            position: relative; overflow: hidden;
+            background:
+                radial-gradient(ellipse 50% 60% at 75% 35%, rgba(56, 189, 248, 0.12), transparent 65%),
+                radial-gradient(ellipse 40% 50% at 15% 10%, rgba(139, 92, 246, 0.08), transparent 60%),
+                radial-gradient(ellipse 45% 55% at 50% 100%, rgba(20, 184, 166, 0.06), transparent 70%),
+                linear-gradient(180deg, #03070f 0%, var(--bg) 100%);
+            border-bottom: 1px solid var(--line);
+        }
+        .hero {
+            display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            gap: 24px; align-items: center; padding: 36px 32px 28px;
+            max-width: 1240px; margin: 0 auto;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 7px 16px 7px 10px; border-radius: 999px;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            background: rgba(10, 25, 48, 0.55);
+            font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+            margin-bottom: 18px; box-shadow: 0 0 20px rgba(56, 189, 248, 0.12);
+        }
+        .hero-badge i {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal-2), var(--electric));
+            box-shadow: 0 0 10px var(--teal-2);
+        }
+        .hero h1 {
+            font-family: Poppins, Inter, sans-serif;
+            font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+            font-weight: 700; letter-spacing: -.02em; line-height: 1.16;
+            margin-bottom: 18px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            background: linear-gradient(90deg, var(--electric) 0%, var(--teal-2) 45%, var(--violet) 100%);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .hero-lead { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin-bottom: 26px; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(180deg, #1a9fd4 0%, #0d7ea8 100%);
+            color: #fff; text-decoration: none; font-weight: 600; font-size: .98rem;
+            padding: 0 28px; min-height: 50px; border-radius: 8px; border: none; cursor: pointer;
+            box-shadow: 0 10px 28px rgba(56, 189, 248, 0.35);
+            transition: transform .2s, box-shadow .2s, filter .2s;
+        }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
+        .btn-ghost {
+            background: rgba(12, 28, 52, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: none;
+        }
+        .btn-ghost:hover { border-color: var(--teal-2); box-shadow: 0 0 20px rgba(20, 184, 166, 0.15); }
+        .btn svg { width: 17px; height: 17px; }
+
+        /* Ecosystem visual */
+        .eco-wrap { position: relative; min-height: 480px; display: grid; place-items: center; }
+        .eco-visual {
+            position: relative; width: min(100%, 520px); aspect-ratio: 1;
+            margin: 0 auto;
+        }
+        .eco-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .eco-line { fill: none; stroke: url(#eco-wire); stroke-width: 1.4; opacity: .75; }
+        .eco-line-glow line { fill: none; stroke: rgba(94, 234, 212, 0.55); stroke-width: 1.2; stroke-dasharray: 4 12; animation: flow 3s linear infinite; }
+        @keyframes flow { to { stroke-dashoffset: -48; } }
+        .eco-core {
+            position: absolute; left: 50%; top: 50%; z-index: 4;
+            transform: translate(-50%, -50%);
+            width: 118px; height: 118px; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            background:
+                radial-gradient(circle at 35% 30%, rgba(139, 92, 246, 0.35), transparent 55%),
+                radial-gradient(circle at 70% 75%, rgba(56, 189, 248, 0.4), transparent 50%),
+                linear-gradient(145deg, rgba(15, 118, 110, 0.95), rgba(8, 47, 73, 0.95));
+            border: 1px solid rgba(94, 234, 212, 0.55);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.25), 0 0 80px rgba(139, 92, 246, 0.12), inset 0 0 30px rgba(94, 234, 212, 0.15);
+            animation: core-pulse 4s ease-in-out infinite;
+        }
+        .eco-core::before {
+            content: ""; position: absolute; inset: -14px; border-radius: 50%;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            animation: ring-pulse 4s ease-in-out infinite;
+        }
+        .eco-core-icon {
+            width: 36px; height: 36px; margin-bottom: 6px; opacity: .95;
+            background: conic-gradient(from 200deg, var(--teal-2), var(--electric), var(--violet), var(--teal-2));
+            border-radius: 50%; mask: radial-gradient(circle, transparent 42%, #000 43%);
+            -webkit-mask: radial-gradient(circle, transparent 42%, #000 43%);
+        }
+        .eco-core strong {
+            font-family: Poppins, sans-serif; font-size: .82rem; letter-spacing: .04em;
+            text-shadow: 0 0 12px rgba(94, 234, 212, 0.4);
+        }
+        @keyframes core-pulse { 0%, 100% { box-shadow: 0 0 40px rgba(56,189,248,.22), 0 0 60px rgba(139,92,246,.1); } 50% { box-shadow: 0 0 55px rgba(56,189,248,.38), 0 0 90px rgba(139,92,246,.18); } }
+        @keyframes ring-pulse { 0%, 100% { transform: scale(1); opacity: .6; } 50% { transform: scale(1.06); opacity: 1; } }
+        .eco-nodes { position: absolute; inset: 0; }
+        .eco-node {
+            --a: 0deg; --d: 0s;
+            position: absolute; left: 50%; top: 50%; z-index: 3;
+            transform: translate(-50%, -50%) rotate(var(--a)) translateY(calc(-1 * var(--orbit))) rotate(calc(-1 * var(--a)));
+            animation: node-float 5.5s ease-in-out infinite;
+            animation-delay: var(--d);
+        }
+        @keyframes node-float { 0%, 100% { margin-top: 0; } 50% { margin-top: -4px; } }
+        .eco-card {
+            position: relative;
+            width: 108px; padding: 10px 10px 12px;
+            border-radius: 12px;
+            background: rgba(10, 22, 42, 0.88);
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            backdrop-filter: blur(8px);
+            text-align: center;
+            transition: transform .25s ease, border-color .25s, box-shadow .25s;
+            cursor: default;
+        }
+        .eco-card:hover {
+            transform: scale(1.08);
+            border-color: rgba(94, 234, 212, 0.65);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35), 0 0 24px rgba(56, 189, 248, 0.2);
+            z-index: 10;
+        }
+        .eco-card-ico {
+            width: 28px; height: 28px; margin: 0 auto 6px;
+            display: grid; place-items: center; color: var(--teal-2);
+        }
+        .eco-card-ico svg { width: 20px; height: 20px; }
+        .eco-card-name { font-size: .68rem; font-weight: 700; line-height: 1.2; letter-spacing: .02em; }
+        .eco-status {
+            width: 6px; height: 6px; border-radius: 50%; margin: 6px auto 0;
+            background: var(--teal-2);
+            box-shadow: 0 0 8px var(--teal-2);
+        }
+        .eco-tip {
+            position: absolute; left: 50%; bottom: calc(100% + 8px);
+            transform: translateX(-50%) scale(.95);
+            width: max-content; max-width: 200px;
+            padding: 8px 10px; border-radius: 8px;
+            background: rgba(6, 14, 28, 0.96);
+            border: 1px solid rgba(94, 234, 212, 0.35);
+            font-size: .68rem; line-height: 1.35; color: rgba(230, 240, 255, 0.92);
+            opacity: 0; pointer-events: none;
+            transition: opacity .2s, transform .2s;
+        }
+        .eco-card:hover .eco-tip { opacity: 1; transform: translateX(-50%) scale(1); }
+
+        .attrs {
+            border-bottom: 1px solid var(--line);
+            background: rgba(6, 12, 24, 0.65);
+        }
+        .attrs-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 0; padding: 22px 0;
+        }
+        .attr {
+            display: flex; align-items: center; gap: 14px; padding: 8px 24px;
+            border-right: 1px solid var(--line);
+        }
+        .attr:last-child { border-right: none; }
+        .attr-ico {
+            width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+            display: grid; place-items: center; color: var(--electric);
+            background: radial-gradient(circle, rgba(30, 100, 180, 0.35), rgba(8, 16, 32, 0.9));
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .attr-ico svg { width: 20px; height: 20px; }
+        .attr h3 { font-size: .92rem; font-weight: 700; }
+        .attr p { font-size: .78rem; color: var(--muted); }
+
+        .section { padding: 56px 0; }
+        .section h2 {
+            font-family: Poppins, Inter, sans-serif;
+            font-size: clamp(1.45rem, 2.8vw, 2rem);
+            font-weight: 700; text-align: center; margin-bottom: 14px;
+        }
+        .section h2 em { font-style: normal; color: var(--teal-2); }
+        .section-lead { text-align: center; color: var(--muted); max-width: 640px; margin: 0 auto 36px; font-size: 1rem; }
+        .section-close { text-align: center; margin-top: 28px; font-weight: 600; color: rgba(200, 230, 255, 0.9); font-size: 1.05rem; }
+
+        .cards-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .card {
+            padding: 22px 20px; border-radius: 14px;
+            background: var(--card); border: 1px solid var(--card-border);
+            transition: border-color .2s, transform .2s;
+        }
+        .card:hover { border-color: rgba(94, 234, 212, 0.45); transform: translateY(-2px); }
+        .card-ico { width: 40px; height: 40px; margin-bottom: 12px; color: var(--electric); }
+        .card-ico svg { width: 100%; height: 100%; }
+        .card h3 { font-size: .95rem; margin-bottom: 8px; }
+        .card p { font-size: .85rem; color: var(--muted); }
+
+        .hub { position: relative; padding: 20px 0 10px; }
+        .hub-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+            position: relative; z-index: 1;
+        }
+        .hub-center {
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            z-index: 2; pointer-events: none;
+            padding: 16px 22px; border-radius: 999px;
+            font-family: Poppins, sans-serif; font-weight: 700; font-size: .9rem;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(139, 92, 246, 0.15));
+            border: 1px solid rgba(94, 234, 212, 0.4);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
+        }
+        .mod-card {
+            padding: 18px 16px; border-radius: 12px;
+            background: rgba(10, 20, 38, 0.75); border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        .mod-card h3 { font-size: .88rem; margin: 8px 0 6px; display: flex; align-items: center; gap: 8px; }
+        .mod-card h3 svg { width: 18px; height: 18px; color: var(--teal-2); flex-shrink: 0; }
+        .mod-card p { font-size: .78rem; color: var(--muted); line-height: 1.45; }
+        .hub-grid .mod-card:nth-child(5), .hub-grid .mod-card:nth-child(6) { margin-top: 8px; }
+
+        .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .pillar {
+            padding: 28px 24px; border-radius: 16px;
+            background: linear-gradient(160deg, rgba(30, 80, 140, 0.2), rgba(10, 18, 36, 0.85));
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+        .pillar h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--teal-2); }
+        .pillar p { font-size: .88rem; color: var(--muted); }
+        .quote {
+            margin-top: 32px; padding: 24px 28px; border-radius: 14px; text-align: center;
+            background: rgba(139, 92, 246, 0.08);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            font-size: 1.08rem; font-weight: 600; line-height: 1.45;
+        }
+
+        .ai-band {
+            background:
+                radial-gradient(ellipse 70% 80% at 50% 0%, rgba(139, 92, 246, 0.12), transparent 70%),
+                radial-gradient(ellipse 50% 60% at 80% 50%, rgba(56, 189, 248, 0.08), transparent 65%),
+                rgba(6, 12, 24, 0.5);
+            border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+        }
+        .ai-label {
+            display: block; text-align: center; font-size: .68rem; font-weight: 700;
+            letter-spacing: .14em; text-transform: uppercase; color: var(--violet); margin-bottom: 12px;
+        }
+        .ai-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 28px; align-items: start; }
+        .ai-chat {
+            border-radius: 16px; overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(4, 10, 22, 0.85);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        }
+        .ai-chat-head {
+            padding: 14px 18px; display: flex; align-items: center; gap: 10px;
+            background: rgba(12, 28, 52, 0.8); border-bottom: 1px solid var(--line);
+            font-size: .82rem; font-weight: 600;
+        }
+        .ai-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal-2); box-shadow: 0 0 8px var(--teal-2); }
+        .ai-chat-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+        .ai-q {
+            padding: 12px 14px; border-radius: 10px; font-size: .82rem; line-height: 1.4;
+            background: rgba(20, 40, 72, 0.6); border: 1px solid rgba(56, 189, 248, 0.2);
+            color: rgba(230, 240, 255, 0.92);
+            transition: border-color .2s, background .2s;
+        }
+        .ai-q:hover { border-color: rgba(139, 92, 246, 0.45); background: rgba(30, 50, 88, 0.65); }
+        .ai-q.active { border-color: var(--teal-2); background: rgba(20, 80, 100, 0.35); }
+        .ai-caps { display: flex; flex-direction: column; gap: 14px; }
+        .ai-cap {
+            display: flex; gap: 12px; align-items: flex-start;
+            padding: 16px; border-radius: 12px;
+            background: var(--card); border: 1px solid var(--card-border);
+        }
+        .ai-cap svg { width: 22px; height: 22px; flex-shrink: 0; color: var(--electric); margin-top: 2px; }
+        .ai-cap strong { display: block; font-size: .88rem; margin-bottom: 4px; }
+        .ai-cap span { font-size: .8rem; color: var(--muted); }
+
+        .use-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .use {
+            padding: 26px 22px; border-radius: 14px;
+            background: var(--card); border: 1px solid var(--card-border);
+        }
+        .use h3 { font-size: 1rem; margin-bottom: 10px; color: var(--electric); }
+        .use p { font-size: .86rem; color: var(--muted); }
+
+        .cta {
+            text-align: center; padding: 64px 32px;
+            background: radial-gradient(ellipse 60% 70% at 50% 100%, rgba(20, 184, 166, 0.1), transparent 70%);
+        }
+        .cta h2 { margin-bottom: 14px; }
+        .cta p { color: var(--muted); max-width: 560px; margin: 0 auto 28px; }
+        .cta-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+        .site-footer {
+            padding: 28px 32px; text-align: center; font-size: .86rem; color: var(--muted);
+            border-top: 1px solid var(--line);
+        }
+        .site-footer a { color: var(--teal-2); text-decoration: none; }
+        .whatsapp-float {
+            position: fixed; right: 22px; bottom: 22px; z-index: 60;
+            width: 54px; height: 54px; border-radius: 50%;
+            background: #25d366; color: #fff; display: grid; place-items: center;
+            box-shadow: 0 4px 18px rgba(0,0,0,.45);
+        }
+        .whatsapp-float svg { width: 28px; height: 28px; }
+
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-lead { max-width: none; }
+            .eco-wrap { min-height: auto; padding: 8px 0 0; }
+            :root { --orbit: 0px; }
+            .eco-visual { aspect-ratio: auto; width: 100%; max-width: 480px; }
+            .eco-svg { display: none; }
+            .eco-core { position: relative; left: auto; top: auto; transform: none; margin: 0 auto 20px; }
+            .eco-nodes {
+                position: relative; display: grid;
+                grid-template-columns: repeat(2, 1fr); gap: 10px;
+            }
+            .eco-node { position: relative; left: auto; top: auto; transform: none !important; animation: none; }
+            .eco-card { width: 100%; }
+            .eco-tip { display: none; }
+            .attrs-grid { grid-template-columns: repeat(2, 1fr); }
+            .attr { border-right: none; border-bottom: 1px solid var(--line); }
+            .cards-4 { grid-template-columns: repeat(2, 1fr); }
+            .hub-center { display: none; }
+            .hub-grid { grid-template-columns: repeat(2, 1fr); }
+            .pillars, .ai-layout, .use-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 560px) {
+            .wrap, .header-inner, .hero { padding-left: 20px; padding-right: 20px; }
+            .attrs-grid, .cards-4, .hub-grid, .eco-nodes { grid-template-columns: 1fr; }
+            .hero-actions .btn { width: 100%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+    <header class="header" role="banner">
+        <div class="header-inner">
+            <a href="https://www.mastersaws.com" class="logo" aria-label="MastersAWS inicio">
+                <img src="logo.png" alt="MastersAWS" width="160" height="34">
+            </a>
+            <nav aria-label="Navegación principal">
+                <ul class="nav-links">
+                    <li><a href="#modulos">Módulos</a></li>
+                    <li><a href="#ia">IA</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section class="hero-band" aria-labelledby="hero-title">
+            <div class="hero">
+                <div>
+                    <div class="hero-badge"><i aria-hidden="true"></i> Plataforma empresarial inteligente</div>
+                    <h1 id="hero-title">Tu empresa no debe adaptarse al sistema.<br><em>El sistema debe adaptarse a tu empresa.</em></h1>
+                    <p class="hero-lead">MasterERP es una plataforma empresarial modular e inteligente que conecta operación, inventario, compras, proveedores, administración, contabilidad, finanzas y analítica en una sola visión del negocio.</p>
+                    <div class="hero-actions">
+                        <a class="btn" href="#modulos">Conocer MasterERP
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                        <a class="btn btn-ghost" href="#contacto">Solicitar una demostración</a>
+                    </div>
+                </div>
+                <div class="eco-wrap">
+                    <div class="eco-visual" role="img" aria-label="Ecosistema MasterERP: núcleo de IA conectado a módulos empresariales">
+                        <svg class="eco-svg" viewBox="0 0 520 520" aria-hidden="true">
+                            <defs>
+                                <linearGradient id="eco-wire" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0" stop-color="#38bdf8"/>
+                                    <stop offset="1" stop-color="#14b8a6"/>
+                                </linearGradient>
+                            </defs>
+                            <g class="eco-line-glow">
+                                <line x1="260" y1="260" x2="260" y2="85" class="eco-line"/>
+                                <line x1="260" y1="260" x2="394" y2="122" class="eco-line"/>
+                                <line x1="260" y1="260" x2="468" y2="228" class="eco-line"/>
+                                <line x1="260" y1="260" x2="468" y2="292" class="eco-line"/>
+                                <line x1="260" y1="260" x2="394" y2="398" class="eco-line"/>
+                                <line x1="260" y1="260" x2="260" y2="435" class="eco-line"/>
+                                <line x1="260" y1="260" x2="126" y2="398" class="eco-line"/>
+                                <line x1="260" y1="260" x2="52" y2="292" class="eco-line"/>
+                                <line x1="260" y1="260" x2="52" y2="228" class="eco-line"/>
+                                <line x1="260" y1="260" x2="126" y2="122" class="eco-line"/>
+                            </g>
+                        </svg>
+                        <div class="eco-core" aria-hidden="true">
+                            <div class="eco-core-icon"></div>
+                            <strong>MasterERP</strong>
+                        </div>
+                        <div class="eco-nodes">
+                            <div class="eco-node" style="--a:-90deg;--d:0s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h10M4 18h14"/></svg></div><div class="eco-card-name">Operaciones</div><div class="eco-status"></div><p class="eco-tip">Procesos, tareas, equipos y seguimiento.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:-54deg;--d:.3s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16v12H4z"/><path d="M8 7V5h8v2"/></svg></div><div class="eco-card-name">Inventario</div><div class="eco-status"></div><p class="eco-tip">Existencias, movimientos y control por ubicación.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:-18deg;--d:.6s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></div><div class="eco-card-name">Compras</div><div class="eco-status"></div><p class="eco-tip">Solicitudes, órdenes, recepciones y costos.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:18deg;--d:.9s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9h18v10H3z"/><path d="M7 9V6h10v3"/></svg></div><div class="eco-card-name">Proveedores</div><div class="eco-status"></div><p class="eco-tip">Catálogo, evaluación y relación comercial.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:54deg;--d:1.2s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h4"/></svg></div><div class="eco-card-name">Administración</div><div class="eco-status"></div><p class="eco-tip">Documentos, contratos y gestión interna.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:90deg;--d:1.5s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 4h10v16H7z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div><div class="eco-card-name">Contabilidad</div><div class="eco-status"></div><p class="eco-tip">Asientos, libros y cierre contable.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:126deg;--d:1.8s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18V6l8 6 8-6v12"/></svg></div><div class="eco-card-name">Finanzas</div><div class="eco-status"></div><p class="eco-tip">Flujo de caja, indicadores y proyecciones.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:162deg;--d:2.1s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/></svg></div><div class="eco-card-name">Analítica</div><div class="eco-status"></div><p class="eco-tip">Tableros, tendencias y escenarios.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:198deg;--d:2.4s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg></div><div class="eco-card-name">Clientes</div><div class="eco-status"></div><p class="eco-tip">Relación, pedidos y seguimiento comercial.</p></div>
+                            </div>
+                            <div class="eco-node" style="--a:234deg;--d:2.7s">
+                                <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2 4 4 .5-3 3 .8 4.5L12 13l-3.8 2 1-4.5-3-3 4-.5z"/></svg></div><div class="eco-card-name">IA Empresarial</div><div class="eco-status"></div><p class="eco-tip">Alertas, consultas y recomendaciones basadas en datos.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="attrs" aria-label="Atributos de MasterERP">
+            <div class="wrap attrs-grid">
+                <div class="attr"><div class="attr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></div><div><h3>Modular</h3><p>Activa solo lo que necesitas.</p></div></div>
+                <div class="attr"><div class="attr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg></div><div><h3>Personalizable</h3><p>Ajustada a tu operación.</p></div></div>
+                <div class="attr"><div class="attr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l2 6 6 1-4 4 1 6-5-3-5 3 1-6-4-4 6-1z"/></svg></div><div><h3>Impulsado por IA</h3><p>Inteligencia en el flujo de trabajo.</p></div></div>
+                <div class="attr"><div class="attr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18l4-8 4 4 4-10 4 14"/></svg></div><div><h3>Preparado para crecer</h3><p>Escala con tu empresa.</p></div></div>
+            </div>
+        </section>
+
+        <section class="section" id="problema" aria-labelledby="problema-title">
+            <div class="wrap">
+                <h2 id="problema-title">Cuando la operación crece, las hojas de cálculo <em>dejan de ser suficientes</em></h2>
+                <p class="section-lead">La información se dispersa, los procesos dependen de tareas manuales y las decisiones se toman sin una visión completa del negocio.</p>
+                <div class="cards-4">
+                    <article class="card"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5"/></svg></div><h3>Información dispersa</h3><p>Excel, mensajes y herramientas separadas que no conversan entre sí.</p></article>
+                    <article class="card"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Procesos manuales</h3><p>Tareas repetitivas, errores y dependencia de personas específicas.</p></article>
+                    <article class="card"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 12h6l2-7 4 14 2-7h6"/></svg></div><h3>Poca visibilidad</h3><p>Dificultad para conocer lo que ocurre entre áreas, sedes y operaciones.</p></article>
+                    <article class="card"><div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5M4 19h16"/><path d="M8 16l3-5 3 3 5-8"/></svg></div><h3>Decisiones tardías</h3><p>Datos disponibles, pero sin indicadores claros ni alertas oportunas.</p></article>
+                </div>
+                <p class="section-close">MasterERP convierte procesos aislados en una operación conectada, trazable e inteligente.</p>
+            </div>
+        </section>
+
+        <section class="section hub" id="modulos" aria-labelledby="modulos-title">
+            <div class="wrap">
+                <h2 id="modulos-title">Una base empresarial <em>conectada</em></h2>
+                <p class="section-lead">Comienza con los módulos que generan mayor impacto hoy y amplía la plataforma a medida que evoluciona tu operación.</p>
+                <div class="hub-center" aria-hidden="true">MasterERP</div>
+                <div class="hub-grid">
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h10M4 18h14"/></svg> Operaciones</h3><p>Orquesta procesos, tareas y equipos con trazabilidad en tiempo real.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16v12H4z"/></svg> Inventario</h3><p>Existencias, movimientos y ubicaciones bajo un mismo control.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z"/></svg> Compras y proveedores</h3><p>Del requerimiento a la recepción, con costos y aprobaciones claras.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/></svg> Administración</h3><p>Documentación, contratos y gestión administrativa centralizada.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 4h10v16H7z"/></svg> Contabilidad</h3><p>Registros contables alineados con la operación diaria.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18V6l8 6 8-6v12"/></svg> Finanzas y analítica</h3><p>Flujo, indicadores y proyecciones para decidir con datos.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6"/></svg> Clientes</h3><p>Relación comercial, pedidos y seguimiento en un solo lugar.</p></article>
+                    <article class="mod-card"><h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 11c1.7 0 3-1.3 3-3S17.7 5 16 5s-3 1.3-3 3 1.3 3 3 3zM8 11c1.7 0 3-1.3 3-3S9.7 5 8 5 5 6.3 5 8s1.3 3 3 3z"/><path d="M2 20c0-3 3-5 6-5M16 15c3 0 6 2 6 5"/></svg> Usuarios, roles y sedes</h3><p>Permisos y estructura organizacional con gobierno de acceso.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="personal-title">
+            <div class="wrap">
+                <h2 id="personal-title">Una plataforma que entiende <em>cómo trabaja tu empresa</em></h2>
+                <p class="section-lead">MasterERP se configura alrededor de la estructura, los procesos y los indicadores que hacen única a cada organización.</p>
+                <div class="pillars">
+                    <article class="pillar"><h3>Tu estructura</h3><p>Sedes, almacenes, departamentos, unidades operativas, usuarios y permisos.</p></article>
+                    <article class="pillar"><h3>Tus procesos</h3><p>Flujos de aprobación, órdenes de trabajo, compras, entregas, servicios y reglas internas.</p></article>
+                    <article class="pillar"><h3>Tus indicadores</h3><p>Tableros y métricas diseñados para que cada equipo tome mejores decisiones.</p></article>
+                </div>
+                <p class="quote">No se trata de instalar un sistema. Se trata de construir la plataforma operativa de tu empresa.</p>
+            </div>
+        </section>
+
+        <section class="section ai-band" id="ia" aria-labelledby="ia-title">
+            <div class="wrap">
+                <span class="ai-label">Inteligencia artificial empresarial</span>
+                <h2 id="ia-title">La IA deja de ser un chat aislado y se convierte en <em>parte de la operación</em></h2>
+                <p class="section-lead">MasterERP incorpora inteligencia artificial conectada a los datos, procesos y permisos de cada empresa para ayudar a detectar, comprender y actuar.</p>
+                <div class="ai-layout">
+                    <div class="ai-chat" role="presentation">
+                        <div class="ai-chat-head"><span class="ai-dot"></span> Asistente MasterERP</div>
+                        <div class="ai-chat-body">
+                            <p class="ai-q active">¿Qué productos podrían quedarse sin existencia esta semana?</p>
+                            <p class="ai-q">Muéstrame las compras pendientes por proveedor.</p>
+                            <p class="ai-q">¿Qué sedes presentan mayor desviación de costos?</p>
+                            <p class="ai-q">Resume las cuentas por cobrar vencidas.</p>
+                            <p class="ai-q">¿Qué procesos están generando más retrasos?</p>
+                        </div>
+                    </div>
+                    <div class="ai-caps">
+                        <div class="ai-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"/></svg><div><strong>Consultas en lenguaje natural</strong><span>Pregunta a tus datos como hablarías con tu equipo.</span></div></div>
+                        <div class="ai-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.6L2.6 17a2 2 0 001.7 3h15.4a2 2 0 001.7-3L13.7 3.6a2 2 0 00-3.4 0z"/></svg><div><strong>Alertas de desviación y riesgo</strong><span>Detecta anomalías operativas antes de que escalen.</span></div></div>
+                        <div class="ai-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><div><strong>Reportes ejecutivos automatizados</strong><span>Resúmenes listos para dirección y áreas clave.</span></div></div>
+                        <div class="ai-cap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 11c1.7 0 3-1.3 3-3S13.7 5 12 5s-3 1.3-3 3 1.3 3 3 3z"/><path d="M6 20v-1a6 6 0 0112 0v1"/><path d="M19 8l2 2-2 2"/></svg><div><strong>IA gobernada por permisos</strong><span>Respeta roles, reglas y políticas de tu organización.</span></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="casos-title">
+            <div class="wrap">
+                <h2 id="casos-title">Una base. <em>Múltiples formas de operar</em></h2>
+                <p class="section-lead">Ejemplos de cómo la plataforma se adapta a distintas operaciones, sin limitarse a un solo sector.</p>
+                <div class="use-grid">
+                    <article class="use"><h3>Distribución y comercio</h3><p>Catálogo, inventario, compras, pedidos, preparación y rutas.</p></article>
+                    <article class="use"><h3>Servicios y operación en campo</h3><p>Órdenes de trabajo, equipos, horas, materiales, sedes y mantenimientos.</p></article>
+                    <article class="use"><h3>Administración y gestión financiera</h3><p>Proveedores, movimientos, cuentas por cobrar y pagar, caja, flujo e indicadores.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" id="contacto" aria-labelledby="cta-title">
+            <h2 id="cta-title">La plataforma de hoy para la empresa que quieres construir mañana</h2>
+            <p>Comienza resolviendo los procesos que hoy consumen más tiempo, generan más errores o limitan la visibilidad de tu negocio. MasterERP evoluciona contigo.</p>
+            <div class="cta-actions">
+                <a class="btn" href="mailto:sales@mastersaws.com?subject=Demostración%20MasterERP">Solicitar demostración</a>
+                <a class="btn btn-ghost" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20hablar%20sobre%20MasterERP%20para%20mi%20operación.">Hablemos de tu operación</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <p><a href="https://www.mastersaws.com">MastersAWS</a> · Partner AWS en LATAM</p>
+        <p><a href="mailto:sales@mastersaws.com">sales@mastersaws.com</a> · <a href="https://wa.me/584129837999" target="_blank" rel="noopener noreferrer">+58 412 9837999</a></p>
+    </footer>
+    <a href="https://wa.me/584129837999?text=Hola%2C%20quiero%20información%20sobre%20MasterERP." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+</body>
+</html>
