@@ -119,16 +119,23 @@
     .header-partner-sep {
       width: 1px; height: 22px; background: rgba(255, 255, 255, 0.12); flex-shrink: 0;
     }
-    .aws-partner-badge {
+    .aws-partner-badge.header-partner {
       display: flex; align-items: center; text-decoration: none; flex-shrink: 0;
-      opacity: 0.72; transition: opacity 0.2s ease;
-      padding: 2px 4px; border-radius: 4px;
+      padding: 2px 0; border-radius: 4px;
+      transition: color 0.2s ease, opacity 0.2s ease;
     }
-    .aws-partner-badge:hover, .aws-partner-badge:focus-visible { opacity: 1; }
-    .aws-partner-badge::before { content: none; display: none; }
-    .aws-partner-badge img {
-      max-height: 20px; width: auto; max-width: 44px; object-fit: contain;
-      filter: saturate(0.8) brightness(0.95);
+    .aws-partner-badge.header-partner:hover,
+    .aws-partner-badge.header-partner:focus-visible { opacity: 1; }
+    .aws-partner-badge.header-partner::before,
+    .aws-partner-badge.header-partner::after { content: none; display: none; }
+    .header-partner__label {
+      font-family: var(--font-display); font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase; line-height: 1.2;
+      color: rgba(248, 250, 252, 0.58); white-space: nowrap;
+    }
+    .aws-partner-badge.header-partner:hover .header-partner__label,
+    .aws-partner-badge.header-partner:focus-visible .header-partner__label {
+      color: rgba(248, 250, 252, 0.88);
     }
     .nav-wrapper { margin-left: auto; display: flex; align-items: center; gap: 20px; overflow: visible; }
     .nav-menu { display: flex; list-style: none; gap: 18px; align-items: center; padding: 0; margin: 0; }
@@ -592,6 +599,28 @@
       .hero-ecosystem--compact {
         min-width: 360px; max-width: min(460px, 46vw);
       }
+    }
+    #hero-ecosystem {
+      --eco-outer-rx: 44.2cqw;
+      --eco-outer-ry: 39cqw;
+    }
+    #hero-ecosystem .hero-ecosystem__orbit--outer-deep { rx: 232; ry: 204; }
+    #hero-ecosystem .hero-ecosystem__orbit--outer,
+    #hero-ecosystem .hero-ecosystem__orbit-glow { rx: 226; ry: 198; }
+    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterERP"] {
+      --eco-dx: 27.2cqw !important; --eco-dy: -32cqw !important;
+    }
+    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterAcademy"] {
+      --eco-dx: 42.5cqw !important; --eco-dy: 12cqw !important;
+    }
+    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterVPN"] {
+      --eco-dx: 0cqw !important; --eco-dy: 39cqw !important;
+    }
+    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterHosting"] {
+      --eco-dx: -42.5cqw !important; --eco-dy: 12cqw !important;
+    }
+    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterOpsphere"] {
+      --eco-dx: -27.2cqw !important; --eco-dy: -32cqw !important;
     }
     .hero-ecosystem--section {
       max-width: min(760px, 100%); min-width: min(100%, 360px);
@@ -1105,7 +1134,7 @@
       :root { --header-h: 72px; }
     }
     @media (max-width: 640px) {
-      .header-partner-sep, .aws-partner-badge { display: none; }
+      .header-partner-sep, .header-partner { display: none; }
       .logo img { max-height: 34px; }
       .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid, .servicios-editorial__grid, .product-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
@@ -1137,8 +1166,8 @@
           <img src="https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png" alt="MasterAWS" width="177" height="45" decoding="async" />
         </a>
         <span class="header-partner-sep" aria-hidden="true"></span>
-        <a href="https://www.mastersaws.com/nosotros/" class="aws-partner-badge" title="AWS Partner">
-          <img src="https://www.mastersaws.com/wp-content/uploads/2025/10/image-removebg-preview-1.png" alt="AWS Partner" width="56" height="28" loading="lazy" />
+        <a href="https://www.mastersaws.com/nosotros/" class="aws-partner-badge header-partner" title="AWS Partner">
+          <span class="header-partner__label">AWS Partner</span>
         </a>
       </div>
       <button type="button" class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-wrapper">
