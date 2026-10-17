@@ -103,7 +103,7 @@
       padding: 4px 0; border-radius: 4px;
     }
     .logo img {
-      display: block; width: auto; height: auto; max-height: 40px;
+      display: block; width: auto; height: auto; max-height: 44px;
       object-fit: contain; object-position: left center;
     }
     .logo:focus-visible { outline-offset: 4px; }
@@ -117,7 +117,8 @@
     }
     .aws-partner-badge:hover, .aws-partner-badge:focus-visible { opacity: 1; }
     .aws-partner-badge img {
-      max-height: 24px; width: auto; max-width: 52px; object-fit: contain;
+      max-height: 22px; width: auto; max-width: 48px; object-fit: contain;
+      filter: saturate(0.85);
     }
     .nav-wrapper { margin-left: auto; display: flex; align-items: center; gap: 24px; }
     .nav-menu { display: flex; list-style: none; gap: 18px; align-items: center; padding: 0; margin: 0; }
@@ -205,6 +206,8 @@
     .btn-primary:hover { background: #fff; color: #021214; border-color: #fff; box-shadow: 0 8px 32px rgba(0, 232, 223, 0.15); }
     .btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
     .btn-secondary:hover { border-color: var(--border-strong); color: var(--brand); background: rgba(255,255,255,0.03); }
+    .chapter-hero .btn-secondary { border-color: rgba(255, 255, 255, 0.28); color: rgba(255, 255, 255, 0.95); }
+    .chapter-hero .btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
     .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
     .btn-ghost:hover { border-color: var(--border-strong); color: var(--brand); }
     .btn-wa { background: #25D366; color: #fff; border-color: #25D366; }
@@ -303,7 +306,15 @@
     .beneficios-split { align-items: start; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
     .beneficios-split .benefit-grid { margin-top: 8px; grid-template-columns: 1fr; gap: 12px; }
     .chapter-trust {
-      background: linear-gradient(180deg, #030508 0%, var(--petroleo-deep) 100%);
+      background:
+        radial-gradient(ellipse 75% 55% at 12% 25%, rgba(0, 232, 223, 0.11), transparent 58%),
+        linear-gradient(180deg, #061428 0%, var(--petroleo-deep) 55%, #020406 100%);
+    }
+    .chapter-trust .section-head h2 {
+      font-size: clamp(2rem, 3.8vw, 2.75rem);
+    }
+    .chapter-trust .trust-item {
+      background: rgba(0, 232, 223, 0.04); border-color: rgba(0, 232, 223, 0.14);
     }
     .chapter-institutional {
       background:
@@ -313,7 +324,7 @@
     }
     .chapter-desafio .section-head p { color: rgba(255, 255, 255, 0.82); }
     .chapter-faq {
-      background: linear-gradient(180deg, #05080c 0%, #0a1018 100%);
+      background: linear-gradient(180deg, #020406 0%, #050a10 100%);
       border-color: rgba(255,255,255,0.05);
     }
     .section-label {
@@ -363,38 +374,54 @@
     .explore-pills a:hover { color: var(--brand); border-bottom-color: var(--border-strong); }
 
     .hero-ecosystem {
-      position: relative; aspect-ratio: 1; max-width: min(580px, 100%); margin-left: auto; width: 100%;
+      --eco-inner-r: 27.5cqw;
+      --eco-outer-rx: 41.9cqw;
+      --eco-outer-ry: 36.5cqw;
+      position: relative; width: 100%; margin-left: auto;
+      min-width: min(100%, 420px); max-width: min(560px, 100%);
       filter: drop-shadow(0 24px 64px rgba(0, 0, 0, 0.45));
+      container-type: inline-size;
+    }
+    .hero-ecosystem__diagram {
+      position: relative; width: 100%; aspect-ratio: 1;
       container-type: inline-size;
     }
     .hero-ecosystem__svg {
       position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none;
     }
     .hero-ecosystem__orbit {
-      fill: none; stroke: rgba(0, 232, 223, 0.1); stroke-width: 1;
-      transform-origin: 250px 250px;
+      fill: none; stroke: rgba(0, 232, 223, 0.12); stroke-width: 1;
+      transform-origin: 260px 260px;
+    }
+    .hero-ecosystem__orbit--inner {
+      stroke: rgba(0, 232, 223, 0.26); stroke-width: 1.25;
     }
     .hero-ecosystem__orbit--outer {
-      stroke: rgba(255, 104, 0, 0.14);
+      stroke: rgba(255, 160, 90, 0.38); stroke-width: 1.4;
       animation: eco-orbit-spin 48s linear infinite;
     }
+    .hero-ecosystem__orbit--outer-deep {
+      stroke: rgba(255, 104, 0, 0.22); stroke-width: 2;
+      animation: eco-orbit-spin 64s linear infinite reverse;
+    }
     .hero-ecosystem__orbit-glow {
-      fill: none; stroke: rgba(0, 232, 223, 0.22); stroke-width: 1.5; opacity: 0;
+      fill: none; stroke: rgba(255, 140, 60, 0.28); stroke-width: 1.75; opacity: 0.55;
       transition: opacity 0.35s ease;
     }
-    .hero-ecosystem.is-active .hero-ecosystem__orbit-glow { opacity: 1; }
+    .hero-ecosystem.is-active .hero-ecosystem__orbit-glow { opacity: 0.92; }
     .hero-ecosystem__spoke {
-      stroke: rgba(0, 232, 223, 0.28); stroke-width: 1.15; fill: none;
+      stroke: rgba(0, 232, 223, 0.32); stroke-width: 1.15; fill: none;
       transition: stroke 0.35s ease, stroke-width 0.35s ease;
     }
-    .hero-ecosystem.is-active .hero-ecosystem__spoke { stroke: rgba(92, 255, 245, 0.55); stroke-width: 1.35; }
+    .hero-ecosystem.is-active .hero-ecosystem__spoke { stroke: rgba(92, 255, 245, 0.58); stroke-width: 1.35; }
     .hero-ecosystem__core-glow {
       fill: url(#ecoCoreGlow); opacity: 0.85;
       animation: eco-core-breathe 6s ease-in-out infinite;
     }
     .hero-ecosystem__nodes {
-      position: absolute; inset: 0; z-index: 1;
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
     }
+    .hero-ecosystem__nodes .hero-ecosystem__node { pointer-events: auto; }
     .hero-ecosystem__core {
       position: absolute; left: 50%; top: 50%;
       transform: translate(-50%, -50%);
@@ -425,8 +452,19 @@
       transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
       -webkit-tap-highlight-color: transparent;
     }
-    .hero-ecosystem__node--service { max-width: 92px; border-radius: 12px; }
-    .hero-ecosystem__node--product { max-width: 96px; border-radius: 14px; border-color: rgba(255, 104, 0, 0.28); }
+    .hero-ecosystem__node--service { max-width: 108px; border-radius: 12px; }
+    .hero-ecosystem__node--product {
+      max-width: 112px; border-radius: 14px;
+      border-color: rgba(255, 176, 96, 0.42);
+      background: rgba(28, 18, 8, 0.88);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 140, 50, 0.08);
+    }
+    @media (min-width: 768px) {
+      .hero-ecosystem__node {
+        white-space: normal; overflow: visible; text-overflow: clip; hyphens: none;
+      }
+      .hero-ecosystem { min-width: 460px; max-width: min(560px, 54vw); }
+    }
     .hero-ecosystem__node--link { cursor: pointer; text-decoration: none; }
     .hero-ecosystem__node--soon { cursor: default; color: rgba(255, 255, 255, 0.78); }
     @media (hover: hover) and (pointer: fine) {
@@ -436,10 +474,15 @@
         border-color: var(--brand-bright);
         box-shadow: 0 12px 32px rgba(0, 232, 223, 0.28);
       }
+      .hero-ecosystem__node--product.hero-ecosystem__node--link:hover,
+      .hero-ecosystem__node--product.hero-ecosystem__node--link:focus-visible {
+        border-color: rgba(255, 190, 110, 0.72);
+        box-shadow: 0 12px 32px rgba(255, 120, 40, 0.22);
+      }
       .hero-ecosystem__node--soon:hover,
       .hero-ecosystem__node--soon:focus-visible {
         transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.04);
-        border-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 190, 110, 0.45);
       }
     }
     .hero-ecosystem__node.is-tooltip-open {
@@ -473,9 +516,39 @@
       0%, 100% { opacity: 0.7; }
       50% { opacity: 1; }
     }
-    @media (max-width: 520px) {
-      .hero-ecosystem__node--product:nth-child(n+9) { font-size: 0.58rem; max-width: 78px; }
-      .hero-ecosystem__orbit--outer { animation-duration: 64s; }
+    .hero-ecosystem__products-mobile { display: none; width: 100%; max-width: 100%; margin-top: 22px; }
+    .hero-ecosystem__products-mobile h3 {
+      font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255, 176, 96, 0.85); margin: 0 0 12px; text-align: center;
+    }
+    .hero-ecosystem__products-scroll {
+      display: flex; flex-wrap: nowrap; gap: 10px; overflow-x: auto; padding: 4px 2px 10px;
+      -webkit-overflow-scrolling: touch; scrollbar-width: thin; max-width: 100%;
+    }
+    .hero-ecosystem__products-scroll .hero-ecosystem__product-chip {
+      position: static; left: auto; top: auto;
+      transform: none !important;
+      flex: 0 0 auto; max-width: none; white-space: nowrap;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .hero-ecosystem__products-scroll .hero-ecosystem__product-chip:hover,
+      .hero-ecosystem__products-scroll .hero-ecosystem__product-chip:focus-visible {
+        transform: scale(1.04) !important;
+      }
+    }
+    .hero-ecosystem__products-scroll .hero-ecosystem__product-chip.is-tooltip-open {
+      transform: scale(1.03) !important;
+    }
+    @media (max-width: 767px) {
+      .hero-ecosystem {
+        min-width: 0; max-width: min(400px, 94vw); margin-left: auto; margin-right: auto;
+        overflow-x: clip;
+      }
+      .hero-ecosystem__orbit--outer,
+      .hero-ecosystem__orbit--outer-deep,
+      .hero-ecosystem__orbit-glow { display: none; }
+      .hero-ecosystem__diagram .hero-ecosystem__node--product { display: none !important; }
+      .hero-ecosystem__products-mobile { display: block; }
     }
 
     .desafio-editorial {
@@ -806,7 +879,10 @@
       .hero-copy { text-align: center; }
       .hero-lead { margin-left: auto; margin-right: auto; }
       .hero-actions, .explore-pills { justify-content: center; }
-      .hero-ecosystem { margin: 0 auto; max-width: min(440px, 92vw); }
+      .hero-ecosystem { margin: 0 auto; }
+      @media (max-width: 767px) {
+        .hero-ecosystem { max-width: min(400px, 94vw); }
+      }
       .desafio-editorial, .process-split, .about-split { grid-template-columns: 1fr; }
       .cards-4-servicios { grid-template-columns: repeat(2, 1fr); }
       .benefit-grid { grid-template-columns: repeat(2, 1fr); }
@@ -874,7 +950,7 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1; transform: none; }
-      .hero-ecosystem__orbit--outer, .hero-ecosystem__core-glow { animation: none !important; }
+      .hero-ecosystem__orbit--outer, .hero-ecosystem__orbit--outer-deep, .hero-ecosystem__core-glow { animation: none !important; }
       .stack-star { animation: none; opacity: 0.85; }
       .evolution-line-svg .evo-path { stroke-dasharray: none; stroke-dashoffset: 0; }
     }
@@ -905,34 +981,11 @@
         </button>
         <nav aria-label="Navegación principal">
           <ul class="nav-menu">
-            <li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
-            <li><a href="https://www.mastersaws.com/nosotros/">Nosotros</a></li>
-            <li class="nav-has-dropdown">
-              <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-servicios-trigger">
-                Servicios<span class="nav-dropdown-chevron" aria-hidden="true"></span>
-              </button>
-              <ul class="nav-dropdown" aria-labelledby="nav-servicios-trigger">
-                <li><a href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a></li>
-                <li><a href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a></li>
-              </ul>
-            </li>
-            <li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
-            <li class="nav-has-dropdown">
-              <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-soluciones-trigger">
-                Soluciones<span class="nav-dropdown-chevron" aria-hidden="true"></span>
-              </button>
-              <ul class="nav-dropdown" aria-labelledby="nav-soluciones-trigger">
-                <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li>
-                <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li>
-                <li><a href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
-              </ul>
-            </li>
+            <li><a href="#problema">El desafío</a></li>
+            <li><a href="#que-hacemos">Qué hacemos</a></li>
+            <li><a href="#como-trabajamos">Método</a></li>
+            <li><a href="#soluciones">Servicios</a></li>
+            <li><a href="/nosotros/">Nosotros</a></li>
           </ul>
         </nav>
         <a class="nav-cta" href="#contacto">Hablemos</a>
@@ -962,43 +1015,56 @@
           </div>
         </div>
         <div class="hero-ecosystem" id="hero-ecosystem" role="group" aria-label="Ecosistema MasterAWS: servicios en la nube y productos propios">
-          <svg class="hero-ecosystem__svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <radialGradient id="ecoCoreGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(0,232,223,0.4)"/>
-                <stop offset="70%" stop-color="rgba(0,232,223,0.08)"/>
-                <stop offset="100%" stop-color="rgba(0,232,223,0)"/>
-              </radialGradient>
-            </defs>
-            <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer" cx="250" cy="250" rx="212" ry="168"/>
-            <ellipse class="hero-ecosystem__orbit-glow" cx="250" cy="250" rx="212" ry="168"/>
-            <ellipse class="hero-ecosystem__orbit" cx="250" cy="250" rx="158" ry="158"/>
-            <circle class="hero-ecosystem__core-glow" cx="250" cy="250" r="108"/>
-            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="250" y2="95"/>
-            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="384" y2="173"/>
-            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="384" y2="327"/>
-            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="250" y2="405"/>
-            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="116" y2="327"/>
-            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="116" y2="173"/>
-          </svg>
-          <div class="hero-ecosystem__nodes">
-            <div class="hero-ecosystem__core" aria-hidden="true">
-              <strong>MasterAWS</strong>
-              <span>Estrategia · Ingeniería · Evolución</span>
+          <div class="hero-ecosystem__diagram">
+            <svg class="hero-ecosystem__svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="ecoCoreGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="rgba(0,232,223,0.4)"/>
+                  <stop offset="70%" stop-color="rgba(0,232,223,0.08)"/>
+                  <stop offset="100%" stop-color="rgba(0,232,223,0)"/>
+                </radialGradient>
+              </defs>
+              <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer hero-ecosystem__orbit--outer-deep" cx="260" cy="260" rx="224" ry="196"/>
+              <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer" cx="260" cy="260" rx="218" ry="190"/>
+              <ellipse class="hero-ecosystem__orbit-glow" cx="260" cy="260" rx="218" ry="190"/>
+              <circle class="hero-ecosystem__orbit hero-ecosystem__orbit--inner" cx="260" cy="260" r="143"/>
+              <circle class="hero-ecosystem__core-glow" cx="260" cy="260" r="94"/>
+              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="260" y2="117"/>
+              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="384" y2="188.5"/>
+              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="384" y2="331.5"/>
+              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="260" y2="403"/>
+              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="136" y2="331.5"/>
+              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="136" y2="188.5"/>
+            </svg>
+            <div class="hero-ecosystem__nodes">
+              <div class="hero-ecosystem__core" aria-hidden="true">
+                <strong>MasterAWS</strong>
+                <span>Estrategia · Ingeniería · Evolución</span>
+              </div>
+              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--eco-dx:0cqw;--eco-dy:-27.5cqw;" data-eco-kind="service" data-eco-name="Cloud Adoption" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--eco-dx:23.85cqw;--eco-dy:-13.75cqw;" data-eco-kind="service" data-eco-name="Seguridad" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/finops/" style="--eco-dx:23.85cqw;--eco-dy:13.75cqw;" data-eco-kind="service" data-eco-name="FinOps" aria-label="FinOps, explorar servicio">FinOps</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/devops/" style="--eco-dx:0cqw;--eco-dy:27.5cqw;" data-eco-kind="service" data-eco-name="DevOps" aria-label="DevOps, explorar servicio">DevOps</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/data-analytics/" style="--eco-dx:-23.85cqw;--eco-dy:13.75cqw;" data-eco-kind="service" data-eco-name="Datos &amp; Analítica" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--eco-dx:-23.85cqw;--eco-dy:-13.75cqw;" data-eco-kind="service" data-eco-name="Gobernanza de IA" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastererp/" style="--eco-dx:24.6cqw;--eco-dy:-29.5cqw;" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-academy/" style="--eco-dx:39.9cqw;--eco-dy:11.2cqw;" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastervpn/" style="--eco-dx:0cqw;--eco-dy:36.5cqw;" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--eco-dx:-39.9cqw;--eco-dy:11.2cqw;" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
+              <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon" style="--eco-dx:-24.6cqw;--eco-dy:-29.5cqw;" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
             </div>
-            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--eco-dx:0cqw;--eco-dy:-31cqw;" data-eco-kind="service" data-eco-name="Cloud Adoption" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--eco-dx:27cqw;--eco-dy:-15.5cqw;" data-eco-kind="service" data-eco-name="Seguridad" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/finops/" style="--eco-dx:27cqw;--eco-dy:15.5cqw;" data-eco-kind="service" data-eco-name="FinOps" aria-label="FinOps, explorar servicio">FinOps</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/devops/" style="--eco-dx:0cqw;--eco-dy:31cqw;" data-eco-kind="service" data-eco-name="DevOps" aria-label="DevOps, explorar servicio">DevOps</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/data-analytics/" style="--eco-dx:-27cqw;--eco-dy:15.5cqw;" data-eco-kind="service" data-eco-name="Datos &amp; Analítica" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--eco-dx:-27cqw;--eco-dy:-15.5cqw;" data-eco-kind="service" data-eco-name="Gobernanza de IA" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastererp/" style="--eco-dx:14cqw;--eco-dy:-38cqw;" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-academy/" style="--eco-dx:36cqw;--eco-dy:-12cqw;" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastervpn/" style="--eco-dx:22cqw;--eco-dy:32cqw;" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
-            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--eco-dx:-22cqw;--eco-dy:32cqw;" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
-            <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon" style="--eco-dx:-36cqw;--eco-dy:-12cqw;" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
           </div>
           <div class="hero-ecosystem__tooltip" id="hero-ecosystem-tooltip" role="tooltip" aria-live="polite" hidden></div>
+          <div class="hero-ecosystem__products-mobile" aria-label="Productos del ecosistema">
+            <h3>Productos construidos sobre este ecosistema</h3>
+            <div class="hero-ecosystem__products-scroll">
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/mastererp/" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/soluciones/master-academy/" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/mastervpn/" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
+              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/soluciones/master-hosting/" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
+              <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon hero-ecosystem__product-chip" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1562,7 +1628,7 @@
       var root = document.getElementById('hero-ecosystem');
       if (!root) return;
       var tooltip = document.getElementById('hero-ecosystem-tooltip');
-      var nodes = root.querySelectorAll('.hero-ecosystem__node');
+      var nodes = root.querySelectorAll('.hero-ecosystem__diagram .hero-ecosystem__node, .hero-ecosystem__product-chip');
       var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
       var coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
       var activeNode = null;
@@ -1571,7 +1637,9 @@
       function ecoLabel(node) {
         var kind = node.getAttribute('data-eco-kind');
         var name = node.getAttribute('data-eco-name') || '';
-        if (node.classList.contains('hero-ecosystem__node--soon')) return 'Próximamente';
+        if (node.classList.contains('hero-ecosystem__node--soon')) {
+          return (name || 'MasterOpsphere') + ' · Próximamente';
+        }
         if (kind === 'service') return 'Explorar ' + name + ' →';
         return 'Conoce ' + name + ' →';
       }
