@@ -60,7 +60,7 @@
       --muted: rgba(203, 213, 225, 0.72);
       --hero-text: rgba(255, 255, 255, 0.92);
       --max: 1180px;
-      --header-h: 80px;
+      --header-h: 72px;
       --section-y: clamp(80px, 10vw, 128px);
       --radius: 14px;
       --font-display: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -86,36 +86,51 @@
     .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
 
     .header {
-      background: rgba(3, 5, 8, 0.88); position: fixed; width: 100%; top: 0; z-index: 1000;
-      backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(10, 12, 16, 0.97) 0%, rgba(5, 7, 10, 0.94) 100%);
+      position: fixed; width: 100%; top: 0; z-index: 1000;
+      backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
     .header-content {
       max-width: 1200px; margin: 0 auto; padding: 0 20px;
       display: flex; align-items: center; min-height: var(--header-h); gap: 20px;
     }
     .header-brand {
-      display: flex; align-items: center; gap: 14px; flex-shrink: 0; min-width: 0;
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0; min-width: 0;
     }
-    .logo { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
-    .logo img { max-height: 42px; width: auto; display: block; filter: brightness(1.08) contrast(1.05); }
+    .logo {
+      display: flex; align-items: center; text-decoration: none; flex-shrink: 0;
+      padding: 4px 0; border-radius: 4px;
+    }
+    .logo-wordmark {
+      display: inline-flex; align-items: baseline; gap: 0.08em;
+      font-size: clamp(1.15rem, 2.4vw, 1.4rem); font-weight: 800;
+      letter-spacing: 0.06em; line-height: 1; white-space: nowrap;
+    }
+    .logo-master { color: #fff; }
+    .logo-aws { color: var(--brand); font-weight: 800; }
+    .logo:hover .logo-aws { color: var(--brand-bright); }
+    .logo:focus-visible { outline-offset: 4px; }
     .header-partner-sep {
-      width: 1px; height: 26px; background: rgba(255, 255, 255, 0.14); flex-shrink: 0;
+      width: 1px; height: 22px; background: rgba(255, 255, 255, 0.12); flex-shrink: 0;
     }
     .aws-partner-badge {
       display: flex; align-items: center; text-decoration: none; flex-shrink: 0;
-      opacity: 0.85; transition: opacity 0.2s ease;
+      opacity: 0.72; transition: opacity 0.2s ease;
+      padding: 2px 4px; border-radius: 4px;
     }
-    .aws-partner-badge:hover { opacity: 1; }
+    .aws-partner-badge:hover, .aws-partner-badge:focus-visible { opacity: 1; }
     .aws-partner-badge img {
-      max-height: 28px; width: auto; max-width: 68px; object-fit: contain;
+      max-height: 24px; width: auto; max-width: 52px; object-fit: contain;
     }
     .nav-wrapper { margin-left: auto; display: flex; align-items: center; gap: 24px; }
     .nav-menu { display: flex; list-style: none; gap: 22px; align-items: center; }
     .nav-menu a {
       color: rgba(255,255,255,0.82); text-decoration: none; font-weight: 500; font-size: 0.9rem;
-      letter-spacing: 0.01em; transition: color 0.2s ease; padding: 6px 0;
+      letter-spacing: 0.01em; transition: color 0.2s ease; padding: 6px 4px;
+      border-radius: 4px;
     }
-    .nav-menu a:hover { color: var(--brand); }
+    .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--brand); }
+    .nav-cta:focus-visible { outline-offset: 3px; }
     .nav-cta {
       display: inline-flex; align-items: center; justify-content: center;
       min-height: 40px; padding: 0 20px; border-radius: 999px;
@@ -718,7 +733,7 @@
     }
     @media (max-width: 640px) {
       .header-partner-sep, .aws-partner-badge { display: none; }
-      .logo img { max-height: 38px; }
+      .logo-wordmark { font-size: 1.12rem; letter-spacing: 0.05em; }
       .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
       .stack-constellation { min-height: 520px; }
@@ -745,7 +760,7 @@
     <div class="header-content">
       <div class="header-brand">
         <a href="https://www.mastersaws.com/" class="logo" aria-label="MasterAWS inicio">
-          <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" alt="MasterAWS" width="180" height="38" />
+          <span class="logo-wordmark"><span class="logo-master">Master</span><span class="logo-aws">AWS</span></span>
         </a>
         <span class="header-partner-sep" aria-hidden="true"></span>
         <a href="https://www.mastersaws.com/nosotros/" class="aws-partner-badge" title="AWS Partner">
