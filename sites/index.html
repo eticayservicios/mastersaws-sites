@@ -120,13 +120,58 @@
       max-height: 24px; width: auto; max-width: 52px; object-fit: contain;
     }
     .nav-wrapper { margin-left: auto; display: flex; align-items: center; gap: 24px; }
-    .nav-menu { display: flex; list-style: none; gap: 22px; align-items: center; }
+    .nav-menu { display: flex; list-style: none; gap: 18px; align-items: center; padding: 0; margin: 0; }
+    .nav-menu li { position: relative; list-style: none; }
+    .nav-menu li::marker { content: none; }
     .nav-menu a {
-      color: rgba(255,255,255,0.82); text-decoration: none; font-weight: 500; font-size: 0.9rem;
-      letter-spacing: 0.01em; transition: color 0.2s ease; padding: 6px 4px;
-      border-radius: 4px;
+      color: rgba(255,255,255,0.82); text-decoration: none; font-weight: 500; font-size: 0.88rem;
+      letter-spacing: 0.01em; transition: color 0.2s ease, background 0.2s ease;
+      padding: 6px 4px; border-radius: 4px;
     }
     .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--brand); }
+    .nav-has-dropdown > .nav-dropdown-trigger {
+      display: inline-flex; align-items: center; gap: 5px; cursor: pointer;
+      background: none; border: none; font: inherit;
+      color: rgba(255,255,255,0.82); font-weight: 500; font-size: 0.88rem;
+      letter-spacing: 0.01em; padding: 6px 4px; border-radius: 4px;
+    }
+    .nav-has-dropdown > .nav-dropdown-trigger:hover,
+    .nav-has-dropdown > .nav-dropdown-trigger:focus-visible { color: var(--brand); }
+    .nav-dropdown-chevron {
+      width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent;
+      border-top: 5px solid rgba(255,255,255,0.55); transition: transform 0.2s ease, border-top-color 0.2s ease;
+      flex-shrink: 0;
+    }
+    .nav-has-dropdown:hover > .nav-dropdown-trigger .nav-dropdown-chevron,
+    .nav-has-dropdown:focus-within > .nav-dropdown-trigger .nav-dropdown-chevron,
+    .nav-has-dropdown.is-expanded > .nav-dropdown-trigger .nav-dropdown-chevron {
+      border-top-color: var(--brand);
+    }
+    .nav-has-dropdown.is-expanded > .nav-dropdown-trigger .nav-dropdown-chevron { transform: rotate(180deg); }
+    .nav-dropdown {
+      position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%) translateY(-6px);
+      min-width: 220px; padding: 8px 0; margin: 0; list-style: none;
+      background: rgba(6, 10, 14, 0.98); border: 1px solid var(--border-strong); border-radius: 10px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+      z-index: 1001;
+    }
+    .nav-dropdown li { list-style: none; }
+    .nav-dropdown li::marker { content: none; }
+    .nav-dropdown a {
+      display: block; padding: 10px 18px; font-size: 0.86rem; white-space: nowrap;
+      color: rgba(255,255,255,0.88);
+    }
+    .nav-dropdown a:hover, .nav-dropdown a:focus-visible {
+      color: #021214; background: var(--brand);
+    }
+    .nav-has-dropdown:hover .nav-dropdown,
+    .nav-has-dropdown:focus-within .nav-dropdown,
+    .nav-has-dropdown.is-open .nav-dropdown {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
     .nav-cta:focus-visible { outline-offset: 3px; }
     .nav-cta {
       display: inline-flex; align-items: center; justify-content: center;
@@ -719,7 +764,22 @@
       }
       .nav-wrapper.is-open { transform: translateX(0); }
       .nav-menu { flex-direction: column; align-items: stretch; gap: 0; width: 100%; }
-      .nav-menu a { font-size: 1.05rem; padding: 14px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .nav-menu > li { border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .nav-menu a { font-size: 1.05rem; padding: 14px 8px; }
+      .nav-has-dropdown > .nav-dropdown-trigger {
+        width: 100%; justify-content: space-between; padding: 14px 8px; text-align: left;
+      }
+      .nav-has-dropdown .nav-dropdown {
+        position: static; transform: none; left: auto; min-width: auto; width: 100%;
+        border: none; border-radius: 0; box-shadow: none; background: rgba(255,255,255,0.03);
+        max-height: 0; overflow: hidden; opacity: 1; visibility: visible; pointer-events: auto;
+        padding: 0; transition: max-height 0.3s ease;
+      }
+      .nav-has-dropdown.is-expanded .nav-dropdown { max-height: 520px; padding: 4px 0 8px; }
+      .nav-has-dropdown:hover .nav-dropdown { transform: none; }
+      .nav-has-dropdown:focus-within .nav-dropdown { transform: none; }
+      .nav-has-dropdown.is-open .nav-dropdown { transform: none; }
+      .nav-dropdown a { padding: 12px 16px 12px 24px; font-size: 0.95rem; }
       .nav-cta { width: 100%; margin-top: 8px; }
       .nav-close {
         display: block; position: absolute; top: 20px; right: 16px;
@@ -775,11 +835,34 @@
         </button>
         <nav aria-label="Navegación principal">
           <ul class="nav-menu">
-            <li><a href="#problema">El desafío</a></li>
-            <li><a href="#que-hacemos">Qué hacemos</a></li>
-            <li><a href="#como-trabajamos">Método</a></li>
-            <li><a href="#soluciones">Servicios</a></li>
+            <li><a href="https://www.mastersaws.com/casos-de-exito/">Casos de éxito</a></li>
             <li><a href="https://www.mastersaws.com/nosotros/">Nosotros</a></li>
+            <li class="nav-has-dropdown">
+              <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-servicios-trigger">
+                Servicios<span class="nav-dropdown-chevron" aria-hidden="true"></span>
+              </button>
+              <ul class="nav-dropdown" aria-labelledby="nav-servicios-trigger">
+                <li><a href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a></li>
+                <li><a href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a></li>
+              </ul>
+            </li>
+            <li><a href="https://www.mastersaws.com/soporte/">Soporte</a></li>
+            <li class="nav-has-dropdown">
+              <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true" id="nav-soluciones-trigger">
+                Soluciones<span class="nav-dropdown-chevron" aria-hidden="true"></span>
+              </button>
+              <ul class="nav-dropdown" aria-labelledby="nav-soluciones-trigger">
+                <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li>
+                <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li>
+                <li><a href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
+              </ul>
+            </li>
           </ul>
         </nav>
         <a class="nav-cta" href="#contacto">Hablemos</a>
@@ -1336,6 +1419,73 @@
       if (overlay) overlay.addEventListener('click', closeNav);
       document.querySelectorAll('.nav-menu a, .nav-cta').forEach(function (a) {
         a.addEventListener('click', closeNav);
+      });
+    })();
+
+    (function () {
+      var mobileMq = window.matchMedia('(max-width: 960px)');
+      var dropdownItems = document.querySelectorAll('.nav-has-dropdown');
+
+      function isMobile() { return mobileMq.matches; }
+
+      function closeDesktopDropdowns() {
+        dropdownItems.forEach(function (li) {
+          li.classList.remove('is-open');
+          var t = li.querySelector('.nav-dropdown-trigger');
+          if (t && !isMobile()) t.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      dropdownItems.forEach(function (li) {
+        var trigger = li.querySelector('.nav-dropdown-trigger');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (isMobile()) {
+            var expanded = li.classList.toggle('is-expanded');
+            trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            dropdownItems.forEach(function (other) {
+              if (other !== li) {
+                other.classList.remove('is-expanded');
+                var ot = other.querySelector('.nav-dropdown-trigger');
+                if (ot) ot.setAttribute('aria-expanded', 'false');
+              }
+            });
+            return;
+          }
+          e.preventDefault();
+          var open = !li.classList.contains('is-open');
+          closeDesktopDropdowns();
+          if (open) {
+            li.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            li.classList.remove('is-open', 'is-expanded');
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.blur();
+          }
+        });
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.nav-has-dropdown')) closeDesktopDropdowns();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeDesktopDropdowns();
+      });
+
+      mobileMq.addEventListener('change', function () {
+        dropdownItems.forEach(function (li) {
+          li.classList.remove('is-open', 'is-expanded');
+          var t = li.querySelector('.nav-dropdown-trigger');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
       });
     })();
 
