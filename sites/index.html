@@ -362,51 +362,120 @@
     }
     .explore-pills a:hover { color: var(--brand); border-bottom-color: var(--border-strong); }
 
-    .hero-network {
-      position: relative; aspect-ratio: 1 / 0.95; max-width: min(580px, 100%); margin-left: auto; width: 100%;
+    .hero-ecosystem {
+      position: relative; aspect-ratio: 1; max-width: min(580px, 100%); margin-left: auto; width: 100%;
       filter: drop-shadow(0 24px 64px rgba(0, 0, 0, 0.45));
+      container-type: inline-size;
     }
-    .hero-network svg { width: 100%; height: 100%; display: block; overflow: visible; }
-    .hero-network .net-halo {
-      fill: none; stroke: rgba(0, 232, 223, 0.12); stroke-width: 1;
-      animation: halo-breathe 6s ease-in-out infinite;
+    .hero-ecosystem__svg {
+      position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none;
     }
-    .hero-network .net-line {
-      stroke: rgba(0, 232, 223, 0.35); stroke-width: 1.25; fill: none;
+    .hero-ecosystem__orbit {
+      fill: none; stroke: rgba(0, 232, 223, 0.1); stroke-width: 1;
+      transform-origin: 250px 250px;
     }
-    .hero-network .net-line-accent { stroke: rgba(255, 104, 0, 0.35); }
-    .hero-network .net-core {
-      fill: rgba(0, 232, 223, 0.12); stroke: var(--brand-bright); stroke-width: 2;
+    .hero-ecosystem__orbit--outer {
+      stroke: rgba(255, 104, 0, 0.14);
+      animation: eco-orbit-spin 48s linear infinite;
     }
-    .hero-network .net-node-ring {
-      fill: rgba(4, 24, 32, 0.85); stroke: var(--border-strong); stroke-width: 1.25;
-      transition: stroke 0.3s ease, filter 0.3s ease;
+    .hero-ecosystem__orbit-glow {
+      fill: none; stroke: rgba(0, 232, 223, 0.22); stroke-width: 1.5; opacity: 0;
+      transition: opacity 0.35s ease;
     }
-    .hero-network .net-node:hover .net-node-ring {
-      stroke: var(--brand-bright); filter: drop-shadow(0 0 12px rgba(0, 232, 223, 0.5));
+    .hero-ecosystem.is-active .hero-ecosystem__orbit-glow { opacity: 1; }
+    .hero-ecosystem__spoke {
+      stroke: rgba(0, 232, 223, 0.28); stroke-width: 1.15; fill: none;
+      transition: stroke 0.35s ease, stroke-width 0.35s ease;
     }
-    .hero-network .net-pulse, .hero-network .net-dot-pulse {
-      animation: net-pulse 4s ease-in-out infinite;
+    .hero-ecosystem.is-active .hero-ecosystem__spoke { stroke: rgba(92, 255, 245, 0.55); stroke-width: 1.35; }
+    .hero-ecosystem__core-glow {
+      fill: url(#ecoCoreGlow); opacity: 0.85;
+      animation: eco-core-breathe 6s ease-in-out infinite;
     }
-    .hero-network .net-float { animation: node-float 5s ease-in-out infinite; }
-    @keyframes net-pulse {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.95; }
+    .hero-ecosystem__nodes {
+      position: absolute; inset: 0; z-index: 1;
     }
-    @keyframes halo-breathe {
-      0%, 100% { opacity: 0.5; transform-origin: center; }
+    .hero-ecosystem__core {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(108px, 28%, 132px); min-height: 88px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      padding: 14px 12px; border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, rgba(0, 232, 223, 0.22) 0%, rgba(4, 24, 32, 0.92) 68%);
+      border: 2px solid var(--brand-bright);
+      box-shadow: 0 0 40px rgba(0, 232, 223, 0.25);
+      pointer-events: none;
+    }
+    .hero-ecosystem__core strong {
+      font-size: clamp(0.82rem, 2.4vw, 0.95rem); font-weight: 800; color: #fff; letter-spacing: 0.04em;
+    }
+    .hero-ecosystem__core span {
+      margin-top: 4px; font-size: clamp(0.58rem, 1.6vw, 0.68rem); font-weight: 600;
+      color: var(--brand-bright); letter-spacing: 0.06em; line-height: 1.35;
+    }
+    .hero-ecosystem__node {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw)));
+      min-width: 44px; min-height: 44px; padding: 8px 10px;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      font-family: var(--font-display); font-size: clamp(0.62rem, 1.7vw, 0.72rem); font-weight: 700;
+      line-height: 1.2; letter-spacing: 0.02em; color: #fff;
+      background: rgba(4, 24, 32, 0.9); border: 1px solid var(--border-strong); border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hero-ecosystem__node--service { max-width: 92px; border-radius: 12px; }
+    .hero-ecosystem__node--product { max-width: 96px; border-radius: 14px; border-color: rgba(255, 104, 0, 0.28); }
+    .hero-ecosystem__node--link { cursor: pointer; text-decoration: none; }
+    .hero-ecosystem__node--soon { cursor: default; color: rgba(255, 255, 255, 0.78); }
+    @media (hover: hover) and (pointer: fine) {
+      .hero-ecosystem__node--link:hover,
+      .hero-ecosystem__node--link:focus-visible {
+        transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.06);
+        border-color: var(--brand-bright);
+        box-shadow: 0 12px 32px rgba(0, 232, 223, 0.28);
+      }
+      .hero-ecosystem__node--soon:hover,
+      .hero-ecosystem__node--soon:focus-visible {
+        transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.04);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+    .hero-ecosystem__node.is-tooltip-open {
+      border-color: var(--brand-bright);
+      box-shadow: 0 12px 32px rgba(0, 232, 223, 0.28);
+      transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.05);
+    }
+    .hero-ecosystem__tooltip {
+      position: absolute; z-index: 3; left: 50%; bottom: 4%;
+      transform: translateX(-50%) translateY(6px);
+      min-width: min(240px, 88%); padding: 10px 14px;
+      font-size: 0.78rem; font-weight: 600; text-align: center; color: #fff;
+      background: rgba(2, 12, 18, 0.96); border: 1px solid var(--border-strong);
+      border-radius: 10px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    }
+    .hero-ecosystem__tooltip.is-visible {
+      opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .hero-ecosystem__tooltip a {
+      display: inline-block; margin-top: 6px; color: var(--brand-bright); text-decoration: none; font-size: 0.76rem;
+    }
+    .hero-ecosystem__tooltip a:hover { text-decoration: underline; }
+    @keyframes eco-orbit-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes eco-core-breathe {
+      0%, 100% { opacity: 0.7; }
       50% { opacity: 1; }
     }
-    @keyframes node-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    .hero-network-label {
-      font-family: var(--font-display); font-size: 11px; font-weight: 700;
-      fill: #fff; letter-spacing: 0.03em;
-    }
-    .hero-network-sublabel {
-      font-size: 8px; fill: rgba(0, 232, 223, 0.75); font-weight: 600; text-transform: uppercase;
+    @media (max-width: 520px) {
+      .hero-ecosystem__node--product:nth-child(n+9) { font-size: 0.58rem; max-width: 78px; }
+      .hero-ecosystem__orbit--outer { animation-duration: 64s; }
     }
 
     .desafio-editorial {
@@ -737,7 +806,7 @@
       .hero-copy { text-align: center; }
       .hero-lead { margin-left: auto; margin-right: auto; }
       .hero-actions, .explore-pills { justify-content: center; }
-      .hero-network { margin: 0 auto; max-width: min(440px, 92vw); }
+      .hero-ecosystem { margin: 0 auto; max-width: min(440px, 92vw); }
       .desafio-editorial, .process-split, .about-split { grid-template-columns: 1fr; }
       .cards-4-servicios { grid-template-columns: repeat(2, 1fr); }
       .benefit-grid { grid-template-columns: repeat(2, 1fr); }
@@ -805,7 +874,8 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1; transform: none; }
-      .hero-network .net-pulse, .hero-network .net-dot-pulse, .hero-network .net-halo, .hero-network .net-float, .stack-star { animation: none; opacity: 0.85; }
+      .hero-ecosystem__orbit--outer, .hero-ecosystem__core-glow { animation: none !important; }
+      .stack-star { animation: none; opacity: 0.85; }
       .evolution-line-svg .evo-path { stroke-dasharray: none; stroke-dashoffset: 0; }
     }
   </style>
@@ -891,63 +961,44 @@
             </div>
           </div>
         </div>
-        <div class="hero-network" role="img" aria-label="Red de transformación: MasterAWS conectado con Cloud, Datos, Automatización, IA y Seguridad">
-          <svg viewBox="0 0 480 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <div class="hero-ecosystem" id="hero-ecosystem" role="group" aria-label="Ecosistema MasterAWS: servicios en la nube y productos propios">
+          <svg class="hero-ecosystem__svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
-              <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(0,232,223,0.35)"/>
+              <radialGradient id="ecoCoreGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="rgba(0,232,223,0.4)"/>
                 <stop offset="70%" stop-color="rgba(0,232,223,0.08)"/>
                 <stop offset="100%" stop-color="rgba(0,232,223,0)"/>
               </radialGradient>
-              <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="rgba(0,232,223,0.2)"/>
-                <stop offset="100%" stop-color="rgba(0,232,223,0)"/>
-              </radialGradient>
             </defs>
-            <circle class="net-halo" cx="240" cy="220" r="118"/>
-            <circle class="net-halo" cx="240" cy="220" r="88" style="animation-delay: 1s"/>
-            <line class="net-line" x1="240" y1="220" x2="240" y2="58"/>
-            <line class="net-line" x1="240" y1="220" x2="400" y2="118"/>
-            <line class="net-line" x1="240" y1="220" x2="418" y2="268"/>
-            <line class="net-line" x1="240" y1="220" x2="240" y2="382"/>
-            <line class="net-line net-line-accent" x1="240" y1="220" x2="62" y2="268"/>
-            <line class="net-line" x1="240" y1="58" x2="400" y2="118" opacity="0.35"/>
-            <line class="net-line" x1="400" y1="118" x2="418" y2="268" opacity="0.35"/>
-            <circle class="net-pulse" cx="240" cy="220" r="96" fill="url(#coreGlow)"/>
-            <circle class="net-core" cx="240" cy="220" r="52"/>
-            <text class="hero-network-label" x="240" y="214" text-anchor="middle" font-size="13">MasterAWS</text>
-            <text class="hero-network-sublabel" x="240" y="232" text-anchor="middle">núcleo</text>
-            <g class="net-node net-float">
-              <circle cx="240" cy="50" r="34" fill="url(#nodeGlow)"/>
-              <circle class="net-node-ring" cx="240" cy="50" r="32"/>
-              <text class="hero-network-label" x="240" y="54" text-anchor="middle">Cloud</text>
-            </g>
-            <g class="net-node net-float" style="animation-delay: 0.6s">
-              <circle cx="408" cy="110" r="34" fill="url(#nodeGlow)"/>
-              <circle class="net-node-ring" cx="408" cy="110" r="32"/>
-              <text class="hero-network-label" x="408" y="114" text-anchor="middle">Datos</text>
-            </g>
-            <g class="net-node net-float" style="animation-delay: 1.2s">
-              <circle cx="426" cy="272" r="36" fill="url(#nodeGlow)"/>
-              <circle class="net-node-ring" cx="426" cy="272" r="34"/>
-              <text class="hero-network-label" x="426" y="268" text-anchor="middle" font-size="9">Automatización</text>
-            </g>
-            <g class="net-node net-float" style="animation-delay: 0.3s">
-              <circle cx="240" cy="390" r="34" fill="url(#nodeGlow)"/>
-              <circle class="net-node-ring" cx="240" cy="390" r="32"/>
-              <text class="hero-network-label" x="240" y="394" text-anchor="middle">IA</text>
-            </g>
-            <g class="net-node net-float" style="animation-delay: 0.9s">
-              <circle cx="54" cy="272" r="34" fill="url(#nodeGlow)"/>
-              <circle class="net-node-ring" cx="54" cy="272" r="32"/>
-              <text class="hero-network-label" x="54" y="276" text-anchor="middle">Seguridad</text>
-            </g>
-            <circle class="net-dot-pulse" cx="240" cy="58" r="4" fill="var(--brand-bright)" style="animation-delay: 0.5s"/>
-            <circle class="net-dot-pulse" cx="400" cy="118" r="4" fill="var(--brand-bright)" style="animation-delay: 1s"/>
-            <circle class="net-dot-pulse" cx="418" cy="268" r="4" fill="var(--brand-bright)" style="animation-delay: 1.5s"/>
-            <circle class="net-dot-pulse" cx="240" cy="382" r="4" fill="var(--brand-bright)" style="animation-delay: 2s"/>
-            <circle class="net-dot-pulse" cx="62" cy="268" r="4" fill="#FF6800" style="animation-delay: 2.5s"/>
+            <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer" cx="250" cy="250" rx="212" ry="168"/>
+            <ellipse class="hero-ecosystem__orbit-glow" cx="250" cy="250" rx="212" ry="168"/>
+            <ellipse class="hero-ecosystem__orbit" cx="250" cy="250" rx="158" ry="158"/>
+            <circle class="hero-ecosystem__core-glow" cx="250" cy="250" r="108"/>
+            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="250" y2="95"/>
+            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="384" y2="173"/>
+            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="384" y2="327"/>
+            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="250" y2="405"/>
+            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="116" y2="327"/>
+            <line class="hero-ecosystem__spoke" x1="250" y1="250" x2="116" y2="173"/>
           </svg>
+          <div class="hero-ecosystem__nodes">
+            <div class="hero-ecosystem__core" aria-hidden="true">
+              <strong>MasterAWS</strong>
+              <span>Estrategia · Ingeniería · Evolución</span>
+            </div>
+            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--eco-dx:0cqw;--eco-dy:-31cqw;" data-eco-kind="service" data-eco-name="Cloud Adoption" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--eco-dx:27cqw;--eco-dy:-15.5cqw;" data-eco-kind="service" data-eco-name="Seguridad" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/finops/" style="--eco-dx:27cqw;--eco-dy:15.5cqw;" data-eco-kind="service" data-eco-name="FinOps" aria-label="FinOps, explorar servicio">FinOps</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/devops/" style="--eco-dx:0cqw;--eco-dy:31cqw;" data-eco-kind="service" data-eco-name="DevOps" aria-label="DevOps, explorar servicio">DevOps</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/data-analytics/" style="--eco-dx:-27cqw;--eco-dy:15.5cqw;" data-eco-kind="service" data-eco-name="Datos &amp; Analítica" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--eco-dx:-27cqw;--eco-dy:-15.5cqw;" data-eco-kind="service" data-eco-name="Gobernanza de IA" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastererp/" style="--eco-dx:14cqw;--eco-dy:-38cqw;" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-academy/" style="--eco-dx:36cqw;--eco-dy:-12cqw;" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastervpn/" style="--eco-dx:22cqw;--eco-dy:32cqw;" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
+            <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--eco-dx:-22cqw;--eco-dy:32cqw;" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
+            <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon" style="--eco-dx:-36cqw;--eco-dy:-12cqw;" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
+          </div>
+          <div class="hero-ecosystem__tooltip" id="hero-ecosystem-tooltip" role="tooltip" aria-live="polite" hidden></div>
         </div>
       </div>
     </section>
@@ -1505,6 +1556,106 @@
         });
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
       els.forEach(function (el) { io.observe(el); });
+    })();
+
+    (function () {
+      var root = document.getElementById('hero-ecosystem');
+      if (!root) return;
+      var tooltip = document.getElementById('hero-ecosystem-tooltip');
+      var nodes = root.querySelectorAll('.hero-ecosystem__node');
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+      var coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
+      var activeNode = null;
+      var mobilePrimed = null;
+
+      function ecoLabel(node) {
+        var kind = node.getAttribute('data-eco-kind');
+        var name = node.getAttribute('data-eco-name') || '';
+        if (node.classList.contains('hero-ecosystem__node--soon')) return 'Próximamente';
+        if (kind === 'service') return 'Explorar ' + name + ' →';
+        return 'Conoce ' + name + ' →';
+      }
+
+      function showTooltip(node) {
+        if (!tooltip) return;
+        var text = ecoLabel(node);
+        tooltip.textContent = '';
+        tooltip.appendChild(document.createTextNode(text));
+        if (node.classList.contains('hero-ecosystem__node--link') && node.href) {
+          var cta = document.createElement('a');
+          cta.href = node.href;
+          cta.textContent = 'Ir ahora →';
+          cta.setAttribute('data-eco-cta', '1');
+          tooltip.appendChild(cta);
+        }
+        tooltip.hidden = false;
+        tooltip.classList.add('is-visible');
+        root.classList.add('is-active');
+        nodes.forEach(function (n) { n.classList.toggle('is-tooltip-open', n === node); });
+        activeNode = node;
+      }
+
+      function hideTooltip() {
+        if (!tooltip) return;
+        tooltip.classList.remove('is-visible');
+        tooltip.hidden = true;
+        tooltip.textContent = '';
+        root.classList.remove('is-active');
+        nodes.forEach(function (n) { n.classList.remove('is-tooltip-open'); });
+        activeNode = null;
+        mobilePrimed = null;
+      }
+
+      function bindDesktop(node) {
+        node.addEventListener('mouseenter', function () { showTooltip(node); });
+        node.addEventListener('mouseleave', function () {
+          if (activeNode === node) hideTooltip();
+        });
+        node.addEventListener('focus', function () { showTooltip(node); });
+        node.addEventListener('blur', function () {
+          if (activeNode === node && !root.contains(document.activeElement)) hideTooltip();
+        });
+      }
+
+      function bindMobile(node) {
+        node.addEventListener('click', function (e) {
+          if (!coarsePointer.matches) return;
+          if (node.classList.contains('hero-ecosystem__node--soon')) {
+            e.preventDefault();
+            showTooltip(node);
+            return;
+          }
+          if (mobilePrimed !== node) {
+            e.preventDefault();
+            mobilePrimed = node;
+            showTooltip(node);
+            return;
+          }
+          hideTooltip();
+        });
+      }
+
+      nodes.forEach(function (node) {
+        bindDesktop(node);
+        bindMobile(node);
+      });
+
+      root.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') hideTooltip();
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!root.contains(e.target)) hideTooltip();
+      });
+
+      if (tooltip) {
+        tooltip.addEventListener('click', function (e) {
+          if (e.target && e.target.getAttribute('data-eco-cta') === '1') hideTooltip();
+        });
+      }
+
+      finePointer.addEventListener('change', hideTooltip);
+      coarsePointer.addEventListener('change', hideTooltip);
     })();
   </script>
 </body>
