@@ -41,6 +41,7 @@
             --card-border: rgba(56, 189, 248, 0.22);
             --max: 1180px;
             --orbit: 168px;
+            --eco-card-w: 108px;
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -179,7 +180,7 @@
         @keyframes node-float { 0%, 100% { margin-top: 0; } 50% { margin-top: -4px; } }
         .eco-card {
             position: relative;
-            width: 108px; padding: 10px 10px 12px;
+            width: var(--eco-card-w); padding: 10px 10px 12px;
             border-radius: 12px;
             background: rgba(10, 22, 42, 0.88);
             border: 1px solid rgba(56, 189, 248, 0.28);
@@ -376,50 +377,44 @@
 
         @media (max-width: 1024px) {
             .hero { grid-template-columns: 1fr; gap: 20px; }
+            .hero-band { overflow: visible; }
             .hero-lead { max-width: none; }
-            .eco-wrap { min-height: auto; padding: 4px 0 8px; width: 100%; }
-            :root { --orbit: 0px; }
-            .eco-visual { aspect-ratio: auto; width: 100%; max-width: 520px; }
-            .eco-svg { display: none; }
-            .eco-stack {
-                position: relative; inset: auto; height: auto;
-                display: flex; flex-direction: column; align-items: stretch; gap: 0;
-                padding: 18px 14px 14px;
-                border-radius: 20px;
-                background:
-                    radial-gradient(ellipse 80% 45% at 50% 0%, rgba(56, 189, 248, 0.14), transparent 70%),
-                    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(139, 92, 246, 0.08), transparent 65%),
-                    rgba(8, 16, 32, 0.75);
-                border: 1px solid rgba(56, 189, 248, 0.28);
-                box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(94, 234, 212, 0.08);
+            .eco-wrap {
+                min-height: auto; padding: 0; width: 100%;
+                display: flex; justify-content: center;
             }
-            .eco-stack::after {
-                content: ""; pointer-events: none;
-                position: absolute; left: 50%; top: 88px; transform: translateX(-50%);
-                width: 72%; height: 1px;
-                background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.35), transparent);
+            :root {
+                --orbit: clamp(108px, 34vw, 152px);
+                --eco-card-w: clamp(62px, 20vw, 86px);
+            }
+            .eco-visual {
+                aspect-ratio: 1;
+                width: min(100%, 420px);
+                max-width: min(94vw, 420px);
+            }
+            .eco-svg { display: block; opacity: .85; }
+            .eco-stack {
+                position: absolute; inset: 0; height: 100%;
+                padding: 0; border: none; background: none; box-shadow: none;
             }
             .eco-core {
-                position: relative; left: auto; top: auto; transform: none;
-                width: 96px; height: 96px; margin: 0 auto 14px; flex-shrink: 0;
+                width: clamp(72px, 23vw, 96px);
+                height: clamp(72px, 23vw, 96px);
             }
-            .eco-core-icon { width: 30px; height: 30px; margin-bottom: 4px; }
-            .eco-core strong { font-size: .74rem; }
-            .eco-nodes {
-                position: relative; display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
-                width: 100%;
+            .eco-core-icon { width: 28px; height: 28px; margin-bottom: 4px; }
+            .eco-core strong { font-size: .7rem; }
+            .eco-core::before { inset: -10px; }
+            .eco-nodes { position: absolute; inset: 0; }
+            .eco-node { animation: node-float 6s ease-in-out infinite; }
+            .eco-card { padding: 7px 5px 8px; border-radius: 10px; }
+            .eco-card-ico { width: 22px; height: 22px; margin-bottom: 3px; }
+            .eco-card-ico svg { width: 16px; height: 16px; }
+            .eco-card-name { font-size: clamp(.5rem, 2.6vw, .62rem); line-height: 1.15; }
+            .eco-status { width: 5px; height: 5px; margin-top: 3px; }
+            .eco-tip { font-size: .62rem; max-width: 160px; }
+            .eco-card:active .eco-tip, .eco-card:focus-within .eco-tip {
+                opacity: 1; transform: translateX(-50%) scale(1);
             }
-            .eco-node { position: relative; left: auto; top: auto; transform: none !important; animation: none; }
-            .eco-card {
-                width: 100%; padding: 10px 8px;
-                display: flex; flex-direction: column; align-items: center;
-            }
-            .eco-card-ico { width: 24px; height: 24px; margin-bottom: 4px; }
-            .eco-card-ico svg { width: 18px; height: 18px; }
-            .eco-card-name { font-size: .64rem; }
-            .eco-status { width: 5px; height: 5px; margin-top: 4px; }
-            .eco-tip { display: none; }
             .attrs-grid { grid-template-columns: repeat(2, 1fr); }
             .attr { border-right: none; border-bottom: 1px solid var(--line); }
             .cards-4 { grid-template-columns: repeat(2, 1fr); }
@@ -430,9 +425,14 @@
         @media (max-width: 560px) {
             .wrap, .header-inner, .hero { padding-left: 20px; padding-right: 20px; }
             .attrs-grid, .cards-4, .hub-grid { grid-template-columns: 1fr; }
-            .eco-nodes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
-            .eco-stack { padding: 14px 10px 10px; border-radius: 16px; }
-            .eco-core { width: 84px; height: 84px; margin-bottom: 10px; }
+            :root {
+                --orbit: clamp(94px, 29vw, 118px);
+                --eco-card-w: clamp(54px, 17vw, 68px);
+            }
+            .eco-visual { max-width: min(96vw, 340px); }
+            .eco-core { width: 68px; height: 68px; }
+            .eco-core-icon { width: 24px; height: 24px; }
+            .eco-core strong { font-size: .62rem; }
             .hero-actions .btn { width: 100%; }
         }
         @media (prefers-reduced-motion: reduce) {
