@@ -96,14 +96,15 @@
     }
     .header-brand {
       display: flex; align-items: center; gap: 12px; flex-shrink: 0; min-width: 0;
+      min-height: 40px;
     }
     .logo {
       display: flex; align-items: center; text-decoration: none; flex-shrink: 0;
       padding: 4px 0; border-radius: 4px;
     }
     .logo img {
-      display: block; width: auto; height: auto; max-height: 34px;
-      filter: brightness(1.06) contrast(1.04);
+      display: block; width: auto; height: auto; max-height: 40px;
+      object-fit: contain; object-position: left center;
     }
     .logo:focus-visible { outline-offset: 4px; }
     .header-partner-sep {
@@ -729,7 +730,7 @@
     }
     @media (max-width: 640px) {
       .header-partner-sep, .aws-partner-badge { display: none; }
-      .logo img { max-height: 30px; }
+      .logo img { max-height: 34px; }
       .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
       .stack-constellation { min-height: 520px; }
@@ -756,7 +757,7 @@
     <div class="header-content">
       <div class="header-brand">
         <a href="https://www.mastersaws.com/" class="logo" aria-label="MasterAWS inicio">
-          <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" alt="MasterAWS" width="160" height="34" />
+          <img src="https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png" alt="MasterAWS" width="177" height="45" decoding="async" />
         </a>
         <span class="header-partner-sep" aria-hidden="true"></span>
         <a href="https://www.mastersaws.com/nosotros/" class="aws-partner-badge" title="AWS Partner">
