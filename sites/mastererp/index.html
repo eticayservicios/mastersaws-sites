@@ -217,6 +217,7 @@
             transition: opacity .2s, transform .2s;
         }
         .eco-card:hover .eco-tip { opacity: 1; transform: translateX(-50%) scale(1); }
+        .eco-stack { position: absolute; inset: 0; width: 100%; height: 100%; }
 
         .attrs {
             border-bottom: 1px solid var(--line);
@@ -374,19 +375,50 @@
         .whatsapp-float svg { width: 28px; height: 28px; }
 
         @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; }
+            .hero { grid-template-columns: 1fr; gap: 20px; }
             .hero-lead { max-width: none; }
-            .eco-wrap { min-height: auto; padding: 8px 0 0; }
+            .eco-wrap { min-height: auto; padding: 4px 0 8px; width: 100%; }
             :root { --orbit: 0px; }
-            .eco-visual { aspect-ratio: auto; width: 100%; max-width: 480px; }
+            .eco-visual { aspect-ratio: auto; width: 100%; max-width: 520px; }
             .eco-svg { display: none; }
-            .eco-core { position: relative; left: auto; top: auto; transform: none; margin: 0 auto 20px; }
+            .eco-stack {
+                position: relative; inset: auto; height: auto;
+                display: flex; flex-direction: column; align-items: stretch; gap: 0;
+                padding: 18px 14px 14px;
+                border-radius: 20px;
+                background:
+                    radial-gradient(ellipse 80% 45% at 50% 0%, rgba(56, 189, 248, 0.14), transparent 70%),
+                    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(139, 92, 246, 0.08), transparent 65%),
+                    rgba(8, 16, 32, 0.75);
+                border: 1px solid rgba(56, 189, 248, 0.28);
+                box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(94, 234, 212, 0.08);
+            }
+            .eco-stack::after {
+                content: ""; pointer-events: none;
+                position: absolute; left: 50%; top: 88px; transform: translateX(-50%);
+                width: 72%; height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(94, 234, 212, 0.35), transparent);
+            }
+            .eco-core {
+                position: relative; left: auto; top: auto; transform: none;
+                width: 96px; height: 96px; margin: 0 auto 14px; flex-shrink: 0;
+            }
+            .eco-core-icon { width: 30px; height: 30px; margin-bottom: 4px; }
+            .eco-core strong { font-size: .74rem; }
             .eco-nodes {
                 position: relative; display: grid;
-                grid-template-columns: repeat(2, 1fr); gap: 10px;
+                grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+                width: 100%;
             }
             .eco-node { position: relative; left: auto; top: auto; transform: none !important; animation: none; }
-            .eco-card { width: 100%; }
+            .eco-card {
+                width: 100%; padding: 10px 8px;
+                display: flex; flex-direction: column; align-items: center;
+            }
+            .eco-card-ico { width: 24px; height: 24px; margin-bottom: 4px; }
+            .eco-card-ico svg { width: 18px; height: 18px; }
+            .eco-card-name { font-size: .64rem; }
+            .eco-status { width: 5px; height: 5px; margin-top: 4px; }
             .eco-tip { display: none; }
             .attrs-grid { grid-template-columns: repeat(2, 1fr); }
             .attr { border-right: none; border-bottom: 1px solid var(--line); }
@@ -397,7 +429,10 @@
         }
         @media (max-width: 560px) {
             .wrap, .header-inner, .hero { padding-left: 20px; padding-right: 20px; }
-            .attrs-grid, .cards-4, .hub-grid, .eco-nodes { grid-template-columns: 1fr; }
+            .attrs-grid, .cards-4, .hub-grid { grid-template-columns: 1fr; }
+            .eco-nodes { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+            .eco-stack { padding: 14px 10px 10px; border-radius: 16px; }
+            .eco-core { width: 84px; height: 84px; margin-bottom: 10px; }
             .hero-actions .btn { width: 100%; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -458,6 +493,7 @@
                                 <line x1="260" y1="260" x2="126" y2="122" class="eco-line"/>
                             </g>
                         </svg>
+                        <div class="eco-stack">
                         <div class="eco-core" aria-hidden="true">
                             <div class="eco-core-icon"></div>
                             <strong>MasterERP</strong>
@@ -493,6 +529,7 @@
                             <div class="eco-node" style="--a:234deg;--d:2.7s">
                                 <div class="eco-card"><div class="eco-card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2 4 4 .5-3 3 .8 4.5L12 13l-3.8 2 1-4.5-3-3 4-.5z"/></svg></div><div class="eco-card-name">IA Empresarial</div><div class="eco-status"></div><p class="eco-tip">Alertas, consultas y recomendaciones basadas en datos.</p></div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
