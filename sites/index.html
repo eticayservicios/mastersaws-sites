@@ -1203,18 +1203,37 @@
         padding: 6px 8px;
       }
       .site-footer { padding-top: 48px; }
+      /* Dos columnas independientes: izq Masters+Soluciones, der Servicios+Contacto */
       .footer-inner {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 28px 20px;
+        display: flow-root;
         padding: 0 16px;
         max-width: 100%;
+      }
+      .footer-inner > .footer-col:not(.footer-logo) {
+        width: calc(50% - 10px);
+        min-width: 0;
+        box-sizing: border-box;
+      }
+      .footer-inner > .footer-col:nth-child(1),
+      .footer-inner > .footer-col:nth-child(3) {
+        float: left;
+        clear: left;
+        margin-bottom: 28px;
+      }
+      .footer-inner > .footer-col:nth-child(2),
+      .footer-inner > .footer-col:nth-child(4) {
+        float: right;
+        clear: right;
+        margin-bottom: 28px;
       }
       .footer-col { min-width: 0; }
       .footer-col h2 { margin-bottom: 14px; }
       .footer-col a { overflow-wrap: anywhere; }
       .footer-col.footer-logo {
-        grid-column: 1 / -1;
-        justify-self: center;
+        clear: both;
+        float: none;
+        width: 100%;
+        margin-bottom: 0;
         text-align: center;
       }
       .footer-logo img { width: 100px; }
@@ -1252,7 +1271,6 @@
       .btn { width: 100%; }
       .transform-nodes { grid-template-columns: 1fr; }
       .feature-band { padding: 24px 18px; }
-      .footer-inner { gap: 24px 14px; }
       .footer-col h2 { margin-bottom: 12px; font-size: 0.68rem; }
       .footer-col a { font-size: 0.9rem; }
       .footer-col li { margin-bottom: 8px; }
