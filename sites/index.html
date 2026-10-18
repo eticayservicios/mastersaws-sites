@@ -1087,7 +1087,7 @@
         position: fixed; top: 0; right: 0; width: min(320px, 88vw); height: 100dvh; max-height: 100vh;
         background: linear-gradient(180deg, #0a0c10 0%, #050708 100%);
         border-left: 1px solid rgba(0, 232, 223, 0.22);
-        padding: 88px 20px 24px; z-index: 999;
+        padding: calc(var(--header-h) + 8px) 20px 24px; z-index: 999;
         margin-left: 0; flex-direction: column; align-items: stretch; gap: 12px;
         transform: translateX(100%); transition: transform 0.25s ease;
         overflow: hidden;
@@ -1131,10 +1131,45 @@
         background: none; border: none; color: var(--brand); cursor: pointer;
       }
       .nav-close svg { width: 28px; height: 28px; }
-      :root { --header-h: 72px; }
+      :root { --header-h: 96px; }
+      .header-content {
+        display: grid;
+        grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr);
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 2px 0;
+        padding: 6px 12px 8px;
+        min-height: unset;
+      }
+      .header-brand { display: contents; }
+      .header-brand .logo {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+      }
+      .header-partner-sep { display: none; }
+      .aws-partner-badge.header-partner {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-self: center;
+        min-height: 44px;
+        padding: 6px 14px;
+        align-items: center;
+      }
+      .header-partner__label {
+        font-size: 0.58rem;
+        letter-spacing: 0.14em;
+        color: rgba(248, 250, 252, 0.48);
+      }
+      .hamburger {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+        align-self: center;
+        margin-left: 0;
+      }
     }
     @media (max-width: 640px) {
-      .header-partner-sep, .header-partner { display: none; }
       .logo img { max-height: 34px; }
       .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid, .servicios-editorial__grid, .product-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
@@ -1166,7 +1201,7 @@
           <img src="https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png" alt="MasterAWS" width="177" height="45" decoding="async" />
         </a>
         <span class="header-partner-sep" aria-hidden="true"></span>
-        <a href="https://www.mastersaws.com/nosotros/" class="aws-partner-badge header-partner" title="AWS Partner">
+        <a href="https://partners.amazonaws.com/partners/0018W00002N5hKNQAZ/mastersaws" class="aws-partner-badge header-partner" target="_blank" rel="noopener noreferrer" aria-label="MasterAWS en AWS Partner Network">
           <span class="header-partner__label">AWS Partner</span>
         </a>
       </div>
