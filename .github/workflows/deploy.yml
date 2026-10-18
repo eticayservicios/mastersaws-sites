@@ -123,7 +123,7 @@ jobs:
               --cache-control "public, max-age=60"
           fi
           # Productos comerciales en la raiz del sitio (no bajo /servicios/)
-          ROOT_LANDINGS="mastervpn tarjetas-nfc webinar-automatizacion-ia mastererp"
+          ROOT_LANDINGS="mastervpn tarjetas-nfc webinar-automatizacion-ia mastererp masteruonify"
           for dir in sites/*/; do
             [ -d "$dir" ] || continue
             name=$(basename "$dir")
@@ -180,7 +180,7 @@ jobs:
           chmod +x scripts/publish-s3-directory-indexes.sh
           BUCKET="${{ steps.target.outputs.s3_bucket }}"
           PREFIX="${{ steps.target.outputs.path_prefix }}"
-          ROOT_LANDINGS="mastervpn tarjetas-nfc webinar-automatizacion-ia mastererp"
+          ROOT_LANDINGS="mastervpn tarjetas-nfc webinar-automatizacion-ia mastererp masteruonify"
 
           # indices bajo /servicios/ (u otro prefijo) excepto landings de raiz
           TMP_SITES=$(mktemp -d)
