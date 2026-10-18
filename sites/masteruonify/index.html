@@ -223,7 +223,16 @@
             font-weight: 700; line-height: 1.12; letter-spacing: -0.02em;
             margin-bottom: 22px; max-width: 16ch;
         }
-        .mu-hero-lead { font-size: 1.08rem; color: var(--muted); max-width: 34rem; margin-bottom: 32px; }
+        .mu-hero-lead { font-size: 1.08rem; color: var(--muted); max-width: 34rem; margin-bottom: 18px; }
+        .mu-avail {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+            color: var(--brand-bright);
+            padding: 8px 14px; margin-bottom: 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 232, 223, 0.35);
+            background: rgba(0, 232, 223, 0.08);
+        }
         .mu-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
         .mu-network {
@@ -231,20 +240,27 @@
         }
         .mu-network svg { width: 100%; height: 100%; display: block; }
         .mu-network__line {
-            fill: none; stroke: rgba(0, 232, 223, 0.28); stroke-width: 1;
+            fill: none; stroke: rgba(0, 232, 223, 0.38); stroke-width: 1.1;
             stroke-dasharray: 4 10;
             animation: mu-flow 7s linear infinite;
         }
         .mu-network__core {
             position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-            width: 108px; height: 108px; border-radius: 50%;
+            width: 124px; min-height: 124px; border-radius: 50%;
             display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-            background: radial-gradient(circle at 30% 25%, rgba(0, 232, 223, 0.2), transparent 55%),
+            background: radial-gradient(circle at 30% 25%, rgba(0, 232, 223, 0.22), transparent 55%),
                 linear-gradient(145deg, rgba(4, 24, 32, 0.95), rgba(3, 5, 8, 0.98));
-            border: 1px solid var(--border-strong);
-            box-shadow: 0 0 40px rgba(0, 232, 223, 0.12);
-            font-family: Poppins, sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em;
-            padding: 8px;
+            border: 1px solid rgba(0, 232, 223, 0.32);
+            box-shadow: 0 0 48px rgba(0, 232, 223, 0.16), inset 0 0 24px rgba(0, 232, 223, 0.06);
+            padding: 12px 10px;
+        }
+        .mu-network__core .mu-core__name {
+            font-family: Poppins, sans-serif; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 0.02em; line-height: 1.15; white-space: nowrap;
+        }
+        .mu-network__core .mu-core__micro {
+            margin-top: 6px; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.06em;
+            color: var(--muted); text-transform: none;
         }
         .mu-node {
             position: absolute; transform: translate(-50%, -50%);
@@ -304,27 +320,92 @@
         .mu-pillar--center h3 { color: var(--brand-bright); font-size: 1.35rem; }
         .mu-connector { display: none; }
 
-        .mu-hub {
-            padding: 36px 32px; border-radius: 16px;
-            border: 1px solid var(--border-strong);
-            background: linear-gradient(135deg, rgba(0, 232, 223, 0.08), rgba(4, 24, 32, 0.6));
-            margin-bottom: 32px;
+        .mu-section h2.mu-section__wide { max-width: 28ch; }
+        .mu-label {
+            display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--brand-bright); margin-bottom: 12px;
         }
-        .mu-hub h3 { font-family: Poppins, sans-serif; font-size: 1.5rem; margin-bottom: 12px; color: var(--brand-bright); }
-        .mu-hub p { color: var(--muted); max-width: 52rem; }
+        .mu-product-block {
+            display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+            gap: clamp(28px, 4vw, 48px); align-items: center;
+            padding: clamp(28px, 4vw, 40px); border-radius: 16px;
+            border: 1px solid var(--border-strong);
+            background: linear-gradient(135deg, rgba(0, 232, 223, 0.09), rgba(4, 24, 32, 0.65));
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+        .mu-product-block h3 {
+            font-family: Poppins, sans-serif; font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+            margin-bottom: 14px; color: var(--brand-bright);
+        }
+        .mu-product-block > div > p { color: var(--muted); font-size: 0.98rem; margin-bottom: 22px; max-width: 36rem; }
+        .mu-cap-chips { display: flex; flex-wrap: wrap; gap: 10px; list-style: none; }
+        .mu-cap-chips li {
+            padding: 10px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 600;
+            border: 1px solid rgba(0, 232, 223, 0.22);
+            background: rgba(0, 0, 0, 0.25); color: rgba(255,255,255,0.9);
+        }
+        .mu-ficha {
+            position: relative; min-height: 280px; padding: 20px;
+            border-radius: 14px; border: 1px solid rgba(0, 232, 223, 0.2);
+            background: rgba(3, 8, 14, 0.75);
+        }
+        .mu-ficha__card {
+            position: relative; z-index: 2; max-width: 220px; margin: 0 auto;
+            padding: 16px; border-radius: 12px;
+            border: 1px solid rgba(0, 232, 223, 0.28);
+            background: rgba(6, 16, 24, 0.95);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
+        .mu-ficha__thumb {
+            height: 56px; border-radius: 8px; margin-bottom: 12px;
+            background: linear-gradient(135deg, rgba(0, 232, 223, 0.12), rgba(4, 24, 32, 0.8));
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .mu-ficha__title { font-size: 0.8rem; font-weight: 700; margin-bottom: 8px; }
+        .mu-ficha__meta { font-size: 0.65rem; color: var(--muted); line-height: 1.5; }
+        .mu-ficha__status {
+            display: inline-block; margin-top: 10px; font-size: 0.58rem; font-weight: 700;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            padding: 4px 8px; border-radius: 6px;
+            background: var(--brand-dim); color: var(--brand-bright);
+        }
+        .mu-ficha svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+        .mu-ficha__sat {
+            position: absolute; z-index: 1; font-size: 0.62rem; font-weight: 600;
+            padding: 6px 10px; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(8, 14, 20, 0.88); color: rgba(255,255,255,0.75);
+        }
+        .mu-ficha__sat--c { top: 18%; right: 6%; }
+        .mu-ficha__sat--e { bottom: 22%; left: 4%; }
+        .mu-ficha__sat--i { bottom: 12%; right: 10%; }
 
-        .mu-modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+        .mu-section--subtle { padding-top: clamp(48px, 6vw, 72px); padding-bottom: clamp(48px, 6vw, 72px); }
+        .mu-section--subtle h2 { font-size: clamp(1.25rem, 2vw, 1.55rem); max-width: none; color: rgba(255,255,255,0.85); }
+        .mu-section--subtle .mu-lead { font-size: 0.92rem; margin-bottom: 24px; max-width: 40rem; opacity: 0.85; }
+        .mu-modules {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px;
+            max-width: 920px;
+        }
         .mu-mod {
-            display: flex; align-items: center; justify-content: space-between; gap: 12px;
-            padding: 14px 16px; border-radius: 10px;
-            background: rgba(3, 8, 14, 0.8); border: 1px solid var(--border);
-            font-size: 0.88rem; font-weight: 500;
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            padding: 10px 12px; border-radius: 8px;
+            background: rgba(3, 8, 14, 0.45); border: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.78rem; font-weight: 500; color: rgba(255,255,255,0.65);
         }
         .mu-mod span.badge {
-            flex-shrink: 0; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-            padding: 4px 8px; border-radius: 6px;
-            background: rgba(255, 255, 255, 0.06); color: rgba(255,255,255,0.55);
+            flex-shrink: 0; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.05em;
+            padding: 3px 6px; border-radius: 4px;
+            background: rgba(255, 255, 255, 0.04); color: rgba(255,255,255,0.4);
         }
+
+        .mu-adoption { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; list-style: none; }
+        .mu-adopt {
+            padding: 26px 22px; border-radius: 14px;
+            background: var(--card); border: 1px solid var(--border);
+        }
+        .mu-adopt h3 { font-size: 1.05rem; margin-bottom: 10px; color: var(--brand-bright); }
+        .mu-adopt p { font-size: 0.9rem; color: var(--muted); }
 
         .mu-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; list-style: none; counter-reset: step; }
         .mu-step {
@@ -392,7 +473,8 @@
         @media (max-width: 1024px) {
             .mu-hero__inner { grid-template-columns: 1fr; }
             .mu-hero h1 { max-width: none; }
-            .mu-cards-3, .mu-steps { grid-template-columns: repeat(2, 1fr); }
+            .mu-cards-3, .mu-steps, .mu-adoption { grid-template-columns: repeat(2, 1fr); }
+            .mu-product-block { grid-template-columns: 1fr; }
             .mu-alliance { grid-template-columns: 1fr; }
             .mu-connector { display: block; width: 2px; height: 24px; margin: 0 auto; background: linear-gradient(var(--brand), transparent); opacity: 0.4; }
         }
@@ -437,11 +519,13 @@
         }
         @media (max-width: 640px) {
             :root { --header-h: 58px; }
-            .mu-cards-3, .mu-steps { grid-template-columns: 1fr; }
+            .mu-cards-3, .mu-steps, .mu-adoption { grid-template-columns: 1fr; }
             .mu-hero-actions { flex-direction: column; }
             .mu-hero-actions .btn { width: 100%; }
             .mu-network { max-width: min(94vw, 340px); min-height: 320px; aspect-ratio: auto; }
-            .mu-network__core { width: 88px; height: 88px; font-size: 0.68rem; }
+            .mu-network__core { width: 112px; min-height: 112px; }
+            .mu-network__core .mu-core__name { font-size: 0.62rem; }
+            .mu-network__core .mu-core__micro { font-size: 0.52rem; }
             .mu-node { min-width: 108px; max-width: 128px; padding: 10px 8px; font-size: 0.64rem; }
             .mu-node--a { top: 6%; left: 50%; }
             .mu-node--b { top: 42%; left: 92%; }
@@ -522,10 +606,11 @@
                 <div>
                     <p class="mu-eyebrow">MASTERAWS <span aria-hidden="true">×</span> UONIFY</p>
                     <h1 id="hero-title">Tu operación conectada. Tu contexto listo para la IA.</h1>
-                    <p class="mu-hero-lead">MasterUonify une la plataforma modular de Uonify con la experiencia de MasterAWS en cloud, integración, seguridad y adopción de inteligencia artificial.</p>
+                    <p class="mu-hero-lead">MasterUonify comienza con Product Hub: una base organizada para conectar productos, procesos y equipos, preparada para evolucionar con IA junto a MasterAWS y Uonify.</p>
+                    <p class="mu-avail">Disponible hoy · Product Hub</p>
                     <div class="mu-hero-actions">
-                        <a class="btn btn-primary" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20agendar%20un%20diagn%C3%B3stico%20estrat%C3%A9gico%20con%20MasterAWS." target="_blank" rel="noopener noreferrer">Hablemos de MasterUonify</a>
-                        <a class="btn btn-ghost" href="#problema">Explorar la solución</a>
+                        <a class="btn btn-primary" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20conocer%20MasterUonify%20y%20evaluar%20Product%20Hub%20para%20mi%20negocio." target="_blank" rel="noopener noreferrer">Conversemos sobre Product Hub</a>
+                        <a class="btn btn-ghost" href="#product-hub">Explorar la solución</a>
                     </div>
                 </div>
                 <div class="mu-network" role="img" aria-label="Red conceptual: núcleo MasterUonify conectado a productos y datos, procesos y equipos, e IA con contexto">
@@ -534,7 +619,10 @@
                         <line class="mu-network__line" x1="200" y1="200" x2="340" y2="170" style="animation-delay:-2s"/>
                         <line class="mu-network__line" x1="200" y1="200" x2="70" y2="290" style="animation-delay:-4s"/>
                     </svg>
-                    <div class="mu-network__core">Master<br>Uonify</div>
+                    <div class="mu-network__core">
+                        <span class="mu-core__name">MasterUonify</span>
+                        <span class="mu-core__micro">Productos · Procesos · IA</span>
+                    </div>
                     <div class="mu-node mu-node--a" tabindex="0">Productos y datos<small>Referencias, atributos, contenido</small></div>
                     <div class="mu-node mu-node--b" tabindex="0">Procesos y equipos<small>Flujos, roles, operación</small></div>
                     <div class="mu-node mu-node--c" tabindex="0">IA con contexto<small>Gobierno y adopción progresiva</small></div>
@@ -576,23 +664,38 @@
             </div>
         </section>
 
-        <section class="mu-section" id="productos" aria-labelledby="productos-title">
+        <section class="mu-section mu-section--alt" id="product-hub" aria-labelledby="productos-title">
             <div class="wrap">
-                <h2 id="productos-title">Empieza por tus productos. Conecta el resto de tu negocio.</h2>
-                <div class="mu-hub">
-                    <h3>Product Hub</h3>
-                    <p>Centraliza productos, referencias, categorías, atributos, variantes, imágenes y contenido para que la información deje de estar fragmentada.</p>
-                </div>
-                <p class="mu-lead" style="margin-bottom:20px;font-size:0.92rem;">Evolución del ecosistema — módulos en desarrollo, no disponibles aún como oferta cerrada:</p>
-                <div class="mu-modules">
-                    <div class="mu-mod"><span>ERP</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Analytics</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Capture &amp; Audit</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Agents</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Academy</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Logistics</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Factory &amp; Suppliers</span><span class="badge">En desarrollo</span></div>
-                    <div class="mu-mod"><span>Nexus / Integraciones</span><span class="badge">En desarrollo</span></div>
+                <h2 id="productos-title" class="mu-section__wide">Empieza por el contexto que mueve tu negocio.</h2>
+                <p class="mu-lead">Product Hub centraliza la información que hoy vive dispersa entre archivos, catálogos, canales y sistemas. Es el punto de partida para operar con claridad e incorporar IA con propósito.</p>
+                <div class="mu-product-block">
+                    <div>
+                        <span class="mu-label">Oferta inicial</span>
+                        <h3>Product Hub</h3>
+                        <p>Organiza productos, referencias, categorías, atributos, variantes, imágenes y contenido en una base única, lista para que equipos y procesos trabajen con el mismo contexto.</p>
+                        <ul class="mu-cap-chips">
+                            <li>Productos y referencias</li>
+                            <li>Categorías y atributos</li>
+                            <li>Variantes y contenido</li>
+                            <li>Información lista para conectar</li>
+                        </ul>
+                    </div>
+                    <div class="mu-ficha" role="img" aria-label="Ficha de producto conectada a canales, equipos e IA">
+                        <svg viewBox="0 0 320 280" aria-hidden="true">
+                            <line x1="160" y1="140" x2="248" y2="52" stroke="rgba(0,232,223,0.35)" stroke-width="1" stroke-dasharray="3 8"/>
+                            <line x1="160" y1="140" x2="48" y2="200" stroke="rgba(0,232,223,0.35)" stroke-width="1" stroke-dasharray="3 8"/>
+                            <line x1="160" y1="140" x2="248" y2="228" stroke="rgba(0,232,223,0.35)" stroke-width="1" stroke-dasharray="3 8"/>
+                        </svg>
+                        <span class="mu-ficha__sat mu-ficha__sat--c">Canales</span>
+                        <span class="mu-ficha__sat mu-ficha__sat--e">Equipos</span>
+                        <span class="mu-ficha__sat mu-ficha__sat--i">IA</span>
+                        <div class="mu-ficha__card">
+                            <div class="mu-ficha__thumb" aria-hidden="true"></div>
+                            <div class="mu-ficha__title">Referencia SKU-2847</div>
+                            <div class="mu-ficha__meta">Categoría: Operación · 3 variantes<br>Atributos: material, capacidad, norma</div>
+                            <span class="mu-ficha__status">Listo para conectar</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -609,6 +712,23 @@
             </div>
         </section>
 
+        <section class="mu-section mu-section--subtle" id="evolucion" aria-labelledby="evolucion-title">
+            <div class="wrap">
+                <h2 id="evolucion-title">El ecosistema puede evolucionar progresivamente</h2>
+                <p class="mu-lead">A medida que la operación madura, MasterUonify puede ampliar sus capacidades. Estos módulos están en evolución y no se presentan como oferta cerrada.</p>
+                <div class="mu-modules">
+                    <div class="mu-mod"><span>ERP</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Analytics</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Capture &amp; Audit</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Agents</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Academy</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Logistics</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Factory &amp; Suppliers</span><span class="badge">En desarrollo</span></div>
+                    <div class="mu-mod"><span>Nexus / Integraciones</span><span class="badge">En desarrollo</span></div>
+                </div>
+            </div>
+        </section>
+
         <section class="mu-section" id="ia" aria-labelledby="ia-title">
             <div class="wrap">
                 <h2 id="ia-title">IA útil empieza con contexto confiable</h2>
@@ -622,10 +742,30 @@
             </div>
         </section>
 
+        <section class="mu-section mu-section--alt" id="como-empezamos" aria-labelledby="adopcion-title">
+            <div class="wrap">
+                <h2 id="adopcion-title" class="mu-section__wide">Una adopción progresiva, no una transformación a ciegas.</h2>
+                <ol class="mu-adoption">
+                    <li class="mu-adopt">
+                        <h3>Entendemos</h3>
+                        <p>Identificamos información crítica, procesos y oportunidades de conexión.</p>
+                    </li>
+                    <li class="mu-adopt">
+                        <h3>Ordenamos</h3>
+                        <p>Diseñamos Product Hub como una base útil para el equipo y la operación diaria.</p>
+                    </li>
+                    <li class="mu-adopt">
+                        <h3>Conectamos</h3>
+                        <p>Con MasterAWS acompañamos integración, cloud, seguridad y los primeros casos de IA con gobierno.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
         <section class="mu-cta" id="contacto" aria-labelledby="cta-title">
             <h2 id="cta-title">Conectemos la base de tu próxima evolución</h2>
             <p>Conversemos sobre cómo MasterUonify puede ordenar tu operación y preparar casos de uso reales de IA.</p>
-            <a class="btn btn-primary" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20agendar%20un%20diagn%C3%B3stico%20estrat%C3%A9gico%20con%20MasterAWS." target="_blank" rel="noopener noreferrer">Hablar por WhatsApp</a>
+            <a class="btn btn-primary" href="https://wa.me/584129837999?text=Hola%2C%20quiero%20conocer%20MasterUonify%20y%20evaluar%20Product%20Hub%20para%20mi%20negocio." target="_blank" rel="noopener noreferrer">Conversemos sobre Product Hub</a>
         </section>
     </main>
 
