@@ -142,19 +142,6 @@
     .aws-partner-badge.header-partner:focus-visible .header-partner__label {
       color: #bdbdbd;
     }
-    .aws-partner-badge.footer-partner {
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; border-radius: 4px;
-      transition: opacity 0.2s ease;
-    }
-    .aws-partner-badge.footer-partner::before,
-    .aws-partner-badge.footer-partner::after { content: none; display: none; }
-    .aws-partner-badge.footer-partner:hover,
-    .aws-partner-badge.footer-partner:focus-visible { opacity: 1; }
-    .aws-partner-badge.footer-partner:hover .header-partner__label,
-    .aws-partner-badge.footer-partner:focus-visible .header-partner__label {
-      color: #bdbdbd;
-    }
     .nav-wrapper {
       grid-column: 3;
       justify-self: end;
@@ -484,28 +471,81 @@
     }
     .hero-bg__starfield {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      opacity: 0.3; pointer-events: none;
-      filter: drop-shadow(0 0 1px rgba(190, 255, 252, 0.088));
+      opacity: 0.32; pointer-events: none;
+      filter: drop-shadow(0 0 1.2px rgba(190, 255, 252, 0.1));
       animation: hero-starfield-twinkle 11s ease-in-out infinite alternate;
     }
     @keyframes hero-starfield-twinkle {
-      from { opacity: 0.24; }
-      to { opacity: 0.34; }
+      from { opacity: 0.26; }
+      to { opacity: 0.38; }
+    }
+    .hero-bg__grid,
+    .hero-bg__lightcycle {
+      position: absolute; left: -21%; right: -21%; bottom: -7%; height: 62%;
+      transform: perspective(500px) rotateX(63deg);
+      transform-origin: 50% 100%;
+      -webkit-mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
+      mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
+      overflow: hidden;
+      pointer-events: none;
     }
     .hero-bg__grid {
-      position: absolute; left: -21%; right: -21%; bottom: -7%; height: 62%; z-index: 2;
+      z-index: 2;
       background-image:
         linear-gradient(rgba(72, 248, 238, 0.232) 1.25px, transparent 1.25px),
         linear-gradient(90deg, rgba(72, 248, 238, 0.232) 1.25px, transparent 1.25px),
         linear-gradient(rgba(0, 232, 223, 0.064) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 232, 223, 0.064) 1px, transparent 1px);
       background-size: 60px 46px, 60px 46px, 15px 12px, 15px 12px;
-      transform: perspective(500px) rotateX(63deg);
-      transform-origin: 50% 100%;
       opacity: 0.3;
       box-shadow: 0 -10px 60px rgba(0, 232, 223, 0.072), inset 0 0 80px rgba(0, 232, 223, 0.016);
-      -webkit-mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
-      mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
+    }
+    /* Barrido Tron en capa aparte (encima de la rejilla, opacidad plena). */
+    .hero-bg__lightcycle {
+      z-index: 3;
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          transparent 36%,
+          rgba(0, 232, 223, 0.12) 43%,
+          rgba(92, 255, 245, 0.28) 47%,
+          rgba(180, 255, 250, 0.72) 50%,
+          rgba(92, 255, 245, 0.28) 53%,
+          rgba(0, 232, 223, 0.12) 57%,
+          transparent 64%,
+          transparent 100%
+        ),
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          transparent 40%,
+          rgba(0, 232, 223, 0.06) 46%,
+          rgba(120, 255, 248, 0.95) 50%,
+          rgba(0, 232, 223, 0.06) 54%,
+          transparent 60%,
+          transparent 100%
+        );
+      background-size: 48% 100%, 14% 100%;
+      background-repeat: no-repeat;
+      background-position: -52% 0, -52% 0;
+      filter: blur(2.5px);
+      opacity: 0;
+      mix-blend-mode: screen;
+      animation: hero-grid-lightcycle 3s cubic-bezier(0.33, 0.12, 0.2, 1) 0.45s 1 forwards;
+      will-change: opacity, background-position;
+    }
+    @keyframes hero-grid-lightcycle {
+      0% {
+        background-position: -52% 0, -52% 0;
+        opacity: 0;
+      }
+      5% { opacity: 1; }
+      92% { opacity: 0.88; }
+      100% {
+        background-position: 152% 0, 152% 0;
+        opacity: 0;
+      }
     }
 
     /* ---- Hero: órbita del ecosistema (SVG + HTML) ---- */
@@ -708,6 +748,9 @@
     }
     .product-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;
+    }
+    @media (min-width: 1100px) {
+      .chapter-productos .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
     .product-card {
       display: flex; flex-direction: column; gap: 10px; padding: 26px 22px;
@@ -1024,7 +1067,6 @@
     .footer-social a:hover { color: var(--brand); transform: translateY(-2px); }
     .footer-social svg { width: 22px; height: 22px; }
     .footer-logo img { width: 120px; height: auto; }
-    .footer-partner { display: none; }
     .footer-bottom {
       max-width: 1200px; margin: 40px auto 0; padding: 24px 24px 32px;
       border-top: 1px solid rgba(255,255,255,0.1);
@@ -1167,26 +1209,14 @@
         padding: 0 16px;
         max-width: 100%;
       }
-      .footer-inner .footer-logo { display: none; }
-      .footer-partner {
-        display: flex;
-        grid-column: 1 / -1;
-        justify-self: center;
-        justify-content: center;
-        align-items: center;
-        margin-top: 4px;
-        padding: 4px 0;
-        min-height: unset;
-      }
-      .aws-partner-badge.footer-partner .header-partner__label {
-        font-size: 0.65rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-      .aws-partner-badge.footer-partner:focus-visible { outline-offset: 4px; }
       .footer-col { min-width: 0; }
       .footer-col h2 { margin-bottom: 14px; }
       .footer-col a { overflow-wrap: anywhere; }
+      .footer-col.footer-logo {
+        grid-column: 1 / -1;
+        justify-self: center;
+        text-align: center;
+      }
       .footer-logo img { width: 100px; }
       .footer-bottom {
         margin-top: 28px;
@@ -1200,8 +1230,23 @@
       .header-brand .logo img { max-height: 30px; }
       .aws-partner-badge.header-partner { min-height: 20px; padding: 1px 10px 3px; }
       .header-partner__label { font-size: 0.6rem; }
-      .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid, .product-grid { grid-template-columns: 1fr; }
+      .cards-4, .cards-3, .cards-2, .benefit-grid, .product-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
+      .chapter-servicios-masteraws .cards-4-servicios {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        grid-auto-rows: 1fr;
+        align-items: stretch;
+      }
+      .chapter-servicios-masteraws .cards-4-servicios .card {
+        min-width: 0;
+        padding: 22px 14px;
+      }
+      .chapter-servicios-masteraws .cards-4-servicios .card h3 {
+        font-size: 0.95rem;
+        hyphens: auto;
+        overflow-wrap: anywhere;
+      }
       .stack-constellation { min-height: 520px; }
       .hero-actions, .cta-actions { flex-direction: column; }
       .btn { width: 100%; }
@@ -1218,7 +1263,8 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1; transform: none; }
-      .hero-bg__fog, .hero-bg__particles, .hero-bg__starfield, .eco-sat-group { animation: none !important; }
+      .hero-bg__fog, .hero-bg__particles, .hero-bg__starfield, .hero-bg__lightcycle, .eco-sat-group { animation: none !important; }
+      .hero-bg__lightcycle { opacity: 0 !important; }
       .stack-star { animation: none; opacity: 0.85; }
       .evolution-line-svg .evo-path { stroke-dasharray: none; stroke-dashoffset: 0; }
     }
@@ -1268,9 +1314,13 @@
             <li class="nav-has-dropdown">
               <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">Soluciones<span class="nav-dropdown-chevron" aria-hidden="true"></span></button>
               <ul class="nav-dropdown">
-                <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li>
-                <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li>
+                <li><a href="https://www.mastersaws.com/mastererp/">MasterERP</a></li>
+                <li><a href="https://www.mastersaws.com/soluciones/master-academy/">MasterAcademy</a></li>
                 <li><a href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
+                <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">MasterHosting</a></li>
+                <li><a href="#" tabindex="-1" aria-disabled="true" style="pointer-events:none;cursor:default;color:rgba(255,255,255,0.85);">MasterOpsphere</a></li>
+                <li><a href="#" tabindex="-1" aria-disabled="true" style="pointer-events:none;cursor:default;color:rgba(255,255,255,0.85);">MasterUonify</a></li>
+                <li><a href="#" tabindex="-1" aria-disabled="true" style="pointer-events:none;cursor:default;color:rgba(255,255,255,0.85);">MasterPay</a></li>
               </ul>
             </li>
           </ul>
@@ -1326,13 +1376,17 @@
             </pattern>
           </defs>
           <rect width="1440" height="900" fill="url(#heroStarPattern)"/>
-          <rect width="1440" height="900" fill="url(#heroStarPatternFine)" opacity="0.312"/>
+          <rect width="1440" height="900" fill="url(#heroStarPatternFine)" opacity="0.328"/>
+          <g fill="#f8feff" opacity="0.22">
+            <circle cx="220" cy="72" r="0.85" fill-opacity="0.42"/><circle cx="1048" cy="96" r="0.75" fill-opacity="0.38"/><circle cx="1320" cy="188" r="0.8" fill-opacity="0.36"/><circle cx="88" cy="148" r="0.7" fill-opacity="0.34"/><circle cx="640" cy="42" r="0.72" fill-opacity="0.4"/><circle cx="1180" cy="268" r="0.78" fill-opacity="0.35"/><circle cx="412" cy="124" r="0.68" fill-opacity="0.33"/><circle cx="892" cy="52" r="0.74" fill-opacity="0.37"/>
+          </g>
           <g fill="#f4feff" opacity="0.352">
             <circle cx="42" cy="58" r="0.55" fill-opacity="0.12"/><circle cx="118" cy="124" r="0.45" fill-opacity="0.106"/><circle cx="198" cy="36" r="0.7" fill-opacity="0.132"/><circle cx="276" cy="88" r="0.5" fill-opacity="0.114"/><circle cx="354" cy="142" r="0.45" fill-opacity="0.126"/><circle cx="428" cy="52" r="0.6" fill-opacity="0.11"/><circle cx="512" cy="118" r="0.5" fill-opacity="0.138"/><circle cx="588" cy="28" r="0.55" fill-opacity="0.116"/><circle cx="664" cy="96" r="0.45" fill-opacity="0.128"/><circle cx="742" cy="164" r="0.65" fill-opacity="0.122"/><circle cx="818" cy="44" r="0.5" fill-opacity="0.132"/><circle cx="896" cy="108" r="0.45" fill-opacity="0.11"/><circle cx="972" cy="72" r="0.55" fill-opacity="0.126"/><circle cx="1054" cy="138" r="0.5" fill-opacity="0.12"/><circle cx="1132" cy="62" r="0.6" fill-opacity="0.128"/><circle cx="1210" cy="128" r="0.45" fill-opacity="0.114"/><circle cx="1288" cy="48" r="0.55" fill-opacity="0.136"/><circle cx="1368" cy="112" r="0.5" fill-opacity="0.122"/><circle cx="78" cy="218" r="0.5" fill-opacity="0.11"/><circle cx="156" cy="284" r="0.65" fill-opacity="0.132"/><circle cx="234" cy="196" r="0.45" fill-opacity="0.12"/><circle cx="312" cy="252" r="0.55" fill-opacity="0.126"/><circle cx="388" cy="318" r="0.5" fill-opacity="0.114"/><circle cx="466" cy="228" r="0.45" fill-opacity="0.128"/><circle cx="544" cy="296" r="0.6" fill-opacity="0.122"/><circle cx="622" cy="208" r="0.5" fill-opacity="0.116"/><circle cx="698" cy="274" r="0.55" fill-opacity="0.132"/><circle cx="776" cy="342" r="0.45" fill-opacity="0.11"/><circle cx="854" cy="238" r="0.5" fill-opacity="0.126"/><circle cx="932" cy="304" r="0.65" fill-opacity="0.12"/><circle cx="1010" cy="216" r="0.45" fill-opacity="0.128"/><circle cx="1088" cy="282" r="0.55" fill-opacity="0.114"/><circle cx="1166" cy="348" r="0.5" fill-opacity="0.122"/><circle cx="1244" cy="258" r="0.45" fill-opacity="0.132"/><circle cx="1322" cy="324" r="0.6" fill-opacity="0.116"/><circle cx="1402" cy="236" r="0.5" fill-opacity="0.126"/><circle cx="56" cy="412" r="0.55" fill-opacity="0.12"/><circle cx="134" cy="478" r="0.45" fill-opacity="0.11"/><circle cx="212" cy="392" r="0.5" fill-opacity="0.128"/><circle cx="290" cy="456" r="0.65" fill-opacity="0.122"/><circle cx="368" cy="528" r="0.45" fill-opacity="0.114"/><circle cx="446" cy="436" r="0.55" fill-opacity="0.132"/><circle cx="524" cy="502" r="0.5" fill-opacity="0.116"/><circle cx="602" cy="418" r="0.45" fill-opacity="0.126"/><circle cx="680" cy="484" r="0.6" fill-opacity="0.12"/><circle cx="758" cy="556" r="0.5" fill-opacity="0.11"/><circle cx="836" cy="468" r="0.55" fill-opacity="0.128"/><circle cx="914" cy="534" r="0.45" fill-opacity="0.122"/><circle cx="992" cy="446" r="0.5" fill-opacity="0.132"/><circle cx="1070" cy="512" r="0.65" fill-opacity="0.114"/><circle cx="1148" cy="578" r="0.45" fill-opacity="0.126"/><circle cx="1226" cy="492" r="0.55" fill-opacity="0.12"/><circle cx="1304" cy="558" r="0.5" fill-opacity="0.116"/><circle cx="1382" cy="472" r="0.45" fill-opacity="0.128"/><circle cx="94" cy="612" r="0.5" fill-opacity="0.122"/><circle cx="172" cy="678" r="0.55" fill-opacity="0.114"/><circle cx="250" cy="592" r="0.45" fill-opacity="0.132"/><circle cx="328" cy="658" r="0.6" fill-opacity="0.12"/><circle cx="406" cy="728" r="0.5" fill-opacity="0.11"/><circle cx="484" cy="638" r="0.45" fill-opacity="0.126"/><circle cx="562" cy="704" r="0.55" fill-opacity="0.128"/><circle cx="640" cy="618" r="0.5" fill-opacity="0.116"/><circle cx="718" cy="684" r="0.65" fill-opacity="0.122"/><circle cx="796" cy="756" r="0.45" fill-opacity="0.132"/><circle cx="874" cy="668" r="0.55" fill-opacity="0.114"/><circle cx="952" cy="734" r="0.5" fill-opacity="0.126"/><circle cx="1030" cy="648" r="0.45" fill-opacity="0.12"/><circle cx="1108" cy="714" r="0.6" fill-opacity="0.128"/><circle cx="1186" cy="782" r="0.5" fill-opacity="0.116"/><circle cx="1264" cy="696" r="0.55" fill-opacity="0.122"/><circle cx="1342" cy="762" r="0.45" fill-opacity="0.132"/><circle cx="1420" cy="676" r="0.5" fill-opacity="0.12"/><circle cx="24" cy="332" r="0.45" fill-opacity="0.106"/><circle cx="1416" cy="388" r="0.55" fill-opacity="0.11"/><circle cx="720" cy="812" r="0.5" fill-opacity="0.118"/><circle cx="360" cy="168" r="0.45" fill-opacity="0.124"/><circle cx="1080" cy="824" r="0.55" fill-opacity="0.112"/>
           </g>
         </svg>
         <span class="hero-bg__particles"></span>
         <span class="hero-bg__grid"></span>
+        <span class="hero-bg__lightcycle" aria-hidden="true"></span>
       </div>
       <div class="container hero-grid reveal">
         <div class="hero-copy">
@@ -1360,42 +1414,47 @@
               <g class="eco-sat-group"><circle class="eco-sat" cx="300" cy="50" r="2.6"/></g>
               <g class="eco-sat-group eco-sat-group--rev"><circle class="eco-sat eco-sat--cyan" cx="300" cy="95" r="2"/></g>
               <line class="eco-spoke" data-eco-id="svc-1" x1="300" y1="230" x2="300" y2="189"/>
-              <line class="eco-spoke" data-eco-id="svc-2" x1="354.7" y1="256.4" x2="386.8" y2="230.8"/>
-              <line class="eco-spoke" data-eco-id="svc-3" x1="368.2" y1="315.6" x2="408.2" y2="324.7"/>
-              <line class="eco-spoke" data-eco-id="svc-4" x1="330.4" y1="363.1" x2="348.2" y2="400"/>
-              <line class="eco-spoke" data-eco-id="svc-5" x1="269.6" y1="363.1" x2="251.8" y2="400"/>
-              <line class="eco-spoke" data-eco-id="svc-6" x1="231.8" y1="315.6" x2="191.8" y2="324.7"/>
-              <line class="eco-spoke" data-eco-id="svc-7" x1="245.3" y1="256.4" x2="213.2" y2="230.8"/>
+              <line class="eco-spoke" data-eco-id="svc-2" x1="349.5" y1="250.5" x2="378.5" y2="221.5"/>
+              <line class="eco-spoke" data-eco-id="svc-3" x1="370" y1="300" x2="411" y2="300"/>
+              <line class="eco-spoke" data-eco-id="svc-4" x1="349.5" y1="349.5" x2="378.5" y2="378.5"/>
+              <line class="eco-spoke" data-eco-id="svc-5" x1="300" y1="370" x2="300" y2="411"/>
+              <line class="eco-spoke" data-eco-id="svc-6" x1="250.5" y1="349.5" x2="221.5" y2="378.5"/>
+              <line class="eco-spoke" data-eco-id="svc-7" x1="230" y1="300" x2="189" y2="300"/>
+              <line class="eco-spoke" data-eco-id="svc-8" x1="250.5" y1="250.5" x2="221.5" y2="221.5"/>
               <circle class="eco-dot eco-dot--service" cx="300" cy="152" r="37"/>
-              <circle class="eco-dot eco-dot--service" cx="415.7" cy="207.7" r="37"/>
-              <circle class="eco-dot eco-dot--service" cx="444.3" cy="332.9" r="37"/>
-              <circle class="eco-dot eco-dot--service" cx="364.2" cy="433.3" r="37"/>
-              <circle class="eco-dot eco-dot--service" cx="235.8" cy="433.3" r="37"/>
-              <circle class="eco-dot eco-dot--service" cx="155.7" cy="332.9" r="37"/>
-              <circle class="eco-dot eco-dot--service" cx="184.3" cy="207.7" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="404.7" cy="195.4" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="448" cy="300" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="404.7" cy="404.7" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="300" cy="448" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="195.4" cy="404.7" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="152" cy="300" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="195.4" cy="195.4" r="37"/>
               <circle class="eco-dot eco-dot--product" cx="300" cy="50" r="11"/>
-              <circle class="eco-dot eco-dot--product" cx="516.5" cy="175" r="11"/>
-              <circle class="eco-dot eco-dot--product" cx="516.5" cy="425" r="11"/>
-              <circle class="eco-dot eco-dot--product" cx="300" cy="550" r="11"/>
-              <circle class="eco-dot eco-dot--product" cx="83.5" cy="425" r="11"/>
-              <circle class="eco-dot eco-dot--product" cx="83.5" cy="175" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="495.5" cy="144.1" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="543.7" cy="355.6" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="408.5" cy="525.2" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="191.5" cy="525.2" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="56.3" cy="355.6" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="104.5" cy="144.1" r="11"/>
             </svg>
             <div class="eco-orbit__core" aria-hidden="true">
               <img class="eco-orbit__core-logo" src="https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png" alt="" width="177" height="45" decoding="async" />
             </div>
             <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--x:50%;--y:25.33%" data-eco-id="svc-1" data-eco-kind="service" data-eco-caption="Cloud Adoption · Explorar servicio →" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
-            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--x:69.28%;--y:34.62%" data-eco-id="svc-2" data-eco-kind="service" data-eco-caption="Seguridad en la nube · Explorar servicio →" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
-            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/finops/" style="--x:74.05%;--y:55.48%" data-eco-id="svc-3" data-eco-kind="service" data-eco-caption="FinOps · Explorar servicio →" aria-label="FinOps, explorar servicio">FinOps</a>
-            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/devops/" style="--x:60.7%;--y:72.22%" data-eco-id="svc-4" data-eco-kind="service" data-eco-caption="DevOps · Explorar servicio →" aria-label="DevOps, explorar servicio">DevOps</a>
-            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/data-analytics/" style="--x:39.3%;--y:72.22%" data-eco-id="svc-5" data-eco-kind="service" data-eco-caption="Datos &amp; Analítica · Explorar servicio →" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
-            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/inteligencia-artificial/" style="--x:25.95%;--y:55.48%" data-eco-id="svc-6" data-eco-kind="service" data-eco-caption="AI Adoption · Explorar servicio →" aria-label="AI Adoption, explorar servicio">AI Adoption</a>
-            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--x:30.72%;--y:34.62%" data-eco-id="svc-7" data-eco-kind="service" data-eco-caption="Gobernanza de IA · Explorar servicio →" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--x:67.44%;--y:32.56%" data-eco-id="svc-2" data-eco-kind="service" data-eco-caption="Seguridad en la nube · Explorar servicio →" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/devops/" style="--x:74.67%;--y:50%" data-eco-id="svc-3" data-eco-kind="service" data-eco-caption="DevOps · Explorar servicio →" aria-label="DevOps, explorar servicio">DevOps</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/finops/" style="--x:67.44%;--y:67.44%" data-eco-id="svc-4" data-eco-kind="service" data-eco-caption="FinOps · Explorar servicio →" aria-label="FinOps, explorar servicio">FinOps</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/infraestructura/" style="--x:50%;--y:74.67%" data-eco-id="svc-5" data-eco-kind="service" data-eco-caption="Infraestructura · Explorar servicio →" aria-label="Infraestructura, explorar servicio">Infraestructura</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/data-analytics/" style="--x:32.56%;--y:67.44%" data-eco-id="svc-6" data-eco-kind="service" data-eco-caption="Datos &amp; Analítica · Explorar servicio →" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/inteligencia-artificial/" style="--x:25.33%;--y:50%" data-eco-id="svc-7" data-eco-kind="service" data-eco-caption="AI Adoption · Explorar servicio →" aria-label="AI Adoption, explorar servicio">AI Adoption</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--x:32.56%;--y:32.56%" data-eco-id="svc-8" data-eco-kind="service" data-eco-caption="Gobernanza de IA · Explorar servicio →" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
             <a class="eco-node eco-node--product eco-node--up" href="https://www.mastersaws.com/mastererp/" style="--x:50%;--y:8.33%" data-eco-id="prd-1" data-eco-kind="product" data-eco-caption="MasterERP · Conocer producto →" aria-label="MasterERP, conocer producto"><span class="eco-node__label">MasterERP</span></a>
-            <a class="eco-node eco-node--product eco-node--up" href="https://www.mastersaws.com/soluciones/master-academy/" style="--x:86.08%;--y:29.17%" data-eco-id="prd-2" data-eco-kind="product" data-eco-caption="MasterAcademy · Conocer producto →" aria-label="MasterAcademy, conocer producto"><span class="eco-node__label">MasterAcademy</span></a>
-            <a class="eco-node eco-node--product eco-node--down" href="https://www.mastersaws.com/mastervpn/" style="--x:86.08%;--y:70.83%" data-eco-id="prd-3" data-eco-kind="product" data-eco-caption="MasterVPN · Conocer producto →" aria-label="MasterVPN, conocer producto"><span class="eco-node__label">MasterVPN</span></a>
-            <a class="eco-node eco-node--product eco-node--down" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--x:50%;--y:91.67%" data-eco-id="prd-4" data-eco-kind="product" data-eco-caption="MasterHosting · Conocer producto →" aria-label="MasterHosting, conocer producto"><span class="eco-node__label">MasterHosting</span></a>
-            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--down" style="--x:13.92%;--y:70.83%" data-eco-id="prd-5" data-eco-kind="product" data-eco-caption="MasterOpsphere" aria-disabled="true" aria-label="MasterOpsphere"><span class="eco-node__label">MasterOpsphere</span></button>
-            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--up" style="--x:13.92%;--y:29.17%" data-eco-id="prd-6" data-eco-kind="product" data-eco-caption="MasterUonify" aria-disabled="true" aria-label="MasterUonify"><span class="eco-node__label">MasterUonify</span></button>
+            <a class="eco-node eco-node--product eco-node--up" href="https://www.mastersaws.com/soluciones/master-academy/" style="--x:82.58%;--y:24.02%" data-eco-id="prd-2" data-eco-kind="product" data-eco-caption="MasterAcademy · Conocer producto →" aria-label="MasterAcademy, conocer producto"><span class="eco-node__label">MasterAcademy</span></a>
+            <a class="eco-node eco-node--product eco-node--down" href="https://www.mastersaws.com/mastervpn/" style="--x:90.62%;--y:59.27%" data-eco-id="prd-3" data-eco-kind="product" data-eco-caption="MasterVPN · Conocer producto →" aria-label="MasterVPN, conocer producto"><span class="eco-node__label">MasterVPN</span></a>
+            <a class="eco-node eco-node--product eco-node--down" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--x:68.08%;--y:87.54%" data-eco-id="prd-4" data-eco-kind="product" data-eco-caption="MasterHosting · Conocer producto →" aria-label="MasterHosting, conocer producto"><span class="eco-node__label">MasterHosting</span></a>
+            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--down" style="--x:31.92%;--y:87.54%" data-eco-id="prd-5" data-eco-kind="product" data-eco-caption="MasterOpsphere" aria-disabled="true" aria-label="MasterOpsphere"><span class="eco-node__label">MasterOpsphere</span></button>
+            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--down" style="--x:9.38%;--y:59.27%" data-eco-id="prd-6" data-eco-kind="product" data-eco-caption="MasterUonify" aria-disabled="true" aria-label="MasterUonify"><span class="eco-node__label">MasterUonify</span></button>
+            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--up" style="--x:17.42%;--y:24.02%" data-eco-id="prd-7" data-eco-kind="product" data-eco-caption="MasterPay" aria-disabled="true" aria-label="MasterPay"><span class="eco-node__label">MasterPay</span></button>
           </div>
           <div class="eco-orbit__mobile">
             <p class="eco-orbit__mobile-title">Servicios</p>
@@ -1404,6 +1463,7 @@
               <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad</a></li>
               <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
               <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a></li>
               <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/data-analytics/">Datos &amp; Analítica</a></li>
               <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/inteligencia-artificial/">AI Adoption</a></li>
               <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a></li>
@@ -1416,6 +1476,7 @@
               <li><a class="eco-chip eco-chip--product" href="https://www.mastersaws.com/soluciones/master-hosting/">MasterHosting</a></li>
               <li><span class="eco-chip eco-chip--product eco-chip--soon">MasterOpsphere · Próximamente</span></li>
               <li><span class="eco-chip eco-chip--product eco-chip--soon">MasterUonify · Próximamente</span></li>
+              <li><span class="eco-chip eco-chip--product eco-chip--soon">MasterPay · Próximamente</span></li>
             </ul>
           </div>
         </div>
@@ -1466,43 +1527,43 @@
         <div class="cards-4-servicios" role="list">
           <article class="card" role="listitem">
             <h3>Cloud Adoption</h3>
-            <p>Diseñamos y modernizamos una base cloud segura, escalable y alineada a tus objetivos.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a>
+            <p>Planificamos migraciones y modernizamos tu base cloud con arquitectura segura, escalable y alineada al negocio.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/cloud-adoption/" aria-label="Explorar Cloud Adoption">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>Seguridad en la nube</h3>
-            <p>Protegemos información, accesos y operación desde la arquitectura hasta el día a día.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la nube</a>
+            <p>Fortalecemos la protección de datos, identidades y operaciones con controles integrados desde el diseño hasta el día a día.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" aria-label="Explorar Seguridad en la nube">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>DevOps</h3>
-            <p>Mejoramos la entrega, automatización y confiabilidad de aplicaciones y plataformas.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/devops/">DevOps</a>
+            <p>Aceleramos entregas con pipelines, automatización y prácticas que mejoran la confiabilidad de aplicaciones y plataformas.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/devops/" aria-label="Explorar DevOps">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>FinOps</h3>
-            <p>Damos visibilidad y control al costo cloud para conectar inversión tecnológica con valor.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/finops/">FinOps</a>
+            <p>Aportamos visibilidad, gobierno y optimización del gasto cloud para alinear la inversión tecnológica con valor de negocio.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/finops/" aria-label="Explorar FinOps">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>Infraestructura</h3>
-            <p>Diseñamos y operamos VPC, compute, redes y almacenamiento con bases sólidas en AWS.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a>
+            <p>Diseñamos y operamos redes, compute y almacenamiento en AWS con fundamentos sólidos, resiliencia y capacidad de crecimiento.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/infraestructura/" aria-label="Explorar Infraestructura">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>Datos &amp; Analítica</h3>
-            <p>Conectamos información para crear visibilidad operativa y decisiones más oportunas.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/data-analytics/">Datos &amp; Analítica</a>
+            <p>Integramos fuentes de datos y analítica para ofrecer visibilidad operativa y apoyar decisiones más rápidas y fundamentadas.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/data-analytics/" aria-label="Explorar Datos y Analítica">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>AI Adoption</h3>
-            <p>Llevamos la inteligencia artificial desde la oportunidad de negocio hasta procesos reales, gobernados y medibles.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Explorar AI Adoption</a>
+            <p>Priorizamos casos de uso y llevamos la IA a procesos reales, con integración de datos, automatización y resultados medibles.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/inteligencia-artificial/" aria-label="Explorar AI Adoption">Explorar →</a>
           </article>
           <article class="card" role="listitem">
             <h3>Gobernanza de IA</h3>
-            <p>Evaluamos madurez y definimos controles para adoptar IA con seguridad, cumplimiento y confianza.</p>
-            <a class="card-link" href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a>
+            <p>Evaluamos madurez y establecemos políticas y controles para adoptar IA con seguridad, cumplimiento y confianza organizacional.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/gobernanza-ia/" aria-label="Explorar Gobernanza de IA">Explorar →</a>
           </article>
         </div>
         <div class="ai-transition-band reveal" aria-labelledby="ai-transition-title">
@@ -1591,6 +1652,16 @@
           <article class="product-card product-card--soon">
             <h3>MasterOpsphere</h3>
             <p>Inteligencia operativa para infraestructura y operaciones tecnológicas.</p>
+            <span class="product-soon-label">Próximamente</span>
+          </article>
+          <article class="product-card product-card--soon">
+            <h3>MasterUonify</h3>
+            <p>Unificación de identidad, canales y experiencia en un ecosistema digital coherente.</p>
+            <span class="product-soon-label">Próximamente</span>
+          </article>
+          <article class="product-card product-card--soon">
+            <h3>MasterPay</h3>
+            <p>Cobros y pagos integrados para digitalizar transacciones con control y trazabilidad.</p>
             <span class="product-soon-label">Próximamente</span>
           </article>
         </div>
@@ -1698,15 +1769,37 @@
         </ul>
       </div>
       <div class="footer-col">
+        <h2>SERVICIOS</h2>
+        <ul>
+          <li><a href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Inteligencia Artificial</a></li>
+          <li><a href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h2>SOLUCIONES</h2>
+        <ul>
+          <li><a href="https://www.mastersaws.com/mastererp/">MasterERP</a></li>
+          <li><a href="https://www.mastersaws.com/soluciones/master-academy/">MasterAcademy</a></li>
+          <li><a href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
+          <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">MasterHosting</a></li>
+          <li><span style="color: rgba(255,255,255,0.85);">MasterOpsphere</span></li>
+          <li><span style="color: rgba(255,255,255,0.85);">MasterUonify</span></li>
+          <li><span style="color: rgba(255,255,255,0.85);">MasterPay</span></li>
+        </ul>
+      </div>
+      <div class="footer-col">
         <h2>CONTACTO</h2>
         <ul class="footer-icon-list">
           <li><a href="mailto:sales@mastersaws.com">sales@mastersaws.com</a></li>
           <li><a href="https://wa.me/584129837999" target="_blank" rel="noopener noreferrer">+58 412 9837999</a></li>
         </ul>
         <div class="footer-social">
-          <a href="https://www.youtube.com/@mastersaws" target="_blank" rel="noopener noreferrer" aria-label="Youtube">
-            <svg viewBox="0 0 576 512" fill="currentColor" aria-hidden="true"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>
-          </a>
           <a href="https://www.linkedin.com/company/eticayservicios" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
           </a>
@@ -1715,30 +1808,9 @@
           </a>
         </div>
       </div>
-      <div class="footer-col">
-        <h2>SERVICIOS</h2>
-        <ul>
-          <li><a href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
-          <li><a href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
-          <li><a href="https://www.mastersaws.com/servicios/data-analytics/">Data &amp; Analytics</a></li>
-          <li><a href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la Nube</a></li>
-          <li><a href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h2>SOLUCIONES</h2>
-        <ul>
-          <li><a href="https://www.mastersaws.com/soluciones/master-academy/">Master Academy</a></li>
-          <li><a href="https://www.mastersaws.com/soluciones/master-hosting/">Master Hosting</a></li>
-          <li><a href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
-        </ul>
-      </div>
-      <a href="https://partners.amazonaws.com/partners/0018W00002N5hKNQAZ/mastersaws" class="aws-partner-badge footer-partner" target="_blank" rel="noopener noreferrer" aria-label="MasterAWS en AWS Partner Network">
-        <span class="header-partner__label">AWS Partner</span>
-      </a>
       <div class="footer-col footer-logo">
-        <a href="https://www.mastersaws.com/">
-          <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" width="120" height="120" alt="Masters AWS" />
+        <a href="https://partners.amazonaws.com/partners/0018W00002N5hKNQAZ/mastersaws" target="_blank" rel="noopener noreferrer" aria-label="MasterAWS en AWS Partner Network">
+          <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" width="120" height="120" alt="AWS Partner" decoding="async" />
         </a>
       </div>
     </div>
@@ -1885,6 +1957,29 @@
           if (t) t.setAttribute('aria-expanded', 'false');
         });
       });
+    })();
+
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var sweep = document.querySelector('.hero-bg__lightcycle');
+      if (!sweep || !window.getComputedStyle) return;
+      var anim = getComputedStyle(sweep).animationName;
+      if (!anim || anim === 'none') {
+        console.warn('[hero] .hero-bg__lightcycle sin animación hero-grid-lightcycle');
+        return;
+      }
+      var sawVisible = false;
+      var deadline = performance.now() + 2200;
+      function probe() {
+        var opacity = parseFloat(getComputedStyle(sweep).opacity) || 0;
+        if (opacity > 0.2) {
+          sawVisible = true;
+          return;
+        }
+        if (performance.now() < deadline) requestAnimationFrame(probe);
+        else if (!sawVisible) console.warn('[hero] barrido lightcycle no alcanzó opacidad visible en carga');
+      }
+      requestAnimationFrame(probe);
     })();
 
     (function () {
