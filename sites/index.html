@@ -278,7 +278,7 @@
     }
     .chapter-hero::after {
       content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-      background: radial-gradient(ellipse 48% 24% at 50% 100%, rgba(0, 0, 0, 0.14), transparent 68%);
+      background: radial-gradient(ellipse 55% 22% at 50% 100%, rgba(0, 232, 223, 0.06), transparent 72%);
     }
     .chapter-desafio {
       background: linear-gradient(135deg, #0a2848 0%, #0d3d52 48%, #0a5c5a 100%);
@@ -339,21 +339,6 @@
     .chapter-audience .audience-card {
       background: rgba(0, 0, 0, 0.28); border-color: rgba(255, 255, 255, 0.1);
     }
-    .chapter-beneficios {
-      background:
-        radial-gradient(ellipse 85% 65% at 25% 15%, rgba(0, 232, 223, 0.12), transparent 55%),
-        linear-gradient(180deg, #061828 0%, #042018 100%);
-      border-color: rgba(0, 232, 223, 0.08);
-    }
-    .chapter-beneficios .section-head h2 {
-      font-size: clamp(2rem, 3.6vw, 2.65rem);
-    }
-    .chapter-beneficios .benefit-card {
-      background: rgba(0, 232, 223, 0.06); border-color: rgba(0, 232, 223, 0.22);
-      text-align: left; padding: 32px 28px;
-    }
-    .beneficios-split { align-items: start; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); }
-    .beneficios-split .benefit-grid { margin-top: 8px; grid-template-columns: 1fr; gap: 12px; }
     .chapter-trust {
       background:
         radial-gradient(ellipse 75% 55% at 12% 25%, rgba(0, 232, 223, 0.11), transparent 58%),
@@ -395,12 +380,7 @@
       align-items: center; position: relative; z-index: 2;
     }
     .hero-copy {
-      text-align: left; min-width: 0; position: relative; isolation: isolate;
-    }
-    .hero-copy::before {
-      content: ""; position: absolute; z-index: -1; pointer-events: none;
-      inset: -28px -40px -28px -32px;
-      background: radial-gradient(ellipse 95% 88% at 8% 48%, rgba(2, 10, 18, 0.66) 0%, rgba(2, 10, 18, 0.28) 52%, transparent 78%);
+      text-align: left; min-width: 0; position: relative;
     }
     .hero h1 {
       font-size: clamp(2rem, 3.05vw, 2.9rem); font-weight: 800; line-height: 1.1;
@@ -429,7 +409,9 @@
       background:
         radial-gradient(40% 35% at 22% 70%, rgba(0, 232, 223, 0.05), transparent 70%),
         radial-gradient(45% 40% at 78% 36%, rgba(70, 170, 185, 0.06), transparent 70%),
-        radial-gradient(35% 30% at 56% 96%, rgba(0, 232, 223, 0.04), transparent 70%);
+        radial-gradient(35% 30% at 56% 96%, rgba(0, 232, 223, 0.04), transparent 70%),
+        radial-gradient(42% 38% at 92% 92%, rgba(0, 200, 210, 0.12), transparent 68%),
+        radial-gradient(38% 34% at 6% 94%, rgba(0, 180, 195, 0.08), transparent 65%);
       animation: hero-fog-drift 52s ease-in-out infinite alternate;
     }
     .hero-bg__particles {
@@ -479,73 +461,42 @@
       from { opacity: 0.26; }
       to { opacity: 0.38; }
     }
-    .hero-bg__grid,
-    .hero-bg__lightcycle {
-      position: absolute; left: -21%; right: -21%; bottom: -7%; height: 62%;
-      transform: perspective(500px) rotateX(63deg);
-      transform-origin: 50% 100%;
-      -webkit-mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
-      mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
-      overflow: hidden;
+    /* Horizonte planetario (malla + brillo en el borde) */
+    .hero-bg__planet {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+      height: min(28vh, 290px); min-height: 160px;
       pointer-events: none;
-    }
-    .hero-bg__grid {
-      z-index: 2;
-      background-image:
-        linear-gradient(rgba(72, 248, 238, 0.232) 1.25px, transparent 1.25px),
-        linear-gradient(90deg, rgba(72, 248, 238, 0.232) 1.25px, transparent 1.25px),
-        linear-gradient(rgba(0, 232, 223, 0.064) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 232, 223, 0.064) 1px, transparent 1px);
-      background-size: 60px 46px, 60px 46px, 15px 12px, 15px 12px;
-      opacity: 0.3;
-      box-shadow: 0 -10px 60px rgba(0, 232, 223, 0.072), inset 0 0 80px rgba(0, 232, 223, 0.016);
-    }
-    /* Barrido Tron en capa aparte (encima de la rejilla, opacidad plena). */
-    .hero-bg__lightcycle {
-      z-index: 3;
-      background:
-        linear-gradient(
-          90deg,
-          transparent 0%,
-          transparent 36%,
-          rgba(0, 232, 223, 0.12) 43%,
-          rgba(92, 255, 245, 0.28) 47%,
-          rgba(180, 255, 250, 0.72) 50%,
-          rgba(92, 255, 245, 0.28) 53%,
-          rgba(0, 232, 223, 0.12) 57%,
-          transparent 64%,
-          transparent 100%
-        ),
-        linear-gradient(
-          90deg,
-          transparent 0%,
-          transparent 40%,
-          rgba(0, 232, 223, 0.06) 46%,
-          rgba(120, 255, 248, 0.95) 50%,
-          rgba(0, 232, 223, 0.06) 54%,
-          transparent 60%,
-          transparent 100%
-        );
-      background-size: 48% 100%, 14% 100%;
-      background-repeat: no-repeat;
-      background-position: -52% 0, -52% 0;
-      filter: blur(2.5px);
+      transform: translate3d(0, 28%, 0);
       opacity: 0;
-      mix-blend-mode: screen;
-      animation: hero-grid-lightcycle 3s cubic-bezier(0.33, 0.12, 0.2, 1) 0.45s 1 forwards;
-      will-change: opacity, background-position;
+      animation: hero-planet-rise 7s cubic-bezier(0.22, 0.98, 0.32, 1) 0.15s forwards;
+      will-change: transform, opacity;
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.35) 6%, #000 16%, #000 100%);
+      mask-image: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.35) 6%, #000 16%, #000 100%);
     }
-    @keyframes hero-grid-lightcycle {
-      0% {
-        background-position: -52% 0, -52% 0;
-        opacity: 0;
-      }
-      5% { opacity: 1; }
-      92% { opacity: 0.88; }
-      100% {
-        background-position: 152% 0, 152% 0;
-        opacity: 0;
-      }
+    .hero-bg__planet-svg {
+      display: block; width: 100%; height: 100%;
+      overflow: hidden;
+      shape-rendering: geometricPrecision;
+    }
+    .hero-bg__planet-haze {
+      position: absolute; left: 0; right: 0; bottom: 0; height: 42%;
+      pointer-events: none; z-index: 1;
+      background: linear-gradient(to top, rgba(0, 232, 223, 0.07) 0%, rgba(0, 232, 223, 0.14) 35%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 45%);
+      mask-image: linear-gradient(to top, transparent 0%, #000 45%);
+    }
+    .hero-bg__planet .planet-mesh {
+      animation: hero-planet-mesh-in 5.2s ease-out 1.1s forwards;
+      opacity: 0;
+    }
+    @keyframes hero-planet-rise {
+      0% { transform: translate3d(0, 28%, 0); opacity: 0; }
+      22% { opacity: 0.35; }
+      100% { transform: translate3d(0, 0, 0); opacity: 0.76; }
+    }
+    @keyframes hero-planet-mesh-in {
+      from { opacity: 0; }
+      to { opacity: 0.85; }
     }
 
     /* ---- Hero: órbita del ecosistema (SVG + HTML) ---- */
@@ -1281,8 +1232,9 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1; transform: none; }
-      .hero-bg__fog, .hero-bg__particles, .hero-bg__starfield, .hero-bg__lightcycle, .eco-sat-group { animation: none !important; }
-      .hero-bg__lightcycle { opacity: 0 !important; }
+      .hero-bg__fog, .hero-bg__particles, .hero-bg__starfield, .hero-bg__planet, .hero-bg__planet .planet-mesh, .eco-sat-group { animation: none !important; }
+      .hero-bg__planet { transform: translate3d(0, 0, 0) !important; opacity: 0.76 !important; }
+      .hero-bg__planet .planet-mesh { opacity: 0.85 !important; }
       .stack-star { animation: none; opacity: 0.85; }
       .evolution-line-svg .evo-path { stroke-dasharray: none; stroke-dashoffset: 0; }
     }
@@ -1403,8 +1355,95 @@
           </g>
         </svg>
         <span class="hero-bg__particles"></span>
-        <span class="hero-bg__grid"></span>
-        <span class="hero-bg__lightcycle" aria-hidden="true"></span>
+        <span class="hero-bg__planet-haze" aria-hidden="true"></span>
+        <div class="hero-bg__planet" aria-hidden="true">
+          <svg class="hero-bg__planet-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" focusable="false">
+            <defs>
+              <radialGradient id="planetBodyGrad" cx="50%" cy="22%" r="92%">
+                <stop offset="0%" stop-color="#0a3d48" stop-opacity="0.42"/>
+                <stop offset="30%" stop-color="#041820"/>
+                <stop offset="65%" stop-color="#020c12"/>
+                <stop offset="100%" stop-color="#01060a" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="planetHorizonBloom" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8fffd" stop-opacity="0.55"/>
+                <stop offset="18%" stop-color="#00f0e8" stop-opacity="0.42"/>
+                <stop offset="55%" stop-color="#00E8DF" stop-opacity="0.12"/>
+                <stop offset="100%" stop-color="#00E8DF" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="planetMeshStroke" x1="720" y1="72" x2="720" y2="320" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#eafffd" stop-opacity="0.78"/>
+                <stop offset="22%" stop-color="#7dfff7" stop-opacity="0.52"/>
+                <stop offset="100%" stop-color="#00E8DF" stop-opacity="0.16"/>
+              </linearGradient>
+              <pattern id="planetTriMesh" width="18" height="15.59" patternUnits="userSpaceOnUse" patternTransform="translate(0 78)">
+                <path d="M 9 0 L 18 15.59 L 0 15.59 Z" fill="none" stroke="#62fff6" stroke-width="0.28" opacity="0.34"/>
+                <path d="M 0 0 L 9 15.59 L 18 0 Z" fill="none" stroke="#48f8ee" stroke-width="0.24" opacity="0.22"/>
+              </pattern>
+              <clipPath id="planetDomeClip">
+                <path d="M -160 148 Q 720 62 1600 148 L 1600 320 L -160 320 Z"/>
+              </clipPath>
+              <filter id="planetHorizonBlurWide" x="-25%" y="-120%" width="150%" height="320%">
+                <feGaussianBlur stdDeviation="11" result="b"/>
+                <feMerge>
+                  <feMergeNode in="b"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <filter id="planetHorizonBlurTight" x="-10%" y="-60%" width="120%" height="200%">
+                <feGaussianBlur stdDeviation="2.5" result="b"/>
+                <feMerge>
+                  <feMergeNode in="b"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <ellipse cx="720" cy="148" rx="1020" ry="72" fill="url(#planetHorizonBloom)" opacity="0.5" filter="url(#planetHorizonBlurWide)"/>
+            <ellipse cx="720" cy="138" rx="880" ry="28" fill="url(#planetHorizonBloom)" opacity="0.35" filter="url(#planetHorizonBlurWide)"/>
+            <g clip-path="url(#planetDomeClip)">
+              <ellipse cx="720" cy="568" rx="1240" ry="528" fill="url(#planetBodyGrad)"/>
+              <rect x="-200" y="78" width="1840" height="250" fill="url(#planetTriMesh)" opacity="0.62"/>
+              <g class="planet-mesh planet-mesh-lines" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <g stroke="url(#planetMeshStroke)" stroke-width="0.36" opacity="0.58">
+                  <ellipse cx="720" cy="568" rx="1180" ry="502"/>
+                  <ellipse cx="720" cy="568" rx="1090" ry="464"/>
+                  <ellipse cx="720" cy="568" rx="1000" ry="424"/>
+                  <ellipse cx="720" cy="568" rx="910" ry="382"/>
+                  <ellipse cx="720" cy="568" rx="820" ry="338"/>
+                  <ellipse cx="720" cy="568" rx="720" ry="292"/>
+                  <ellipse cx="720" cy="568" rx="610" ry="242"/>
+                  <ellipse cx="720" cy="568" rx="490" ry="188"/>
+                  <ellipse cx="720" cy="568" rx="360" ry="132"/>
+                  <ellipse cx="720" cy="568" rx="220" ry="76"/>
+                </g>
+                <g stroke="url(#planetMeshStroke)" stroke-width="0.32" opacity="0.5">
+                  <path d="M 720 72 A 110 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 220 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 330 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 440 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 550 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 700 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 860 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 1020 528 0 0 1 720 1096"/>
+                  <path d="M 720 72 A 110 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 220 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 330 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 440 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 550 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 700 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 860 528 0 0 0 720 1096"/>
+                  <path d="M 720 72 A 1020 528 0 0 0 720 1096"/>
+                </g>
+                <g fill="#d6fffc" stroke="none" opacity="0.48">
+                  <circle cx="160" cy="198" r="1.2"/><circle cx="280" cy="172" r="1.1"/><circle cx="400" cy="152" r="1.2"/><circle cx="520" cy="136" r="1.15"/><circle cx="640" cy="126" r="1.1"/><circle cx="800" cy="126" r="1.1"/><circle cx="920" cy="136" r="1.15"/><circle cx="1040" cy="152" r="1.2"/><circle cx="1160" cy="172" r="1.1"/><circle cx="1280" cy="198" r="1.2"/>
+                  <circle cx="100" cy="232" r="1.05"/><circle cx="220" cy="204" r="1.1"/><circle cx="340" cy="182" r="1.12"/><circle cx="460" cy="166" r="1.05"/><circle cx="580" cy="154" r="1.02"/><circle cx="980" cy="154" r="1.02"/><circle cx="1100" cy="166" r="1.05"/><circle cx="1220" cy="182" r="1.12"/><circle cx="1340" cy="204" r="1.1"/>
+                  <circle cx="60" cy="268" r="0.95"/><circle cx="180" cy="242" r="1"/><circle cx="300" cy="218" r="1.05"/><circle cx="420" cy="198" r="1"/><circle cx="540" cy="182" r="0.98"/><circle cx="1020" cy="182" r="0.98"/><circle cx="1140" cy="198" r="1"/><circle cx="1260" cy="218" r="1.05"/><circle cx="1380" cy="242" r="1"/>
+                </g>
+              </g>
+            </g>
+            <path d="M -120 148 Q 720 64 1560 148" fill="none" stroke="#c8fffb" stroke-width="1.1" opacity="0.28" filter="url(#planetHorizonBlurTight)"/>
+          </svg>
+        </div>
       </div>
       <div class="container hero-grid reveal">
         <div class="hero-copy">
@@ -1704,32 +1743,6 @@
       </div>
     </section>
 
-    <section class="section section-alt chapter-beneficios" id="beneficios" aria-labelledby="beneficios-title">
-      <div class="container reveal">
-        <div class="split beneficios-split">
-        <div class="section-head left">
-          <span class="section-label">Beneficios clave</span>
-          <h2 id="beneficios-title">Claridad frente a la complejidad</h2>
-          <p>Menos fricción entre áreas, más visibilidad y un socio que entiende negocio e ingeniería.</p>
-        </div>
-        <div class="benefit-grid">
-          <article class="benefit-card">
-            <h3>Un solo hilo conductor</h3>
-            <p>Estrategia, arquitectura e implementación alineadas — sin silos entre consultoría y ejecución.</p>
-          </article>
-          <article class="benefit-card">
-            <h3>Entregas que se ven</h3>
-            <p>Avances por fases con artefactos, integraciones y automatizaciones que tu equipo puede usar.</p>
-          </article>
-          <article class="benefit-card">
-            <h3>Evolución continua</h3>
-            <p>No terminamos en el go-live: seguridad, costos y mejoras siguen siendo parte del trabajo.</p>
-          </article>
-        </div>
-        </div>
-      </div>
-    </section>
-
     <section class="section chapter-faq" id="faq" aria-labelledby="faq-title">
       <div class="container reveal">
         <div class="section-head">
@@ -1975,29 +1988,6 @@
           if (t) t.setAttribute('aria-expanded', 'false');
         });
       });
-    })();
-
-    (function () {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var sweep = document.querySelector('.hero-bg__lightcycle');
-      if (!sweep || !window.getComputedStyle) return;
-      var anim = getComputedStyle(sweep).animationName;
-      if (!anim || anim === 'none') {
-        console.warn('[hero] .hero-bg__lightcycle sin animación hero-grid-lightcycle');
-        return;
-      }
-      var sawVisible = false;
-      var deadline = performance.now() + 2200;
-      function probe() {
-        var opacity = parseFloat(getComputedStyle(sweep).opacity) || 0;
-        if (opacity > 0.2) {
-          sawVisible = true;
-          return;
-        }
-        if (performance.now() < deadline) requestAnimationFrame(probe);
-        else if (!sawVisible) console.warn('[hero] barrido lightcycle no alcanzó opacidad visible en carga');
-      }
-      requestAnimationFrame(probe);
     })();
 
     (function () {
