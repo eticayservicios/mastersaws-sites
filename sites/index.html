@@ -142,6 +142,19 @@
     .aws-partner-badge.header-partner:focus-visible .header-partner__label {
       color: #bdbdbd;
     }
+    .aws-partner-badge.footer-partner {
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; border-radius: 4px;
+      transition: opacity 0.2s ease;
+    }
+    .aws-partner-badge.footer-partner::before,
+    .aws-partner-badge.footer-partner::after { content: none; display: none; }
+    .aws-partner-badge.footer-partner:hover,
+    .aws-partner-badge.footer-partner:focus-visible { opacity: 1; }
+    .aws-partner-badge.footer-partner:hover .header-partner__label,
+    .aws-partner-badge.footer-partner:focus-visible .header-partner__label {
+      color: #bdbdbd;
+    }
     .nav-wrapper {
       grid-column: 3;
       justify-self: end;
@@ -251,8 +264,12 @@
     .btn-primary:hover { background: #fff; color: #021214; border-color: #fff; box-shadow: 0 8px 32px rgba(0, 232, 223, 0.15); }
     .btn-secondary { background: transparent; color: var(--text); border-color: var(--border); }
     .btn-secondary:hover { border-color: var(--border-strong); color: var(--brand); background: rgba(255,255,255,0.03); }
-    .chapter-hero .btn-secondary { border-color: rgba(255, 255, 255, 0.28); color: rgba(255, 255, 255, 0.95); }
-    .chapter-hero .btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
+    .chapter-hero .btn { border-radius: 8px; min-height: 46px; padding: 0 22px; font-size: 0.9rem; }
+    .chapter-hero .btn-primary .btn-arrow { display: inline-block; font-size: 1.05em; line-height: 1; transition: transform 0.2s ease; }
+    .chapter-hero .btn-primary:hover .btn-arrow { transform: translateX(3px); }
+    .chapter-hero .btn-primary { box-shadow: 0 0 24px rgba(0, 232, 223, 0.18); }
+    .chapter-hero .btn-secondary { border-color: rgba(0, 232, 223, 0.55); color: rgba(255, 255, 255, 0.95); background: rgba(0, 232, 223, 0.03); }
+    .chapter-hero .btn-secondary:hover { border-color: var(--brand-bright); color: var(--brand-bright); background: rgba(0, 232, 223, 0.08); }
     .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
     .btn-ghost:hover { border-color: var(--border-strong); color: var(--brand); }
     .btn-wa { background: #25D366; color: #fff; border-color: #25D366; }
@@ -267,14 +284,14 @@
       align-items: center;
       padding: clamp(32px, 5vw, 64px) 0 clamp(48px, 6vw, 72px);
       background:
-        radial-gradient(ellipse 100% 90% at 72% 42%, rgba(0, 232, 223, 0.14) 0%, transparent 55%),
-        radial-gradient(ellipse 60% 50% at 12% 78%, rgba(255, 104, 0, 0.06) 0%, transparent 50%),
-        linear-gradient(155deg, #052028 0%, var(--petroleo) 42%, var(--petroleo-deep) 100%);
+        radial-gradient(ellipse 50% 62% at 74% 46%, rgba(0, 190, 210, 0.10) 0%, transparent 66%),
+        radial-gradient(ellipse 60% 70% at 4% 14%, rgba(8, 40, 62, 0.50) 0%, transparent 62%),
+        linear-gradient(160deg, #03121d 0%, #020b14 46%, #01060b 100%);
       overflow: hidden;
     }
     .chapter-hero::after {
-      content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 50% 40% at 50% 100%, rgba(0, 0, 0, 0.45), transparent 70%);
+      content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse 48% 24% at 50% 100%, rgba(0, 0, 0, 0.14), transparent 68%);
     }
     .chapter-desafio {
       background: linear-gradient(135deg, #0a2848 0%, #0d3d52 48%, #0a5c5a 100%);
@@ -387,303 +404,289 @@
 
     .hero { position: relative; width: 100%; }
     .hero-grid {
-      display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(36px, 5vw, 64px);
-      align-items: center; position: relative; z-index: 1;
+      display: grid; grid-template-columns: minmax(0, 0.45fr) minmax(0, 0.55fr); gap: clamp(24px, 3vw, 56px);
+      align-items: center; position: relative; z-index: 2;
     }
-    .hero-copy { text-align: left; }
+    .hero-copy {
+      text-align: left; min-width: 0; position: relative; isolation: isolate;
+    }
+    .hero-copy::before {
+      content: ""; position: absolute; z-index: -1; pointer-events: none;
+      inset: -28px -40px -28px -32px;
+      background: radial-gradient(ellipse 95% 88% at 8% 48%, rgba(2, 10, 18, 0.66) 0%, rgba(2, 10, 18, 0.28) 52%, transparent 78%);
+    }
     .hero h1 {
-      font-size: clamp(2.35rem, 5.2vw, 4.15rem); font-weight: 800; line-height: 1.04;
-      letter-spacing: -0.045em; margin-bottom: 28px; color: #fff;
-      max-width: 16ch;
+      font-size: clamp(2rem, 3.05vw, 2.9rem); font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.035em; margin-bottom: 24px; color: #fff;
+      max-width: none;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.35);
     }
     .hero h1 .text-accent {
+      display: inline-block; margin-top: 0.08em;
       color: var(--brand-bright);
-      text-shadow: 0 0 48px rgba(0, 232, 223, 0.35);
+      text-shadow: 0 0 14px rgba(0, 232, 223, 0.08);
     }
     .hero-lead {
-      color: rgba(255, 255, 255, 0.94); font-size: clamp(1.0625rem, 1.9vw, 1.2rem);
-      max-width: 46ch; margin: 0 0 40px; line-height: 1.72; font-weight: 400;
+      color: rgba(255, 255, 255, 0.9); font-size: clamp(1rem, 1.35vw, 1.125rem);
+      max-width: 40ch; margin: 0 0 34px; line-height: 1.6; font-weight: 400;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
     }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-start; margin-bottom: 44px; }
-    .page-explore { padding-top: 28px; border-top: 1px solid var(--border); }
-    .page-explore p {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(255,255,255,0.38); margin-bottom: 16px;
-    }
-    .explore-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; }
-    .explore-pills a {
-      font-size: 0.82rem; font-weight: 500; text-decoration: none; color: rgba(255,255,255,0.72);
-      padding: 7px 0; border: none; background: none;
-      border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s;
-    }
-    .explore-pills a:hover { color: var(--brand); border-bottom-color: var(--border-strong); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: flex-start; margin-bottom: 0; }
 
-    .hero-ecosystem {
-      --eco-inner-r: 27.5cqw;
-      --eco-outer-rx: 41.9cqw;
-      --eco-outer-ry: 36.5cqw;
-      position: relative; width: 100%; margin-left: auto;
-      min-width: min(100%, 420px); max-width: min(560px, 100%);
-      filter: drop-shadow(0 24px 64px rgba(0, 0, 0, 0.45));
+    /* ---- Hero: fondo atmosférico (niebla, partículas, estrellas) ---- */
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+    }
+    .hero-bg__fog {
+      position: absolute; inset: -15%;
+      background:
+        radial-gradient(40% 35% at 22% 70%, rgba(0, 232, 223, 0.05), transparent 70%),
+        radial-gradient(45% 40% at 78% 36%, rgba(70, 170, 185, 0.06), transparent 70%),
+        radial-gradient(35% 30% at 56% 96%, rgba(0, 232, 223, 0.04), transparent 70%);
+      animation: hero-fog-drift 52s ease-in-out infinite alternate;
+    }
+    .hero-bg__particles {
+      position: absolute; inset: 0; opacity: 0.55;
+      background-image:
+        radial-gradient(1px 1px at 8% 18%, rgba(190, 255, 250, 0.6), transparent),
+        radial-gradient(1px 1px at 17% 64%, rgba(190, 255, 250, 0.4), transparent),
+        radial-gradient(1.2px 1.2px at 26% 36%, rgba(190, 255, 250, 0.5), transparent),
+        radial-gradient(1px 1px at 33% 84%, rgba(190, 255, 250, 0.35), transparent),
+        radial-gradient(1px 1px at 41% 12%, rgba(190, 255, 250, 0.45), transparent),
+        radial-gradient(1.2px 1.2px at 49% 56%, rgba(190, 255, 250, 0.3), transparent),
+        radial-gradient(1px 1px at 57% 28%, rgba(190, 255, 250, 0.5), transparent),
+        radial-gradient(1px 1px at 64% 78%, rgba(190, 255, 250, 0.4), transparent),
+        radial-gradient(1.2px 1.2px at 72% 14%, rgba(190, 255, 250, 0.55), transparent),
+        radial-gradient(1px 1px at 79% 48%, rgba(190, 255, 250, 0.35), transparent),
+        radial-gradient(1px 1px at 86% 70%, rgba(190, 255, 250, 0.45), transparent),
+        radial-gradient(1.2px 1.2px at 92% 30%, rgba(190, 255, 250, 0.4), transparent),
+        radial-gradient(1px 1px at 96% 88%, rgba(190, 255, 250, 0.3), transparent),
+        radial-gradient(1px 1px at 4% 90%, rgba(190, 255, 250, 0.3), transparent),
+        radial-gradient(1.6px 1.6px at 12% 30%, rgba(210, 255, 252, 0.75), transparent),
+        radial-gradient(1.6px 1.6px at 38% 46%, rgba(210, 255, 252, 0.6), transparent),
+        radial-gradient(1.8px 1.8px at 61% 9%, rgba(210, 255, 252, 0.7), transparent),
+        radial-gradient(1.6px 1.6px at 83% 22%, rgba(210, 255, 252, 0.65), transparent),
+        radial-gradient(1.6px 1.6px at 94% 56%, rgba(210, 255, 252, 0.6), transparent),
+        radial-gradient(1px 1px at 22% 8%, rgba(190, 255, 250, 0.4), transparent),
+        radial-gradient(1px 1px at 46% 92%, rgba(190, 255, 250, 0.35), transparent),
+        radial-gradient(1px 1px at 69% 62%, rgba(190, 255, 250, 0.3), transparent),
+        radial-gradient(1px 1px at 88% 94%, rgba(190, 255, 250, 0.4), transparent),
+        radial-gradient(1px 1px at 2% 48%, rgba(190, 255, 250, 0.35), transparent);
+      animation: hero-particles-float 38s ease-in-out infinite alternate;
+    }
+    @keyframes hero-fog-drift {
+      from { transform: translate3d(-2%, 1%, 0) scale(1); }
+      to { transform: translate3d(2%, -1.5%, 0) scale(1.06); }
+    }
+    @keyframes hero-particles-float {
+      from { transform: translate3d(0, 0, 0); opacity: 0.45; }
+      to { transform: translate3d(0, -18px, 0); opacity: 0.7; }
+    }
+    .hero-bg__starfield {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      opacity: 0.3; pointer-events: none;
+      filter: drop-shadow(0 0 1px rgba(190, 255, 252, 0.088));
+      animation: hero-starfield-twinkle 11s ease-in-out infinite alternate;
+    }
+    @keyframes hero-starfield-twinkle {
+      from { opacity: 0.24; }
+      to { opacity: 0.34; }
+    }
+    .hero-bg__grid {
+      position: absolute; left: -21%; right: -21%; bottom: -7%; height: 62%; z-index: 2;
+      background-image:
+        linear-gradient(rgba(72, 248, 238, 0.232) 1.25px, transparent 1.25px),
+        linear-gradient(90deg, rgba(72, 248, 238, 0.232) 1.25px, transparent 1.25px),
+        linear-gradient(rgba(0, 232, 223, 0.064) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 232, 223, 0.064) 1px, transparent 1px);
+      background-size: 60px 46px, 60px 46px, 15px 12px, 15px 12px;
+      transform: perspective(500px) rotateX(63deg);
+      transform-origin: 50% 100%;
+      opacity: 0.3;
+      box-shadow: 0 -10px 60px rgba(0, 232, 223, 0.072), inset 0 0 80px rgba(0, 232, 223, 0.016);
+      -webkit-mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
+      mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.92) 50%, rgba(0, 0, 0, 0.68) 84%, transparent 96%);
+    }
+
+    /* ---- Hero: órbita del ecosistema (SVG + HTML) ---- */
+    .eco-orbit {
+      position: relative; width: 100%; margin: 0 auto; min-width: 0;
+      max-width: max(380px, min(600px, calc(100vh - var(--header-h) - 120px)));
+    }
+    .eco-orbit__diagram {
+      position: relative; width: 100%; aspect-ratio: 1 / 1;
       container-type: inline-size;
     }
-    .hero-ecosystem__diagram {
-      position: relative; width: 100%; aspect-ratio: 1;
-      container-type: inline-size;
+    .eco-orbit__svg {
+      position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+      overflow: visible; pointer-events: none;
     }
-    .hero-ecosystem__svg {
-      position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none;
-    }
-    .hero-ecosystem__orbit {
-      fill: none; stroke: rgba(0, 232, 223, 0.12); stroke-width: 1;
-      transform-origin: 260px 260px;
-    }
-    .hero-ecosystem__orbit--inner {
-      stroke: rgba(0, 232, 223, 0.26); stroke-width: 1.25;
-    }
-    .hero-ecosystem__orbit--outer {
-      stroke: rgba(255, 160, 90, 0.38); stroke-width: 1.4;
-      animation: eco-orbit-spin 48s linear infinite;
-    }
-    .hero-ecosystem__orbit--outer-deep {
-      stroke: rgba(255, 104, 0, 0.22); stroke-width: 2;
-      animation: eco-orbit-spin 64s linear infinite reverse;
-    }
-    .hero-ecosystem__orbit-glow {
-      fill: none; stroke: rgba(255, 140, 60, 0.28); stroke-width: 1.75; opacity: 0.55;
-      transition: opacity 0.35s ease;
-    }
-    .hero-ecosystem.is-active .hero-ecosystem__orbit-glow { opacity: 0.92; }
-    .hero-ecosystem__spoke {
-      stroke: rgba(0, 232, 223, 0.32); stroke-width: 1.15; fill: none;
-      transition: stroke 0.35s ease, stroke-width 0.35s ease;
-    }
-    .hero-ecosystem.is-active .hero-ecosystem__spoke { stroke: rgba(92, 255, 245, 0.58); stroke-width: 1.35; }
-    .hero-ecosystem__core-glow {
-      fill: url(#ecoCoreGlow); opacity: 0.85;
-      animation: eco-core-breathe 6s ease-in-out infinite;
-    }
-    .hero-ecosystem__nodes {
-      position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    }
-    .hero-ecosystem__nodes .hero-ecosystem__node { pointer-events: auto; }
-    .hero-ecosystem__core {
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: clamp(108px, 28%, 132px); min-height: 88px;
+    .eco-ring { fill: none; stroke-width: 1; vector-effect: non-scaling-stroke; transition: stroke 0.3s ease; }
+    .eco-ring--inner { stroke: rgba(0, 232, 223, 0.2); stroke-dasharray: 2 5; }
+    .eco-ring--mid { stroke: rgba(0, 232, 223, 0.07); }
+    .eco-ring--outer { stroke: rgba(224, 150, 80, 0.45); stroke-dasharray: 2 6; }
+    .eco-orbit[data-active-kind="service"] .eco-ring--inner { stroke: rgba(92, 255, 245, 0.5); }
+    .eco-orbit[data-active-kind="product"] .eco-ring--outer { stroke: rgba(255, 176, 96, 0.75); }
+    .eco-halo { fill: url(#ecoHalo); }
+    .eco-sat { fill: #f0a868; opacity: 0.85; }
+    .eco-sat--cyan { fill: var(--brand-bright); }
+    .eco-sat-group { transform-origin: 300px 300px; animation: eco-sat-spin 90s linear infinite; }
+    .eco-sat-group--rev { animation-duration: 120s; animation-direction: reverse; }
+    .eco-spoke { stroke: rgba(0, 232, 223, 0.42); stroke-width: 1; vector-effect: non-scaling-stroke; transition: stroke 0.3s ease; }
+    .eco-spoke.is-on { stroke: rgba(120, 255, 248, 0.95); }
+    .eco-dot { display: none; stroke-width: 1; vector-effect: non-scaling-stroke; }
+    .eco-dot--service { fill: rgba(3, 18, 28, 0.95); stroke: rgba(0, 232, 223, 0.75); }
+    .eco-dot--product { fill: rgba(30, 16, 6, 0.95); stroke: rgba(240, 168, 104, 0.8); }
+    @keyframes eco-sat-spin { to { transform: rotate(360deg); } }
+
+    .eco-orbit__core {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 23.4%; aspect-ratio: 1 / 1; border-radius: 50%;
       display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-      padding: 14px 12px; border-radius: 50%;
-      background: radial-gradient(circle at 50% 35%, rgba(0, 232, 223, 0.22) 0%, rgba(4, 24, 32, 0.92) 68%);
-      border: 2px solid var(--brand-bright);
-      box-shadow: 0 0 40px rgba(0, 232, 223, 0.25);
-      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(190, 255, 252, 0.16) 0%, rgba(0, 232, 223, 0.06) 45%, transparent 75%),
+        radial-gradient(circle at 50% 50%, rgba(4, 24, 36, 0.98) 0%, rgba(2, 12, 20, 0.98) 100%);
+      border: 2px solid rgba(92, 255, 245, 0.85);
+      box-shadow: 0 0 0 6px rgba(0, 232, 223, 0.06), 0 0 38px rgba(0, 232, 223, 0.35), inset 0 0 26px rgba(0, 232, 223, 0.18);
+      color: #fff; pointer-events: none;
     }
-    .hero-ecosystem__core strong {
-      font-size: clamp(0.82rem, 2.4vw, 0.95rem); font-weight: 800; color: #fff; letter-spacing: 0.04em;
+    .eco-orbit__core-logo {
+      width: 76%; height: auto; max-height: 38%; object-fit: contain; display: block;
     }
-    .hero-ecosystem__core span {
-      margin-top: 4px; font-size: clamp(0.58rem, 1.6vw, 0.68rem); font-weight: 600;
-      color: var(--brand-bright); letter-spacing: 0.06em; line-height: 1.35;
+
+    .eco-node {
+      position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+      margin: 0; padding: 0; text-decoration: none; text-align: center;
+      font-family: var(--font-display); font-weight: 600; line-height: 1.2; letter-spacing: 0.005em;
+      font-size: 0.66rem; font-size: clamp(9.5px, 1.95cqw, 12px);
+      color: rgba(236, 246, 248, 0.92);
+      cursor: pointer; -webkit-appearance: none; appearance: none; background: none; border: 0;
+      transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, opacity 0.25s ease;
     }
-    .hero-ecosystem__node {
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw)));
-      min-width: 44px; min-height: 44px; padding: 8px 10px;
-      display: flex; align-items: center; justify-content: center; text-align: center;
-      font-family: var(--font-display); font-size: clamp(0.62rem, 1.7vw, 0.72rem); font-weight: 700;
-      line-height: 1.2; letter-spacing: 0.02em; color: #fff;
-      background: rgba(4, 24, 32, 0.9); border: 1px solid var(--border-strong); border-radius: 999px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
-      -webkit-tap-highlight-color: transparent;
+    .eco-node:focus-visible { outline: 2px solid var(--brand-bright); outline-offset: 3px; }
+    .eco-node--service {
+      display: flex; align-items: center; justify-content: center;
+      width: 12.4%; aspect-ratio: 1 / 1; border-radius: 50%; padding: 4px;
+      background: radial-gradient(circle at 50% 35%, rgba(0, 232, 223, 0.10) 0%, rgba(3, 16, 26, 0.96) 70%);
+      border: 1.5px solid rgba(0, 232, 223, 0.8);
+      box-shadow: 0 0 14px rgba(0, 232, 223, 0.2), inset 0 0 12px rgba(0, 232, 223, 0.08);
     }
-    .hero-ecosystem__node--service { max-width: 108px; border-radius: 12px; }
-    .hero-ecosystem__node--product {
-      max-width: 112px; border-radius: 14px;
-      border-color: rgba(255, 176, 96, 0.42);
-      background: rgba(28, 18, 8, 0.88);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 140, 50, 0.08);
+    .eco-node--service:hover, .eco-node--service.is-active {
+      color: #fff; border-color: rgba(140, 255, 250, 1);
+      background: radial-gradient(circle at 50% 35%, rgba(0, 232, 223, 0.22) 0%, rgba(4, 24, 34, 0.98) 72%);
+      box-shadow: 0 0 22px rgba(0, 232, 223, 0.5), inset 0 0 14px rgba(0, 232, 223, 0.18);
     }
-    @media (min-width: 768px) {
-      .hero-ecosystem__node {
-        white-space: normal; overflow: visible; text-overflow: clip; hyphens: none;
-      }
-      .hero-ecosystem { min-width: 460px; max-width: min(560px, 54vw); }
+    .eco-node--product {
+      width: 3.8%; aspect-ratio: 1 / 1; border-radius: 50%;
+      border: 1.5px solid rgba(240, 168, 104, 0.85);
+      background: radial-gradient(circle, #f0a868 0 2.5px, rgba(18, 10, 4, 0.96) 3px);
+      box-shadow: 0 0 10px rgba(240, 150, 70, 0.18);
     }
-    .hero-ecosystem__node--link { cursor: pointer; text-decoration: none; }
-    .hero-ecosystem__node--soon { cursor: default; color: rgba(255, 255, 255, 0.78); }
-    @media (hover: hover) and (pointer: fine) {
-      .hero-ecosystem__node--link:hover,
-      .hero-ecosystem__node--link:focus-visible {
-        transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.06);
-        border-color: var(--brand-bright);
-        box-shadow: 0 12px 32px rgba(0, 232, 223, 0.28);
-      }
-      .hero-ecosystem__node--product.hero-ecosystem__node--link:hover,
-      .hero-ecosystem__node--product.hero-ecosystem__node--link:focus-visible {
-        border-color: rgba(255, 190, 110, 0.72);
-        box-shadow: 0 12px 32px rgba(255, 120, 40, 0.22);
-      }
-      .hero-ecosystem__node--soon:hover,
-      .hero-ecosystem__node--soon:focus-visible {
-        transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.04);
-        border-color: rgba(255, 190, 110, 0.45);
-      }
+    .eco-node--soon { cursor: default; }
+    .eco-node::after { content: ""; position: absolute; inset: -8px; border-radius: 50%; }
+    .eco-node__label {
+      position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap;
+      font-size: 0.66rem; font-size: clamp(9.5px, 1.85cqw, 11.5px); font-weight: 500; letter-spacing: 0.01em;
+      color: rgba(236, 224, 210, 0.78); pointer-events: none; transition: color 0.25s ease;
     }
-    .hero-ecosystem__node.is-tooltip-open {
-      border-color: var(--brand-bright);
-      box-shadow: 0 12px 32px rgba(0, 232, 223, 0.28);
-      transform: translate(calc(-50% + var(--eco-dx, 0cqw)), calc(-50% + var(--eco-dy, 0cqw))) scale(1.05);
+    .eco-node--up .eco-node__label { bottom: calc(100% + 7px); }
+    .eco-node--down .eco-node__label { top: calc(100% + 7px); }
+    .eco-node__label small {
+      display: block; margin-top: 1px; font-size: 0.5rem; font-size: clamp(7.5px, 1.35cqw, 8.5px); font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240, 168, 104, 0.85);
     }
-    .hero-ecosystem__tooltip {
-      position: absolute; z-index: 3; left: 50%; bottom: 4%;
-      transform: translateX(-50%) translateY(6px);
-      min-width: min(240px, 88%); padding: 10px 14px;
-      font-size: 0.78rem; font-weight: 600; text-align: center; color: #fff;
-      background: rgba(2, 12, 18, 0.96); border: 1px solid var(--border-strong);
-      border-radius: 10px; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+    .eco-node--product:hover, .eco-node--product.is-active {
+      border-color: rgba(255, 205, 150, 1);
+      box-shadow: 0 0 18px rgba(255, 150, 60, 0.45);
     }
-    .hero-ecosystem__tooltip.is-visible {
-      opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
+    .eco-node--product:hover .eco-node__label, .eco-node--product.is-active .eco-node__label { color: #fff; }
+    .eco-orbit.has-active .eco-node:not(.is-active) { opacity: 0.55; }
+
+    .eco-orbit__mobile { display: none; }
+    .eco-orbit__mobile-title {
+      margin: 0 0 10px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(203, 213, 225, 0.6); text-align: center;
     }
-    .hero-ecosystem__tooltip a {
-      display: inline-block; margin-top: 6px; color: var(--brand-bright); text-decoration: none; font-size: 0.76rem;
+    .eco-orbit__chips {
+      list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0 0 22px; padding: 0;
     }
-    .hero-ecosystem__tooltip a:hover { text-decoration: underline; }
-    @keyframes eco-orbit-spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    .eco-chip {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px;
+      font-size: 0.84rem; font-weight: 600; text-decoration: none; text-align: center;
+      color: rgba(236, 246, 248, 0.92); background: rgba(3, 12, 16, 0.85);
+      border: 1px solid rgba(0, 232, 223, 0.22); border-radius: 999px;
     }
-    @keyframes eco-core-breathe {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
-    }
-    .hero-ecosystem__products-mobile { display: none; width: 100%; max-width: 100%; margin-top: 22px; }
-    .hero-ecosystem__products-mobile h3 {
-      font-family: var(--font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: rgba(255, 176, 96, 0.85); margin: 0 0 12px; text-align: center;
-    }
-    .hero-ecosystem__products-scroll {
-      display: flex; flex-wrap: nowrap; gap: 10px; overflow-x: auto; padding: 4px 2px 10px;
-      -webkit-overflow-scrolling: touch; scrollbar-width: thin; max-width: 100%;
-    }
-    .hero-ecosystem__products-scroll .hero-ecosystem__product-chip {
-      position: static; left: auto; top: auto;
-      transform: none !important;
-      flex: 0 0 auto; max-width: none; white-space: nowrap;
-    }
-    @media (hover: hover) and (pointer: fine) {
-      .hero-ecosystem__products-scroll .hero-ecosystem__product-chip:hover,
-      .hero-ecosystem__products-scroll .hero-ecosystem__product-chip:focus-visible {
-        transform: scale(1.04) !important;
-      }
-    }
-    .hero-ecosystem__products-scroll .hero-ecosystem__product-chip.is-tooltip-open {
-      transform: scale(1.03) !important;
-    }
+    .eco-chip--product { border-color: rgba(255, 255, 255, 0.16); }
+    .eco-chip--soon { border-style: dashed; color: rgba(236, 246, 248, 0.7); }
+    .eco-chip:hover, .eco-chip:focus-visible { border-color: var(--brand-bright); color: #fff; }
+
     @media (max-width: 767px) {
-      .hero-ecosystem {
-        min-width: 0; max-width: min(400px, 94vw); margin-left: auto; margin-right: auto;
-        overflow-x: clip;
+      .eco-orbit {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 clamp(2px, 1.5vw, 8px);
       }
-      .hero-ecosystem__orbit--outer,
-      .hero-ecosystem__orbit--outer-deep,
-      .hero-ecosystem__orbit-glow { display: none; }
-      .hero-ecosystem__diagram .hero-ecosystem__node--product { display: none !important; }
-      .hero-ecosystem__products-mobile { display: block; }
-    }
-    .hero-ecosystem--compact {
-      max-width: min(440px, 100%); min-width: min(100%, 320px);
-      filter: drop-shadow(0 16px 48px rgba(0, 0, 0, 0.38));
-    }
-    @media (min-width: 768px) {
-      .hero-ecosystem--compact {
-        min-width: 360px; max-width: min(460px, 46vw);
+      .eco-orbit__diagram {
+        width: min(100%, min(92vw, 360px));
+        max-width: 100%;
+        margin: 0 auto;
       }
-    }
-    #hero-ecosystem {
-      --eco-outer-rx: 44.2cqw;
-      --eco-outer-ry: 39cqw;
-    }
-    #hero-ecosystem .hero-ecosystem__orbit--outer-deep { rx: 232; ry: 204; }
-    #hero-ecosystem .hero-ecosystem__orbit--outer,
-    #hero-ecosystem .hero-ecosystem__orbit-glow { rx: 226; ry: 198; }
-    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterERP"] {
-      --eco-dx: 27.2cqw !important; --eco-dy: -32cqw !important;
-    }
-    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterAcademy"] {
-      --eco-dx: 42.5cqw !important; --eco-dy: 12cqw !important;
-    }
-    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterVPN"] {
-      --eco-dx: 0cqw !important; --eco-dy: 39cqw !important;
-    }
-    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterHosting"] {
-      --eco-dx: -42.5cqw !important; --eco-dy: 12cqw !important;
-    }
-    #hero-ecosystem .hero-ecosystem__node--product[data-eco-name="MasterOpsphere"] {
-      --eco-dx: -27.2cqw !important; --eco-dy: -32cqw !important;
-    }
-    .hero-ecosystem--section {
-      max-width: min(760px, 100%); min-width: min(100%, 360px);
-      margin: 0 auto;
-      filter: drop-shadow(0 32px 80px rgba(0, 0, 0, 0.5));
-    }
-    @media (min-width: 768px) {
-      .hero-ecosystem--section {
-        min-width: 520px; max-width: min(760px, 92vw);
+      .eco-orbit__core {
+        box-shadow: 0 0 0 4px rgba(0, 232, 223, 0.06), 0 0 24px rgba(0, 232, 223, 0.3), inset 0 0 16px rgba(0, 232, 223, 0.16);
       }
-      .hero-ecosystem--section .hero-ecosystem__node { font-size: clamp(0.68rem, 1.5vw, 0.8rem); }
-      .hero-ecosystem--section .hero-ecosystem__node--service { max-width: 124px; }
-      .hero-ecosystem--section .hero-ecosystem__node--product { max-width: 128px; }
+      .eco-orbit__core-logo { width: 80%; max-height: 42%; }
+      .eco-node {
+        font-size: clamp(8px, 2.05cqw, 10.5px);
+        line-height: 1.15;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .eco-node--service {
+        width: 11.6%;
+        padding: 2px 3px;
+        white-space: normal;
+        word-break: break-word;
+        hyphens: auto;
+      }
+      .eco-node__label {
+        font-size: clamp(7.5px, 1.9cqw, 10px);
+      }
+      .eco-node--up .eco-node__label { bottom: calc(100% + 5px); }
+      .eco-node--down .eco-node__label { top: calc(100% + 5px); }
+      .eco-node::after { inset: -12px; }
+      .eco-node--product::after { inset: -16px; }
+      .eco-orbit__mobile { display: none; }
     }
-    #hero-ecosystem .hero-ecosystem__core-glow { fill: url(#ecoCoreGlow-hero); }
-    .hero-ecosystem--section .hero-ecosystem__core-glow { fill: url(#ecoCoreGlow-section); }
 
     .chapter-servicios-masteraws {
       background:
         radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 232, 223, 0.1), transparent 58%),
         linear-gradient(180deg, var(--petroleo-deep) 0%, #030508 100%);
     }
-    .servicios-editorial {
-      display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-      gap: clamp(18px, 3vw, 24px); align-items: stretch;
+    .chapter-servicios-masteraws .cards-4-servicios {
+      align-items: stretch;
     }
-    .servicio-card {
-      display: flex; flex-direction: column; gap: 10px;
-      padding: 26px 24px; border-radius: var(--radius);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+    .chapter-servicios-masteraws .card {
+      display: flex; flex-direction: column; gap: 0;
+      height: 100%; min-height: 100%;
       background: rgba(255, 255, 255, 0.04);
-      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      min-height: 100%;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
     }
-    .servicio-card:hover {
-      border-color: rgba(0, 232, 223, 0.42); transform: translateY(-3px);
+    .chapter-servicios-masteraws .card:hover {
       background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(0, 232, 223, 0.42);
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
     }
-    .servicio-card h3 { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
-    .servicio-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; flex: 1; }
-    .servicio-card--featured {
-      padding: clamp(28px, 4vw, 36px);
-      border-color: rgba(0, 232, 223, 0.35);
-      background:
-        radial-gradient(ellipse 100% 80% at 100% 0%, rgba(0, 232, 223, 0.12), transparent 55%),
-        rgba(4, 28, 36, 0.65);
-      position: relative;
+    .chapter-servicios-masteraws .card h3 {
+      color: #fff; font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
+      margin-bottom: 10px;
     }
-    .servicio-card--featured:hover { border-color: rgba(0, 232, 223, 0.55); }
-    .servicios-editorial__grid {
-      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;
+    .chapter-servicios-masteraws .card p {
+      flex: 1; color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 0;
     }
-    .badge-nuevo {
-      align-self: flex-start; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--brand-bright);
-      padding: 4px 10px; border-radius: 999px;
-      border: 1px solid rgba(0, 232, 223, 0.45); background: rgba(0, 232, 223, 0.1);
-    }
+    .chapter-servicios-masteraws .card-link { margin-top: 16px; }
     .ai-transition-band {
       margin-top: clamp(40px, 6vw, 56px); padding: clamp(32px, 5vw, 48px);
       border-radius: var(--radius); text-align: left;
@@ -698,17 +701,9 @@
     }
     .ai-transition-band p { color: var(--muted); font-size: 0.98rem; line-height: 1.7; max-width: 58ch; margin-bottom: 22px; }
 
-    .chapter-ecosistema {
-      background:
-        radial-gradient(ellipse 90% 70% at 50% 20%, rgba(0, 232, 223, 0.12), transparent 58%),
-        linear-gradient(180deg, #030508 0%, var(--petroleo) 55%, var(--petroleo-deep) 100%);
-      border-color: rgba(0, 232, 223, 0.08);
-    }
-    .ecosistema-wrap { padding-top: clamp(24px, 4vw, 40px); }
-
     .chapter-productos {
       background:
-        radial-gradient(ellipse 75% 55% at 88% 20%, rgba(255, 104, 0, 0.08), transparent 55%),
+        radial-gradient(ellipse 75% 55% at 88% 20%, rgba(0, 232, 223, 0.1), transparent 55%),
         linear-gradient(180deg, var(--petroleo-deep) 0%, #020406 100%);
     }
     .product-grid {
@@ -717,23 +712,29 @@
     .product-card {
       display: flex; flex-direction: column; gap: 10px; padding: 26px 22px;
       border-radius: 16px; min-height: 100%;
-      border: 1px solid rgba(255, 176, 96, 0.28);
-      background: linear-gradient(155deg, rgba(32, 20, 10, 0.55) 0%, rgba(6, 10, 14, 0.92) 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 200, 140, 0.06);
+      border: 1px solid var(--border-strong);
+      background:
+        radial-gradient(ellipse 85% 120% at 0% 40%, rgba(0, 232, 223, 0.1), transparent 55%),
+        linear-gradient(155deg, rgba(6, 32, 44, 0.72) 0%, rgba(4, 12, 18, 0.94) 100%);
+      box-shadow: inset 0 1px 0 rgba(92, 255, 245, 0.08);
       transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .product-card:hover { border-color: rgba(255, 190, 110, 0.5); transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35); }
+    .product-card:hover {
+      border-color: rgba(0, 232, 223, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), 0 0 32px rgba(0, 232, 223, 0.08);
+    }
     .product-card h3 { font-size: 1.05rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
     .product-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; flex: 1; }
-    .product-card .card-link { color: rgba(255, 190, 110, 0.95); }
+    .product-card .card-link { color: var(--brand-bright); }
     .product-card--soon {
-      border-style: dashed; border-color: rgba(255, 176, 96, 0.35);
+      border-style: dashed; border-color: rgba(0, 232, 223, 0.32);
       cursor: default;
     }
-    .product-card--soon:hover { transform: none; box-shadow: inset 0 1px 0 rgba(255, 200, 140, 0.06); }
+    .product-card--soon:hover { transform: none; box-shadow: inset 0 1px 0 rgba(92, 255, 245, 0.08); }
     .product-soon-label {
       display: inline-block; margin-top: 8px; font-size: 0.75rem; font-weight: 700;
-      letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255, 190, 110, 0.85);
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--brand);
     }
 
     .desafio-editorial {
@@ -750,7 +751,8 @@
       .cards-4-editorial .card:nth-child(3) { transform: none; }
     }
     .cards-4-servicios {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px;
+      grid-auto-rows: 1fr;
     }
     .cards-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .cards-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -860,26 +862,6 @@
       stroke: url(#evoGrad); stroke-width: 2.5; fill: none; stroke-linecap: round;
       filter: drop-shadow(0 0 10px rgba(0, 232, 223, 0.55));
     }
-    .process-timeline {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative;
-      padding-top: 8px; margin-bottom: 40px;
-    }
-    .process-timeline::before {
-      content: ""; position: absolute; top: 20px; left: 6%; right: 6%; height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0, 232, 223, 0.45), rgba(0, 232, 223, 0.85), rgba(0, 232, 223, 0.45), transparent);
-      box-shadow: 0 0 24px rgba(0, 232, 223, 0.35);
-    }
-    .timeline-node {
-      text-align: center; padding: 0 12px; position: relative;
-    }
-    .timeline-dot {
-      width: 12px; height: 12px; border-radius: 50%; background: var(--brand-bright);
-      margin: 0 auto 16px; box-shadow: 0 0 0 5px var(--brand-dim), 0 0 18px rgba(0, 232, 223, 0.4);
-    }
-    .timeline-node span {
-      display: block; font-size: 0.72rem; font-weight: 600; color: var(--brand); letter-spacing: 0.04em; margin-bottom: 6px;
-    }
-    .timeline-node strong { font-size: 0.85rem; font-weight: 600; color: var(--text); }
     .process-steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
     .process-step {
       display: flex; flex-direction: column; gap: 12px; padding: 28px;
@@ -1042,6 +1024,7 @@
     .footer-social a:hover { color: var(--brand); transform: translateY(-2px); }
     .footer-social svg { width: 22px; height: 22px; }
     .footer-logo img { width: 120px; height: auto; }
+    .footer-partner { display: none; }
     .footer-bottom {
       max-width: 1200px; margin: 40px auto 0; padding: 24px 24px 32px;
       border-top: 1px solid rgba(255,255,255,0.1);
@@ -1060,28 +1043,21 @@
 
     @media (max-width: 1024px) {
       .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .hero h1 { max-width: 18ch; margin-left: auto; margin-right: auto; }
+      .hero h1 { font-size: clamp(1.9rem, 5.2vw, 2.8rem); margin-left: auto; margin-right: auto; }
       .hero-copy { text-align: center; }
       .hero-lead { margin-left: auto; margin-right: auto; }
-      .hero-actions, .explore-pills { justify-content: center; }
-      .hero-ecosystem { margin: 0 auto; }
-      @media (max-width: 767px) {
-        .hero-ecosystem { max-width: min(400px, 94vw); }
-      }
+      .hero-actions { justify-content: center; }
+      .eco-orbit { margin: 0 auto; }
       .desafio-editorial, .process-split, .about-split { grid-template-columns: 1fr; }
       .cards-4-servicios { grid-template-columns: repeat(2, 1fr); }
       .benefit-grid { grid-template-columns: repeat(2, 1fr); }
       .split, .feature-band { grid-template-columns: 1fr; }
       .feature-band.reverse .feature-visual { order: -1; }
-      .process-timeline { grid-template-columns: repeat(2, 1fr); gap: 24px; }
-      .process-timeline::before { display: none; }
       .process-steps { grid-template-columns: 1fr; }
       .stack-constellation { min-height: 480px; aspect-ratio: auto; }
       .stack-star { white-space: normal; text-align: center; max-width: 42vw; }
       .stack-split, .beneficios-split { grid-template-columns: 1fr; }
       .beneficios-split .section-head { margin-bottom: 32px; }
-      .servicios-editorial { grid-template-columns: 1fr; }
-      .servicio-card--featured { order: -1; }
     }
     @media (max-width: 960px) {
       .hamburger { display: inline-flex; }
@@ -1168,13 +1144,13 @@
         margin: 0;
         align-items: center;
       }
-      .header-brand .logo img { max-height: 34px; }
       .header-partner__label {
         font-size: 0.65rem;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: #9E9E9E;
       }
+      .header-brand .logo img { max-height: 34px; }
       .hamburger {
         grid-column: 1;
         grid-row: 1;
@@ -1184,6 +1160,39 @@
         margin: 0;
         padding: 6px 8px;
       }
+      .site-footer { padding-top: 48px; }
+      .footer-inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+        padding: 0 16px;
+        max-width: 100%;
+      }
+      .footer-inner .footer-logo { display: none; }
+      .footer-partner {
+        display: flex;
+        grid-column: 1 / -1;
+        justify-self: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: 4px;
+        padding: 4px 0;
+        min-height: unset;
+      }
+      .aws-partner-badge.footer-partner .header-partner__label {
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .aws-partner-badge.footer-partner:focus-visible { outline-offset: 4px; }
+      .footer-col { min-width: 0; }
+      .footer-col h2 { margin-bottom: 14px; }
+      .footer-col a { overflow-wrap: anywhere; }
+      .footer-logo img { width: 100px; }
+      .footer-bottom {
+        margin-top: 28px;
+        padding: 20px 16px 28px;
+        max-width: 100%;
+      }
     }
     @media (max-width: 640px) {
       :root { --header-h: 58px; }
@@ -1191,21 +1200,25 @@
       .header-brand .logo img { max-height: 30px; }
       .aws-partner-badge.header-partner { min-height: 20px; padding: 1px 10px 3px; }
       .header-partner__label { font-size: 0.6rem; }
-      .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid, .servicios-editorial__grid, .product-grid { grid-template-columns: 1fr; }
+      .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid, .product-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
       .stack-constellation { min-height: 520px; }
       .hero-actions, .cta-actions { flex-direction: column; }
       .btn { width: 100%; }
       .transform-nodes { grid-template-columns: 1fr; }
-      .process-timeline { grid-template-columns: 1fr; text-align: left; }
-      .timeline-node { display: grid; grid-template-columns: 24px 1fr; gap: 12px; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border); }
-      .timeline-dot { margin: 4px 0 0; }
       .feature-band { padding: 24px 18px; }
+      .footer-inner { gap: 24px 14px; }
+      .footer-col h2 { margin-bottom: 12px; font-size: 0.68rem; }
+      .footer-col a { font-size: 0.9rem; }
+      .footer-col li { margin-bottom: 8px; }
+      .footer-social { gap: 12px; margin-top: 12px; }
+      .footer-logo img { width: 88px; }
+      .footer-copyright { font-size: 0.82rem; line-height: 1.5; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal { opacity: 1; transform: none; }
-      .hero-ecosystem__orbit--outer, .hero-ecosystem__orbit--outer-deep, .hero-ecosystem__core-glow { animation: none !important; }
+      .hero-bg__fog, .hero-bg__particles, .hero-bg__starfield, .eco-sat-group { animation: none !important; }
       .stack-star { animation: none; opacity: 0.85; }
       .evolution-line-svg .evo-path { stroke-dasharray: none; stroke-dashoffset: 0; }
     }
@@ -1270,75 +1283,140 @@
 
   <main id="main-content">
     <section class="hero chapter-hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="hero-bg__fog"></span>
+        <svg class="hero-bg__starfield" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <defs>
+            <pattern id="heroStarPattern" width="34" height="34" patternUnits="userSpaceOnUse">
+              <circle cx="5" cy="8" r="0.42" fill="#f0fcff" fill-opacity="0.212"/>
+              <circle cx="16" cy="3" r="0.38" fill="#f0fcff" fill-opacity="0.192"/>
+              <circle cx="26" cy="11" r="0.44" fill="#f0fcff" fill-opacity="0.22"/>
+              <circle cx="34" cy="5" r="0.4" fill="#f0fcff" fill-opacity="0.196"/>
+              <circle cx="10" cy="18" r="0.43" fill="#f0fcff" fill-opacity="0.204"/>
+              <circle cx="22" cy="22" r="0.41" fill="#f0fcff" fill-opacity="0.184"/>
+              <circle cx="33" cy="19" r="0.46" fill="#f0fcff" fill-opacity="0.216"/>
+              <circle cx="3" cy="29" r="0.39" fill="#f0fcff" fill-opacity="0.176"/>
+              <circle cx="18" cy="34" r="0.42" fill="#f0fcff" fill-opacity="0.192"/>
+              <circle cx="29" cy="31" r="0.41" fill="#f0fcff" fill-opacity="0.188"/>
+              <circle cx="38" cy="26" r="0.4" fill="#f0fcff" fill-opacity="0.18"/>
+              <circle cx="12" cy="38" r="0.43" fill="#f0fcff" fill-opacity="0.192"/>
+              <circle cx="24" cy="14" r="0.36" fill="#f0fcff" fill-opacity="0.172"/>
+              <circle cx="36" cy="37" r="0.41" fill="#f0fcff" fill-opacity="0.184"/>
+              <circle cx="7" cy="24" r="0.38" fill="#f0fcff" fill-opacity="0.18"/>
+              <circle cx="28" cy="4" r="0.37" fill="#f0fcff" fill-opacity="0.176"/>
+              <circle cx="39" cy="15" r="0.42" fill="#f0fcff" fill-opacity="0.192"/>
+              <circle cx="20" cy="7" r="0.36" fill="#f0fcff" fill-opacity="0.188"/>
+              <circle cx="6" cy="33" r="0.38" fill="#f0fcff" fill-opacity="0.18"/>
+              <circle cx="31" cy="36" r="0.39" fill="#f0fcff" fill-opacity="0.188"/>
+              <circle cx="14" cy="6" r="0.34" fill="#d8f8ff" fill-opacity="0.196"/>
+              <circle cx="8" cy="12" r="0.32" fill="#d8f8ff" fill-opacity="0.168"/>
+            </pattern>
+            <pattern id="heroStarPatternFine" width="17" height="17" patternUnits="userSpaceOnUse">
+              <circle cx="4" cy="6" r="0.32" fill="#e8f8fa" fill-opacity="0.16"/>
+              <circle cx="12" cy="2" r="0.3" fill="#e8f8fa" fill-opacity="0.148"/>
+              <circle cx="16" cy="10" r="0.34" fill="#e8f8fa" fill-opacity="0.168"/>
+              <circle cx="7" cy="13" r="0.31" fill="#e8f8fa" fill-opacity="0.312"/>
+              <circle cx="14" cy="17" r="0.33" fill="#e8f8fa" fill-opacity="0.16"/>
+              <circle cx="2" cy="18" r="0.3" fill="#e8f8fa" fill-opacity="0.14"/>
+              <circle cx="18" cy="5" r="0.32" fill="#e8f8fa" fill-opacity="0.152"/>
+              <circle cx="9" cy="9" r="0.29" fill="#e8f8fa" fill-opacity="0.148"/>
+              <circle cx="17" cy="14" r="0.31" fill="#e8f8fa" fill-opacity="0.312"/>
+              <circle cx="5" cy="3" r="0.28" fill="#e8f8fa" fill-opacity="0.144"/>
+              <circle cx="11" cy="11" r="0.27" fill="#e8f8fa" fill-opacity="0.14"/>
+            </pattern>
+          </defs>
+          <rect width="1440" height="900" fill="url(#heroStarPattern)"/>
+          <rect width="1440" height="900" fill="url(#heroStarPatternFine)" opacity="0.312"/>
+          <g fill="#f4feff" opacity="0.352">
+            <circle cx="42" cy="58" r="0.55" fill-opacity="0.12"/><circle cx="118" cy="124" r="0.45" fill-opacity="0.106"/><circle cx="198" cy="36" r="0.7" fill-opacity="0.132"/><circle cx="276" cy="88" r="0.5" fill-opacity="0.114"/><circle cx="354" cy="142" r="0.45" fill-opacity="0.126"/><circle cx="428" cy="52" r="0.6" fill-opacity="0.11"/><circle cx="512" cy="118" r="0.5" fill-opacity="0.138"/><circle cx="588" cy="28" r="0.55" fill-opacity="0.116"/><circle cx="664" cy="96" r="0.45" fill-opacity="0.128"/><circle cx="742" cy="164" r="0.65" fill-opacity="0.122"/><circle cx="818" cy="44" r="0.5" fill-opacity="0.132"/><circle cx="896" cy="108" r="0.45" fill-opacity="0.11"/><circle cx="972" cy="72" r="0.55" fill-opacity="0.126"/><circle cx="1054" cy="138" r="0.5" fill-opacity="0.12"/><circle cx="1132" cy="62" r="0.6" fill-opacity="0.128"/><circle cx="1210" cy="128" r="0.45" fill-opacity="0.114"/><circle cx="1288" cy="48" r="0.55" fill-opacity="0.136"/><circle cx="1368" cy="112" r="0.5" fill-opacity="0.122"/><circle cx="78" cy="218" r="0.5" fill-opacity="0.11"/><circle cx="156" cy="284" r="0.65" fill-opacity="0.132"/><circle cx="234" cy="196" r="0.45" fill-opacity="0.12"/><circle cx="312" cy="252" r="0.55" fill-opacity="0.126"/><circle cx="388" cy="318" r="0.5" fill-opacity="0.114"/><circle cx="466" cy="228" r="0.45" fill-opacity="0.128"/><circle cx="544" cy="296" r="0.6" fill-opacity="0.122"/><circle cx="622" cy="208" r="0.5" fill-opacity="0.116"/><circle cx="698" cy="274" r="0.55" fill-opacity="0.132"/><circle cx="776" cy="342" r="0.45" fill-opacity="0.11"/><circle cx="854" cy="238" r="0.5" fill-opacity="0.126"/><circle cx="932" cy="304" r="0.65" fill-opacity="0.12"/><circle cx="1010" cy="216" r="0.45" fill-opacity="0.128"/><circle cx="1088" cy="282" r="0.55" fill-opacity="0.114"/><circle cx="1166" cy="348" r="0.5" fill-opacity="0.122"/><circle cx="1244" cy="258" r="0.45" fill-opacity="0.132"/><circle cx="1322" cy="324" r="0.6" fill-opacity="0.116"/><circle cx="1402" cy="236" r="0.5" fill-opacity="0.126"/><circle cx="56" cy="412" r="0.55" fill-opacity="0.12"/><circle cx="134" cy="478" r="0.45" fill-opacity="0.11"/><circle cx="212" cy="392" r="0.5" fill-opacity="0.128"/><circle cx="290" cy="456" r="0.65" fill-opacity="0.122"/><circle cx="368" cy="528" r="0.45" fill-opacity="0.114"/><circle cx="446" cy="436" r="0.55" fill-opacity="0.132"/><circle cx="524" cy="502" r="0.5" fill-opacity="0.116"/><circle cx="602" cy="418" r="0.45" fill-opacity="0.126"/><circle cx="680" cy="484" r="0.6" fill-opacity="0.12"/><circle cx="758" cy="556" r="0.5" fill-opacity="0.11"/><circle cx="836" cy="468" r="0.55" fill-opacity="0.128"/><circle cx="914" cy="534" r="0.45" fill-opacity="0.122"/><circle cx="992" cy="446" r="0.5" fill-opacity="0.132"/><circle cx="1070" cy="512" r="0.65" fill-opacity="0.114"/><circle cx="1148" cy="578" r="0.45" fill-opacity="0.126"/><circle cx="1226" cy="492" r="0.55" fill-opacity="0.12"/><circle cx="1304" cy="558" r="0.5" fill-opacity="0.116"/><circle cx="1382" cy="472" r="0.45" fill-opacity="0.128"/><circle cx="94" cy="612" r="0.5" fill-opacity="0.122"/><circle cx="172" cy="678" r="0.55" fill-opacity="0.114"/><circle cx="250" cy="592" r="0.45" fill-opacity="0.132"/><circle cx="328" cy="658" r="0.6" fill-opacity="0.12"/><circle cx="406" cy="728" r="0.5" fill-opacity="0.11"/><circle cx="484" cy="638" r="0.45" fill-opacity="0.126"/><circle cx="562" cy="704" r="0.55" fill-opacity="0.128"/><circle cx="640" cy="618" r="0.5" fill-opacity="0.116"/><circle cx="718" cy="684" r="0.65" fill-opacity="0.122"/><circle cx="796" cy="756" r="0.45" fill-opacity="0.132"/><circle cx="874" cy="668" r="0.55" fill-opacity="0.114"/><circle cx="952" cy="734" r="0.5" fill-opacity="0.126"/><circle cx="1030" cy="648" r="0.45" fill-opacity="0.12"/><circle cx="1108" cy="714" r="0.6" fill-opacity="0.128"/><circle cx="1186" cy="782" r="0.5" fill-opacity="0.116"/><circle cx="1264" cy="696" r="0.55" fill-opacity="0.122"/><circle cx="1342" cy="762" r="0.45" fill-opacity="0.132"/><circle cx="1420" cy="676" r="0.5" fill-opacity="0.12"/><circle cx="24" cy="332" r="0.45" fill-opacity="0.106"/><circle cx="1416" cy="388" r="0.55" fill-opacity="0.11"/><circle cx="720" cy="812" r="0.5" fill-opacity="0.118"/><circle cx="360" cy="168" r="0.45" fill-opacity="0.124"/><circle cx="1080" cy="824" r="0.55" fill-opacity="0.112"/>
+          </g>
+        </svg>
+        <span class="hero-bg__particles"></span>
+        <span class="hero-bg__grid"></span>
+      </div>
       <div class="container hero-grid reveal">
         <div class="hero-copy">
-          <h1 id="hero-title">Transformamos operaciones empresariales con<br><span class="text-accent">Cloud, Datos e Inteligencia Artificial</span></h1>
+          <h1 id="hero-title">Transformamos<br>operaciones empresariales con<br><span class="text-accent">Cloud, Datos e<br>Inteligencia Artificial</span></h1>
           <p class="hero-lead">Diseñamos, implementamos y evolucionamos soluciones tecnológicas para que tu operación sea más conectada, segura, eficiente y preparada para crecer.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="mailto:sales@mastersaws.com?subject=Agenda%20un%20diagn%C3%B3stico%20estrat%C3%A9gico">Agenda un diagnóstico estratégico</a>
+            <a class="btn btn-primary" href="mailto:sales@mastersaws.com?subject=Agenda%20un%20diagn%C3%B3stico%20estrat%C3%A9gico">Agenda un diagnóstico estratégico <span class="btn-arrow" aria-hidden="true">&rarr;</span></a>
             <a class="btn btn-secondary" href="#servicios-masteraws">Conoce nuestros servicios</a>
           </div>
-          <div class="page-explore" aria-label="Explorar secciones de la página">
-            <p>Explorar esta página</p>
-            <div class="explore-pills">
-              <a href="#problema">El desafío</a>
-              <a href="#servicios-masteraws">Servicios</a>
-              <a href="#como-trabajamos">Método</a>
-              <a href="#ecosistema-masteraws">Ecosistema</a>
-              <a href="#contacto">Contacto</a>
-            </div>
-          </div>
         </div>
-        <div class="hero-ecosystem hero-ecosystem--compact" id="hero-ecosystem" role="group" aria-label="Vista introductoria del ecosistema MasterAWS">
-          <div class="hero-ecosystem__diagram">
-            <svg class="hero-ecosystem__svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <div class="eco-orbit" id="hero-orbit" role="group" aria-label="Ecosistema MasterAWS">
+          <div class="eco-orbit__diagram">
+            <svg class="eco-orbit__svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
               <defs>
-                <radialGradient id="ecoCoreGlow-hero" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="rgba(0,232,223,0.4)"/>
-                  <stop offset="70%" stop-color="rgba(0,232,223,0.08)"/>
-                  <stop offset="100%" stop-color="rgba(0,232,223,0)"/>
+                <radialGradient id="ecoHalo" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#00E8DF" stop-opacity="0.22"/>
+                  <stop offset="55%" stop-color="#00B4D8" stop-opacity="0.07"/>
+                  <stop offset="100%" stop-color="#00E8DF" stop-opacity="0"/>
                 </radialGradient>
               </defs>
-              <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer hero-ecosystem__orbit--outer-deep" cx="260" cy="260" rx="224" ry="196"/>
-              <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer" cx="260" cy="260" rx="218" ry="190"/>
-              <ellipse class="hero-ecosystem__orbit-glow" cx="260" cy="260" rx="218" ry="190"/>
-              <circle class="hero-ecosystem__orbit hero-ecosystem__orbit--inner" cx="260" cy="260" r="143"/>
-              <circle class="hero-ecosystem__core-glow" cx="260" cy="260" r="94"/>
-              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="260" y2="117"/>
-              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="384" y2="188.5"/>
-              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="384" y2="331.5"/>
-              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="260" y2="403"/>
-              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="136" y2="331.5"/>
-              <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="136" y2="188.5"/>
+              <circle class="eco-halo" cx="300" cy="300" r="250"/>
+              <circle class="eco-ring eco-ring--mid" cx="300" cy="300" r="205"/>
+              <circle class="eco-ring eco-ring--outer" cx="300" cy="300" r="250"/>
+              <circle class="eco-ring eco-ring--inner" cx="300" cy="300" r="148"/>
+              <g class="eco-sat-group"><circle class="eco-sat" cx="300" cy="50" r="2.6"/></g>
+              <g class="eco-sat-group eco-sat-group--rev"><circle class="eco-sat eco-sat--cyan" cx="300" cy="95" r="2"/></g>
+              <line class="eco-spoke" data-eco-id="svc-1" x1="300" y1="230" x2="300" y2="189"/>
+              <line class="eco-spoke" data-eco-id="svc-2" x1="354.7" y1="256.4" x2="386.8" y2="230.8"/>
+              <line class="eco-spoke" data-eco-id="svc-3" x1="368.2" y1="315.6" x2="408.2" y2="324.7"/>
+              <line class="eco-spoke" data-eco-id="svc-4" x1="330.4" y1="363.1" x2="348.2" y2="400"/>
+              <line class="eco-spoke" data-eco-id="svc-5" x1="269.6" y1="363.1" x2="251.8" y2="400"/>
+              <line class="eco-spoke" data-eco-id="svc-6" x1="231.8" y1="315.6" x2="191.8" y2="324.7"/>
+              <line class="eco-spoke" data-eco-id="svc-7" x1="245.3" y1="256.4" x2="213.2" y2="230.8"/>
+              <circle class="eco-dot eco-dot--service" cx="300" cy="152" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="415.7" cy="207.7" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="444.3" cy="332.9" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="364.2" cy="433.3" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="235.8" cy="433.3" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="155.7" cy="332.9" r="37"/>
+              <circle class="eco-dot eco-dot--service" cx="184.3" cy="207.7" r="37"/>
+              <circle class="eco-dot eco-dot--product" cx="300" cy="50" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="516.5" cy="175" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="516.5" cy="425" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="300" cy="550" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="83.5" cy="425" r="11"/>
+              <circle class="eco-dot eco-dot--product" cx="83.5" cy="175" r="11"/>
             </svg>
-            <div class="hero-ecosystem__nodes">
-              <div class="hero-ecosystem__core" aria-hidden="true">
-                <strong>MasterAWS</strong>
-                <span>Estrategia · Ingeniería · Evolución</span>
-              </div>
-              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--eco-dx:0cqw;--eco-dy:-27.5cqw;" data-eco-kind="service" data-eco-name="Cloud Adoption" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--eco-dx:23.85cqw;--eco-dy:-13.75cqw;" data-eco-kind="service" data-eco-name="Seguridad" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/finops/" style="--eco-dx:23.85cqw;--eco-dy:13.75cqw;" data-eco-kind="service" data-eco-name="FinOps" aria-label="FinOps, explorar servicio">FinOps</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/devops/" style="--eco-dx:0cqw;--eco-dy:27.5cqw;" data-eco-kind="service" data-eco-name="DevOps" aria-label="DevOps, explorar servicio">DevOps</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/data-analytics/" style="--eco-dx:-23.85cqw;--eco-dy:13.75cqw;" data-eco-kind="service" data-eco-name="Datos &amp; Analítica" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--eco-dx:-23.85cqw;--eco-dy:-13.75cqw;" data-eco-kind="service" data-eco-name="Gobernanza de IA" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastererp/" style="--eco-dx:24.6cqw;--eco-dy:-29.5cqw;" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-academy/" style="--eco-dx:39.9cqw;--eco-dy:11.2cqw;" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastervpn/" style="--eco-dx:0cqw;--eco-dy:36.5cqw;" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--eco-dx:-39.9cqw;--eco-dy:11.2cqw;" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
-              <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon" style="--eco-dx:-24.6cqw;--eco-dy:-29.5cqw;" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
+            <div class="eco-orbit__core" aria-hidden="true">
+              <img class="eco-orbit__core-logo" src="https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png" alt="" width="177" height="45" decoding="async" />
             </div>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--x:50%;--y:25.33%" data-eco-id="svc-1" data-eco-kind="service" data-eco-caption="Cloud Adoption · Explorar servicio →" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--x:69.28%;--y:34.62%" data-eco-id="svc-2" data-eco-kind="service" data-eco-caption="Seguridad en la nube · Explorar servicio →" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/finops/" style="--x:74.05%;--y:55.48%" data-eco-id="svc-3" data-eco-kind="service" data-eco-caption="FinOps · Explorar servicio →" aria-label="FinOps, explorar servicio">FinOps</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/devops/" style="--x:60.7%;--y:72.22%" data-eco-id="svc-4" data-eco-kind="service" data-eco-caption="DevOps · Explorar servicio →" aria-label="DevOps, explorar servicio">DevOps</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/data-analytics/" style="--x:39.3%;--y:72.22%" data-eco-id="svc-5" data-eco-kind="service" data-eco-caption="Datos &amp; Analítica · Explorar servicio →" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/inteligencia-artificial/" style="--x:25.95%;--y:55.48%" data-eco-id="svc-6" data-eco-kind="service" data-eco-caption="AI Adoption · Explorar servicio →" aria-label="AI Adoption, explorar servicio">AI Adoption</a>
+            <a class="eco-node eco-node--service" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--x:30.72%;--y:34.62%" data-eco-id="svc-7" data-eco-kind="service" data-eco-caption="Gobernanza de IA · Explorar servicio →" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
+            <a class="eco-node eco-node--product eco-node--up" href="https://www.mastersaws.com/mastererp/" style="--x:50%;--y:8.33%" data-eco-id="prd-1" data-eco-kind="product" data-eco-caption="MasterERP · Conocer producto →" aria-label="MasterERP, conocer producto"><span class="eco-node__label">MasterERP</span></a>
+            <a class="eco-node eco-node--product eco-node--up" href="https://www.mastersaws.com/soluciones/master-academy/" style="--x:86.08%;--y:29.17%" data-eco-id="prd-2" data-eco-kind="product" data-eco-caption="MasterAcademy · Conocer producto →" aria-label="MasterAcademy, conocer producto"><span class="eco-node__label">MasterAcademy</span></a>
+            <a class="eco-node eco-node--product eco-node--down" href="https://www.mastersaws.com/mastervpn/" style="--x:86.08%;--y:70.83%" data-eco-id="prd-3" data-eco-kind="product" data-eco-caption="MasterVPN · Conocer producto →" aria-label="MasterVPN, conocer producto"><span class="eco-node__label">MasterVPN</span></a>
+            <a class="eco-node eco-node--product eco-node--down" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--x:50%;--y:91.67%" data-eco-id="prd-4" data-eco-kind="product" data-eco-caption="MasterHosting · Conocer producto →" aria-label="MasterHosting, conocer producto"><span class="eco-node__label">MasterHosting</span></a>
+            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--down" style="--x:13.92%;--y:70.83%" data-eco-id="prd-5" data-eco-kind="product" data-eco-caption="MasterOpsphere" aria-disabled="true" aria-label="MasterOpsphere"><span class="eco-node__label">MasterOpsphere</span></button>
+            <button type="button" class="eco-node eco-node--product eco-node--soon eco-node--up" style="--x:13.92%;--y:29.17%" data-eco-id="prd-6" data-eco-kind="product" data-eco-caption="MasterUonify" aria-disabled="true" aria-label="MasterUonify"><span class="eco-node__label">MasterUonify</span></button>
           </div>
-          <div class="hero-ecosystem__tooltip" role="tooltip" aria-live="polite" hidden></div>
-          <div class="hero-ecosystem__products-mobile" aria-label="Productos del ecosistema">
-            <h3>Productos construidos sobre este ecosistema</h3>
-            <div class="hero-ecosystem__products-scroll">
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/mastererp/" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/soluciones/master-academy/" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/mastervpn/" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
-              <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/soluciones/master-hosting/" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
-              <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon hero-ecosystem__product-chip" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
-            </div>
+          <div class="eco-orbit__mobile">
+            <p class="eco-orbit__mobile-title">Servicios</p>
+            <ul class="eco-orbit__chips" aria-label="Servicios MasterAWS">
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/devops/">DevOps</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/finops/">FinOps</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/data-analytics/">Datos &amp; Analítica</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/inteligencia-artificial/">AI Adoption</a></li>
+              <li><a class="eco-chip" href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a></li>
+            </ul>
+            <p class="eco-orbit__mobile-title">Productos</p>
+            <ul class="eco-orbit__chips" aria-label="Productos MasterAWS">
+              <li><a class="eco-chip eco-chip--product" href="https://www.mastersaws.com/mastererp/">MasterERP</a></li>
+              <li><a class="eco-chip eco-chip--product" href="https://www.mastersaws.com/soluciones/master-academy/">MasterAcademy</a></li>
+              <li><a class="eco-chip eco-chip--product" href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
+              <li><a class="eco-chip eco-chip--product" href="https://www.mastersaws.com/soluciones/master-hosting/">MasterHosting</a></li>
+              <li><span class="eco-chip eco-chip--product eco-chip--soon">MasterOpsphere · Próximamente</span></li>
+              <li><span class="eco-chip eco-chip--product eco-chip--soon">MasterUonify · Próximamente</span></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -1385,40 +1463,47 @@
           <h2 id="servicios-title">Servicios para transformar y operar mejor tu empresa</h2>
           <p>Combinamos estrategia, ingeniería y acompañamiento continuo para convertir necesidades de negocio en soluciones tecnológicas reales.</p>
         </div>
-        <div class="servicios-editorial">
-          <article class="servicio-card servicio-card--featured">
-            <span class="badge-nuevo">Nuevo</span>
+        <div class="cards-4-servicios" role="list">
+          <article class="card" role="listitem">
+            <h3>Cloud Adoption</h3>
+            <p>Diseñamos y modernizamos una base cloud segura, escalable y alineada a tus objetivos.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Seguridad en la nube</h3>
+            <p>Protegemos información, accesos y operación desde la arquitectura hasta el día a día.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la nube</a>
+          </article>
+          <article class="card" role="listitem">
+            <h3>DevOps</h3>
+            <p>Mejoramos la entrega, automatización y confiabilidad de aplicaciones y plataformas.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/devops/">DevOps</a>
+          </article>
+          <article class="card" role="listitem">
+            <h3>FinOps</h3>
+            <p>Damos visibilidad y control al costo cloud para conectar inversión tecnológica con valor.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/finops/">FinOps</a>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Infraestructura</h3>
+            <p>Diseñamos y operamos VPC, compute, redes y almacenamiento con bases sólidas en AWS.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/infraestructura/">Infraestructura</a>
+          </article>
+          <article class="card" role="listitem">
+            <h3>Datos &amp; Analítica</h3>
+            <p>Conectamos información para crear visibilidad operativa y decisiones más oportunas.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/data-analytics/">Datos &amp; Analítica</a>
+          </article>
+          <article class="card" role="listitem">
             <h3>AI Adoption</h3>
             <p>Llevamos la inteligencia artificial desde la oportunidad de negocio hasta procesos reales, gobernados y medibles.</p>
             <a class="card-link" href="https://www.mastersaws.com/servicios/inteligencia-artificial/">Explorar AI Adoption</a>
           </article>
-          <div class="servicios-editorial__grid">
-            <article class="servicio-card">
-              <h3>Cloud Adoption</h3>
-              <p>Diseñamos y modernizamos una base cloud segura, escalable y alineada a tus objetivos.</p>
-              <a class="card-link" href="https://www.mastersaws.com/servicios/cloud-adoption/">Cloud Adoption</a>
-            </article>
-            <article class="servicio-card">
-              <h3>Seguridad en la nube</h3>
-              <p>Protegemos información, accesos y operación desde la arquitectura hasta el día a día.</p>
-              <a class="card-link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/">Seguridad en la nube</a>
-            </article>
-            <article class="servicio-card">
-              <h3>FinOps</h3>
-              <p>Damos visibilidad y control al costo cloud para conectar inversión tecnológica con valor.</p>
-              <a class="card-link" href="https://www.mastersaws.com/servicios/finops/">FinOps</a>
-            </article>
-            <article class="servicio-card">
-              <h3>DevOps</h3>
-              <p>Mejoramos la entrega, automatización y confiabilidad de aplicaciones y plataformas.</p>
-              <a class="card-link" href="https://www.mastersaws.com/servicios/devops/">DevOps</a>
-            </article>
-            <article class="servicio-card" style="grid-column: 1 / -1;">
-              <h3>Datos &amp; Analítica</h3>
-              <p>Conectamos información para crear visibilidad operativa y decisiones más oportunas.</p>
-              <a class="card-link" href="https://www.mastersaws.com/servicios/data-analytics/">Datos &amp; Analítica</a>
-            </article>
-          </div>
+          <article class="card" role="listitem">
+            <h3>Gobernanza de IA</h3>
+            <p>Evaluamos madurez y definimos controles para adoptar IA con seguridad, cumplimiento y confianza.</p>
+            <a class="card-link" href="https://www.mastersaws.com/servicios/gobernanza-ia/">Gobernanza de IA</a>
+          </article>
         </div>
         <div class="ai-transition-band reveal" aria-labelledby="ai-transition-title">
           <h3 id="ai-transition-title">La IA no empieza con una herramienta. Empieza con una oportunidad de negocio.</h3>
@@ -1453,12 +1538,6 @@
             </svg>
           </div>
           </div>
-          <div class="process-timeline reveal" aria-label="Fases del método">
-            <div class="timeline-node"><div class="timeline-dot" aria-hidden="true"></div><span>Fase 1</span><strong>Diagnóstico</strong></div>
-            <div class="timeline-node"><div class="timeline-dot" aria-hidden="true"></div><span>Fase 2</span><strong>Diseño</strong></div>
-            <div class="timeline-node"><div class="timeline-dot" aria-hidden="true"></div><span>Fase 3</span><strong>Implementación</strong></div>
-            <div class="timeline-node"><div class="timeline-dot" aria-hidden="true"></div><span>Fase 4</span><strong>Evolución</strong></div>
-          </div>
         </div>
         <div class="process-steps reveal">
           <article class="process-step">
@@ -1477,70 +1556,6 @@
             <span class="process-num">04</span>
             <div><h3>Evolucionar</h3><p>Acompañamos seguridad, costos, adopción y mejora continua.</p></div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt chapter-ecosistema" id="ecosistema-masteraws" aria-labelledby="ecosistema-title">
-      <div class="container reveal">
-        <div class="section-head">
-          <span class="section-label">Ecosistema MasterAWS</span>
-          <h2 id="ecosistema-title">Un ecosistema construido para evolucionar</h2>
-          <p>Nuestros servicios forman la base con la que diseñamos, implementamos y operamos cada solución. Sobre esa experiencia creamos productos que aceleran resultados concretos.</p>
-        </div>
-        <div class="ecosistema-wrap">
-          <div class="hero-ecosystem hero-ecosystem--section" role="group" aria-label="Ecosistema MasterAWS: servicios en la nube y productos propios">
-            <div class="hero-ecosystem__diagram">
-              <svg class="hero-ecosystem__svg" viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <radialGradient id="ecoCoreGlow-section" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="rgba(0,232,223,0.4)"/>
-                    <stop offset="70%" stop-color="rgba(0,232,223,0.08)"/>
-                    <stop offset="100%" stop-color="rgba(0,232,223,0)"/>
-                  </radialGradient>
-                </defs>
-                <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer hero-ecosystem__orbit--outer-deep" cx="260" cy="260" rx="224" ry="196"/>
-                <ellipse class="hero-ecosystem__orbit hero-ecosystem__orbit--outer" cx="260" cy="260" rx="218" ry="190"/>
-                <ellipse class="hero-ecosystem__orbit-glow" cx="260" cy="260" rx="218" ry="190"/>
-                <circle class="hero-ecosystem__orbit hero-ecosystem__orbit--inner" cx="260" cy="260" r="143"/>
-                <circle class="hero-ecosystem__core-glow" cx="260" cy="260" r="94"/>
-                <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="260" y2="117"/>
-                <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="384" y2="188.5"/>
-                <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="384" y2="331.5"/>
-                <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="260" y2="403"/>
-                <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="136" y2="331.5"/>
-                <line class="hero-ecosystem__spoke" x1="260" y1="260" x2="136" y2="188.5"/>
-              </svg>
-              <div class="hero-ecosystem__nodes">
-                <div class="hero-ecosystem__core" aria-hidden="true">
-                  <strong>MasterAWS</strong>
-                  <span>Estrategia · Ingeniería · Evolución</span>
-                </div>
-                <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/cloud-adoption/" style="--eco-dx:0cqw;--eco-dy:-27.5cqw;" data-eco-kind="service" data-eco-name="Cloud Adoption" aria-label="Cloud Adoption, explorar servicio">Cloud Adoption</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/seguridad-en-la-nube/" style="--eco-dx:23.85cqw;--eco-dy:-13.75cqw;" data-eco-kind="service" data-eco-name="Seguridad" aria-label="Seguridad en la nube, explorar servicio">Seguridad</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/finops/" style="--eco-dx:23.85cqw;--eco-dy:13.75cqw;" data-eco-kind="service" data-eco-name="FinOps" aria-label="FinOps, explorar servicio">FinOps</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/devops/" style="--eco-dx:0cqw;--eco-dy:27.5cqw;" data-eco-kind="service" data-eco-name="DevOps" aria-label="DevOps, explorar servicio">DevOps</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/data-analytics/" style="--eco-dx:-23.85cqw;--eco-dy:13.75cqw;" data-eco-kind="service" data-eco-name="Datos &amp; Analítica" aria-label="Datos y analítica, explorar servicio">Datos &amp; Analítica</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--service hero-ecosystem__node--link" href="https://www.mastersaws.com/servicios/gobernanza-ia/" style="--eco-dx:-23.85cqw;--eco-dy:-13.75cqw;" data-eco-kind="service" data-eco-name="Gobernanza de IA" aria-label="Gobernanza de IA, explorar servicio">Gobernanza de IA</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastererp/" style="--eco-dx:24.6cqw;--eco-dy:-29.5cqw;" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-academy/" style="--eco-dx:39.9cqw;--eco-dy:11.2cqw;" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/mastervpn/" style="--eco-dx:0cqw;--eco-dy:36.5cqw;" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link" href="https://www.mastersaws.com/soluciones/master-hosting/" style="--eco-dx:-39.9cqw;--eco-dy:11.2cqw;" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
-                <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon" style="--eco-dx:-24.6cqw;--eco-dy:-29.5cqw;" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
-              </div>
-            </div>
-            <div class="hero-ecosystem__tooltip" role="tooltip" aria-live="polite" hidden></div>
-            <div class="hero-ecosystem__products-mobile" aria-label="Productos del ecosistema">
-              <h3>Productos construidos sobre este ecosistema</h3>
-              <div class="hero-ecosystem__products-scroll">
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/mastererp/" data-eco-kind="product" data-eco-name="MasterERP" aria-label="MasterERP, conocer producto">MasterERP</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/soluciones/master-academy/" data-eco-kind="product" data-eco-name="MasterAcademy" aria-label="Master Academy, conocer producto">MasterAcademy</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/mastervpn/" data-eco-kind="product" data-eco-name="MasterVPN" aria-label="MasterVPN, conocer producto">MasterVPN</a>
-                <a class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--link hero-ecosystem__product-chip" href="https://www.mastersaws.com/soluciones/master-hosting/" data-eco-kind="product" data-eco-name="MasterHosting" aria-label="Master Hosting, conocer producto">MasterHosting</a>
-                <button type="button" class="hero-ecosystem__node hero-ecosystem__node--product hero-ecosystem__node--soon hero-ecosystem__product-chip" data-eco-kind="product" data-eco-name="MasterOpsphere" aria-label="MasterOpsphere, próximamente, sin enlace disponible">MasterOpsphere</button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -1718,6 +1733,9 @@
           <li><a href="https://www.mastersaws.com/mastervpn/">MasterVPN</a></li>
         </ul>
       </div>
+      <a href="https://partners.amazonaws.com/partners/0018W00002N5hKNQAZ/mastersaws" class="aws-partner-badge footer-partner" target="_blank" rel="noopener noreferrer" aria-label="MasterAWS en AWS Partner Network">
+        <span class="header-partner__label">AWS Partner</span>
+      </a>
       <div class="footer-col footer-logo">
         <a href="https://www.mastersaws.com/">
           <img src="https://www.mastersaws.com/wp-content/uploads/2025/09/a553171c-cd61-4b20-b5fb-43ddfa8e2ed8.png" width="120" height="120" alt="Masters AWS" />
@@ -1888,127 +1906,48 @@
     })();
 
     (function () {
-      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-      var coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
+      var root = document.getElementById('hero-orbit');
+      if (!root) return;
+      var caption = root.querySelector('.eco-orbit__caption');
+      var fallback = caption ? caption.getAttribute('data-default') : '';
+      var nodes = root.querySelectorAll('.eco-node');
+      var spokes = root.querySelectorAll('.eco-spoke');
 
-      function ecoLabel(node) {
-        var kind = node.getAttribute('data-eco-kind');
-        var name = node.getAttribute('data-eco-name') || '';
-        if (node.classList.contains('hero-ecosystem__node--soon')) {
-          return (name || 'MasterOpsphere') + ' · Próximamente';
-        }
-        if (kind === 'service') return 'Explorar ' + name + ' →';
-        return 'Conoce ' + name + ' →';
+      function clear() {
+        root.classList.remove('has-active');
+        root.removeAttribute('data-active-kind');
+        nodes.forEach(function (n) { n.classList.remove('is-active'); });
+        spokes.forEach(function (s) { s.classList.remove('is-on'); });
+        if (caption) caption.textContent = fallback;
       }
 
-      document.querySelectorAll('.hero-ecosystem').forEach(function (root) {
-        var tooltip = root.querySelector('.hero-ecosystem__tooltip');
-        var nodes = root.querySelectorAll('.hero-ecosystem__diagram .hero-ecosystem__node, .hero-ecosystem__product-chip');
-        var activeNode = null;
-        var mobilePrimed = null;
-
-        function showTooltip(node) {
-          if (!tooltip) return;
-          var text = ecoLabel(node);
-          tooltip.textContent = '';
-          tooltip.appendChild(document.createTextNode(text));
-          if (node.classList.contains('hero-ecosystem__node--link') && node.href) {
-            var cta = document.createElement('a');
-            cta.href = node.href;
-            cta.textContent = 'Ir ahora →';
-            cta.setAttribute('data-eco-cta', '1');
-            tooltip.appendChild(cta);
-          }
-          tooltip.hidden = false;
-          tooltip.classList.add('is-visible');
-          root.classList.add('is-active');
-          nodes.forEach(function (n) { n.classList.toggle('is-tooltip-open', n === node); });
-          activeNode = node;
-        }
-
-        function hideTooltip() {
-          if (!tooltip) return;
-          tooltip.classList.remove('is-visible');
-          tooltip.hidden = true;
-          tooltip.textContent = '';
-          root.classList.remove('is-active');
-          nodes.forEach(function (n) { n.classList.remove('is-tooltip-open'); });
-          activeNode = null;
-          mobilePrimed = null;
-        }
-
-        function bindDesktop(node) {
-          node.addEventListener('mouseenter', function () { showTooltip(node); });
-          node.addEventListener('mouseleave', function () {
-            if (activeNode === node) hideTooltip();
-          });
-          node.addEventListener('focus', function () { showTooltip(node); });
-          node.addEventListener('blur', function () {
-            if (activeNode === node && !root.contains(document.activeElement)) hideTooltip();
-          });
-        }
-
-        function bindMobile(node) {
-          node.addEventListener('click', function (e) {
-            if (!coarsePointer.matches) return;
-            if (node.classList.contains('hero-ecosystem__node--soon')) {
-              e.preventDefault();
-              showTooltip(node);
-              return;
-            }
-            if (mobilePrimed !== node) {
-              e.preventDefault();
-              mobilePrimed = node;
-              showTooltip(node);
-              return;
-            }
-            hideTooltip();
-          });
-        }
-
-        nodes.forEach(function (node) {
-          bindDesktop(node);
-          bindMobile(node);
+      function activate(node) {
+        clear();
+        root.classList.add('has-active');
+        root.setAttribute('data-active-kind', node.getAttribute('data-eco-kind') || '');
+        node.classList.add('is-active');
+        var id = node.getAttribute('data-eco-id');
+        spokes.forEach(function (s) {
+          if (s.getAttribute('data-eco-id') === id) s.classList.add('is-on');
         });
+        if (caption) caption.textContent = node.getAttribute('data-eco-caption') || '';
+      }
 
-        root.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape') hideTooltip();
+      nodes.forEach(function (node) {
+        node.addEventListener('mouseenter', function () { activate(node); });
+        node.addEventListener('mouseleave', function () {
+          var focused = root.querySelector('.eco-node:focus-visible');
+          if (focused) activate(focused); else clear();
         });
-
-        document.addEventListener('click', function (e) {
-          if (!root.contains(e.target)) hideTooltip();
-        });
-
-        if (tooltip) {
-          tooltip.addEventListener('click', function (e) {
-            if (e.target && e.target.getAttribute('data-eco-cta') === '1') hideTooltip();
-          });
+        node.addEventListener('focus', function () { activate(node); });
+        node.addEventListener('blur', function () { clear(); });
+        if (node.getAttribute('aria-disabled') === 'true') {
+          node.addEventListener('click', function (e) { e.preventDefault(); });
         }
       });
 
-      finePointer.addEventListener('change', function () {
-        document.querySelectorAll('.hero-ecosystem').forEach(function (root) {
-          var tooltip = root.querySelector('.hero-ecosystem__tooltip');
-          if (tooltip) {
-            tooltip.classList.remove('is-visible');
-            tooltip.hidden = true;
-            tooltip.textContent = '';
-          }
-          root.classList.remove('is-active');
-          root.querySelectorAll('.is-tooltip-open').forEach(function (n) { n.classList.remove('is-tooltip-open'); });
-        });
-      });
-      coarsePointer.addEventListener('change', function () {
-        document.querySelectorAll('.hero-ecosystem').forEach(function (root) {
-          var tooltip = root.querySelector('.hero-ecosystem__tooltip');
-          if (tooltip) {
-            tooltip.classList.remove('is-visible');
-            tooltip.hidden = true;
-            tooltip.textContent = '';
-          }
-          root.classList.remove('is-active');
-          root.querySelectorAll('.is-tooltip-open').forEach(function (n) { n.classList.remove('is-tooltip-open'); });
-        });
+      root.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') clear();
       });
     })();
   </script>
