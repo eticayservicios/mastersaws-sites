@@ -99,30 +99,26 @@
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     }
     .header-content {
-      width: 100%; max-width: none; margin: 0 auto;
-      padding: 0 clamp(20px, 4.5vw, 52px);
-      display: flex; align-items: center; justify-content: space-between;
-      min-height: var(--header-h); gap: clamp(16px, 3vw, 40px);
+      width: min(var(--max), calc(100% - 32px));
+      max-width: none; margin: 0 auto; padding: 0;
+      display: grid;
+      grid-template-columns: auto minmax(32px, 1fr) auto;
+      align-items: center;
+      column-gap: clamp(24px, 4.5vw, 64px);
+      min-height: var(--header-h);
       overflow: visible;
     }
     .header-brand {
+      grid-column: 1;
       display: flex; align-items: center; gap: 14px; flex-shrink: 0; min-width: 0;
-      min-height: 40px;
     }
     .logo {
       display: flex; align-items: center; text-decoration: none; flex-shrink: 0;
-      padding: 4px 0; border-radius: 4px;
+      padding: 0; border-radius: 4px;
     }
-    .logo-wordmark {
-      display: inline-flex; align-items: baseline; gap: 0;
-      font-family: var(--font-display); font-size: clamp(1.15rem, 1.35vw, 1.42rem);
-      line-height: 1; letter-spacing: -0.02em; white-space: nowrap;
-    }
-    .logo-wordmark__master {
-      color: #fff; font-weight: 600;
-    }
-    .logo-wordmark__aws {
-      color: var(--brand); font-weight: 800;
+    .logo img {
+      display: block; width: auto; height: auto; max-height: 46px;
+      object-fit: contain; object-position: left center;
     }
     .logo:focus-visible { outline-offset: 4px; }
     .header-partner-sep {
@@ -147,26 +143,30 @@
       color: #bdbdbd;
     }
     .nav-wrapper {
-      margin-left: auto; display: flex; align-items: center; flex-shrink: 0;
-      gap: clamp(20px, 2.5vw, 36px); overflow: visible;
+      grid-column: 3;
+      justify-self: end;
+      display: flex; align-items: center; flex-shrink: 0;
+      gap: clamp(26px, 2.8vw, 40px); overflow: visible;
+      transform: translateX(-14px);
     }
+    .hamburger { grid-column: 3; justify-self: end; }
     .nav-menu {
-      display: flex; list-style: none; gap: clamp(22px, 2.2vw, 34px);
+      display: flex; list-style: none; gap: clamp(28px, 2.6vw, 40px);
       align-items: center; padding: 0; margin: 0;
     }
     .nav-menu li { position: relative; list-style: none; }
     .nav-menu li::marker { content: none; }
     .nav-menu > li > a {
-      color: #fff; text-decoration: none; font-weight: 500; font-size: 0.9375rem;
-      letter-spacing: 0.01em; transition: color 0.2s ease, opacity 0.2s ease;
+      color: #fff; text-decoration: none; font-weight: 500; font-size: 1rem;
+      letter-spacing: 0.02em; transition: color 0.2s ease, opacity 0.2s ease;
       padding: 8px 0; border-radius: 4px;
     }
     .nav-menu > li > a:hover, .nav-menu > li > a:focus-visible { color: #fff; opacity: 0.88; }
     .nav-has-dropdown > .nav-dropdown-trigger {
       display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
       background: none; border: none; font: inherit;
-      color: #fff; font-weight: 500; font-size: 0.9375rem;
-      letter-spacing: 0.01em; padding: 8px 0; border-radius: 4px;
+      color: #fff; font-weight: 500; font-size: 1rem;
+      letter-spacing: 0.02em; padding: 8px 0; border-radius: 4px;
       transition: opacity 0.2s ease;
     }
     .nav-has-dropdown > .nav-dropdown-trigger:hover,
@@ -228,7 +228,7 @@
     .nav-cta--mobile { display: none; }
     .hamburger {
       display: none; background: none; border: none; padding: 10px; cursor: pointer;
-      color: var(--brand); margin-left: auto; min-width: 44px; min-height: 44px;
+      color: var(--brand); margin-left: 0; min-width: 44px; min-height: 44px;
       align-items: center; justify-content: center;
     }
     .hamburger svg { width: 28px; height: 28px; }
@@ -1136,47 +1136,61 @@
         background: none; border: none; color: var(--brand); cursor: pointer;
       }
       .nav-close svg { width: 28px; height: 28px; }
-      :root { --header-h: 96px; }
+      :root { --header-h: 64px; }
       .header-content {
+        width: min(var(--max), calc(100% - 32px));
         display: grid;
-        grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr);
-        grid-template-rows: auto auto;
+        grid-template-columns: 1fr;
+        grid-template-rows: 44px auto;
         align-items: center;
-        gap: 2px 0;
-        padding: 6px 12px 8px;
+        column-gap: 0;
+        row-gap: 0;
+        padding: 4px 0 0;
         min-height: unset;
       }
+      .nav-wrapper { grid-column: auto; justify-self: auto; }
       .header-brand { display: contents; }
       .header-brand .logo {
-        grid-column: 2;
+        grid-column: 1;
         grid-row: 1;
         justify-self: center;
+        align-self: center;
+        z-index: 1;
       }
       .header-partner-sep { display: none; }
       .aws-partner-badge.header-partner {
-        grid-column: 1 / -1;
+        grid-column: 1;
         grid-row: 2;
         justify-self: center;
-        min-height: 44px;
-        padding: 6px 14px;
+        align-self: center;
+        min-height: 22px;
+        padding: 2px 10px 4px;
+        margin: 0;
         align-items: center;
       }
-      .logo-wordmark { font-size: 1.2rem; }
+      .header-brand .logo img { max-height: 34px; }
       .header-partner__label {
-        font-size: 0.75rem;
-        letter-spacing: 0.02em;
+        font-size: 0.65rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
         color: #9E9E9E;
       }
       .hamburger {
-        grid-column: 3;
+        grid-column: 1;
         grid-row: 1;
         justify-self: end;
         align-self: center;
-        margin-left: 0;
+        z-index: 2;
+        margin: 0;
+        padding: 6px 8px;
       }
     }
     @media (max-width: 640px) {
-      .logo-wordmark { font-size: 1.1rem; }
+      :root { --header-h: 58px; }
+      .header-content { padding: 3px 0 0; grid-template-rows: 40px auto; }
+      .header-brand .logo img { max-height: 30px; }
+      .aws-partner-badge.header-partner { min-height: 20px; padding: 1px 10px 3px; }
+      .header-partner__label { font-size: 0.6rem; }
       .cards-4, .cards-4-servicios, .cards-3, .cards-2, .benefit-grid, .servicios-editorial__grid, .product-grid { grid-template-columns: 1fr; }
       .cards-4 { gap: 16px; }
       .stack-constellation { min-height: 520px; }
@@ -1204,7 +1218,7 @@
     <div class="header-content">
       <div class="header-brand">
         <a href="https://www.mastersaws.com/" class="logo" aria-label="MasterAWS inicio">
-          <span class="logo-wordmark" aria-hidden="true"><span class="logo-wordmark__master">Master</span><span class="logo-wordmark__aws">AWS</span></span>
+          <img src="https://www.mastersaws.com/wp-content/uploads/2024/10/logo.png" alt="MasterAWS" width="177" height="45" decoding="async" />
         </a>
         <span class="header-partner-sep" aria-hidden="true"></span>
         <a href="https://partners.amazonaws.com/partners/0018W00002N5hKNQAZ/mastersaws" class="aws-partner-badge header-partner" target="_blank" rel="noopener noreferrer" aria-label="MasterAWS en AWS Partner Network">
