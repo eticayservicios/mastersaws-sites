@@ -226,5 +226,5 @@ jobs:
           echo "Bucket: ${{ steps.target.outputs.s3_bucket }}"
           DOMAIN=$(aws cloudfront get-distribution --id "${{ steps.target.outputs.cloudfront_id }}" --query 'Distribution.DomainName' --output text)
           echo "CloudFront: https://${DOMAIN}/mastervpn/"
-          echo "Nota: landings en raiz (mastervpn, tarjetas-nfc, webinar-automatizacion-ia) requieren location nginx -> CloudFront en el servidor WordPress."
+          echo "Nota: landings en raiz (mastervpn, tarjetas-nfc, webinar-automatizacion-ia, mastererp, masteruonify) requieren location nginx -> CloudFront en el servidor WordPress."
 
